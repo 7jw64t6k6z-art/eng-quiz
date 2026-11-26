@@ -870,7 +870,7 @@
     return ab;
   }
 
-  var musicEl = null, musicUrl = null, musicBuilt = false, musicArmed = false;
+  var musicEl = null, musicUrl = null, musicBuilt = false, musicArmed = false, musicStarted = false;
 
   var MUSIC_EVS = ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'click', 'keydown'];
 
@@ -905,9 +905,11 @@
       a.volume = 1;
       a.src = musicUrl;
       a.style.cssText = 'position:fixed;left:-4px;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;';
-      a.addEventListener('playing', function () { if (!a.paused) disarmMusic(); }, false);
+      a.addEventListener('playing', function () { musicStarted = true; disarmMusic(); }, false);
       a.addEventListener('pause', function () {
-        if (musicOn && !a.ended) setTimeout(function () { if (a.paused) armMusic(); }, 400);
+        if (musicOn && !a.ended) setTimeout(function () {
+          if (a.paused) { musicStarted = false; armMusic(); }
+        }, 400);
       }, false);
       document.body.appendChild(a);
       musicEl = a;
@@ -916,9 +918,9 @@
   }
 
   function playCarol() {
-    if (!musicOn) return;
+    if (!musicOn || musicStarted) return;
     var a = musicEl || makeMusic();
-    if (!a || !a.paused) return;
+    if (!a) return;
     try {
       var p = a.play();
       if (p && p.catch) p.catch(function () {});
@@ -927,7 +929,7 @@
 
   function onMusicGesture() {
     playCarol();
-    if (musicEl && !musicEl.paused) disarmMusic();
+    if (musicStarted) disarmMusic();
   }
 
   armMusic();
