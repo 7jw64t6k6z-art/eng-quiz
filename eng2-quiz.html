@@ -329,7 +329,7 @@ body.reveal .blank .opt.correct{opacity:1; background:#fff; border:1.5px solid v
       if (kind === 'm' && (it.kind==='grammar' || it.kind==='irrelevant' || it.kind==='insert' || it.kind==='vocab')){
         return '<span class="mk">' + (it.mkIndex[name] || '') + '</span>';
       }
-      return t.plain;
+      return '';
     }
     return '';
   }
