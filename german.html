@@ -189,7 +189,7 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
  <section class="part on" id="p1">
   <div class="hero">
    <h2>1. 불규칙 과거분사 (Infinitiv → Partizip II)</h2>
-   <p>왼쪽 원형을 보고 오른쪽 칸에 과거분사를 직접 입력하세요. Enter 또는 다른 칸을 누르면 바로 채점됩니다. · 총 50개</p>
+   <p>왼쪽 원형을 보고 오른쪽 칸에 과거분사를 직접 입력하세요. Enter 또는 다른 칸을 누르면 바로 채점됩니다. · 총 50개<br>🎤 <b>말하기</b>를 누르고 독일어로 말해도 되고 타이핑해도 돼요. 말이 끝나면 바로 채점되고, 채점 뒤 <b>🔊 정답 발음 듣기</b>로 발음을 확인해 보세요.</p>
    <div class="toolbar">
      <button class="btn on" id="v-shuffle">🔀 순서 섞기</button>
      <button class="btn" id="v-retry">✗ 틀린 것만 다시</button>
@@ -398,7 +398,7 @@ function addMicNote(partId){
   $$("#"+partId+" .mic").forEach(b=>b.classList.add("off"));
 }
 function flashMicNote(){
-  const n=$("#p2-micnote")||$("#p3-micnote");
+  const n=$(".part.on .micnote")||$("#p2-micnote")||$("#p3-micnote");
   if(!n) return;
   try{ n.scrollIntoView({block:"center",behavior:"smooth"}); }catch(e){}
   n.classList.remove("flash"); void n.offsetWidth; n.classList.add("flash");
@@ -518,6 +518,21 @@ function addSpk(fb,text,label){
   fb.appendChild(b);
 }
 
+/* ---------- part 1 : 과거분사 답 비교(말하기 인식 오차 허용) ---------- */
+/* 공백·구두점·대소문자·움라우트 표기(ae/ä) 차이는 무시하고,
+   음성 인식이 ‘hat geholfen’처럼 조동사를 붙여 줄 때도 정답 처리 */
+function deKey(s){ return norm(s).replace(/\s+/g,""); }
+function vMatch(val,it){
+  const a=deKey(val), t=deKey(it.part);
+  if(!a) return false;
+  if(a===t) return true;
+  return a.replace(/^(hat|ist|haben|sind)/,"")===t;
+}
+function vIsInfinitive(val,it){
+  const a=deKey(val), inf=deKey(it.inf);
+  return !!a && (a===inf || a==="zu"+inf);
+}
+
 /* ---------- part 1 ---------- */
 const V={items:VERBS.map(v=>({...v,state:0})),order:null,shuffle:true};
 function vOrder(){
@@ -530,35 +545,53 @@ function renderV(){
     const it=V.items[idx];
     const el=document.createElement("div");
     el.className="item"+(it.state===1?" ok":it.state===-1?" no":"");
-    el.innerHTML=`<div class="row"><span class="qn">${n+1}</span>
-      <span class="qtxt">${it.inf} <span style="color:#9aa3b0">→</span></span>
-      <input class="ans" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Partizip II">
-      </div><div class="fb"></div>`;
+    el.innerHTML=`<div class="row" style="align-items:flex-start">
+        <span class="qn">${n+1}</span>
+        <div style="flex:1;min-width:0">
+          <div class="qtxt">${it.inf} <span style="color:#9aa3b0">→</span></div>
+          <div class="ansrow" style="margin-top:7px">
+            <input class="ans" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Partizip II">
+            <button class="mic" type="button">🎤 말하기</button>
+          </div>
+          <div class="micst"></div>
+          <div class="fb"></div>
+        </div></div>`;
     const inp=$("input",el);
+    const micb=$(".mic",el), micst=$(".micst",el);
     inp.value=it.typed||"";
+    /* 🎤 말하기 → 인식된 음성으로 채우고 자동 채점 (2·3번 탭과 같은 동작) */
+    micb.addEventListener("mousedown",e=>e.preventDefault());
+    micb.addEventListener("click",()=>micToggle(inp,micb,micst,()=>checkV(el,it,inp)));
+    if(!SR) micb.classList.add("off");
     inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();checkV(el,it,inp);inp.blur();}});
     inp.addEventListener("focus",()=>{activeInput=inp;});
-    inp.addEventListener("input",()=>{it.typed=inp.value; el.classList.remove("ok","no","correct"); it.state=0; updateV();});
+    inp.addEventListener("input",()=>{it.typed=inp.value; el.classList.remove("ok","no","correct"); it.state=0; micb.disabled=false; updateV();});
     inp.addEventListener("blur",()=>{if(inp.value.trim())checkV(el,it,inp);});
-    if(it.state===1){ inp.readOnly=true; }
-    if(it.state===1) setVfb(el,it,true);
-    else if(it.state===-1) setVfb(el,it,false);
+    if(it.state===1){ inp.readOnly=true; micb.disabled=true; }
+    if(it.state===1) setVfb(el,it,true,it.typed);
+    else if(it.state===-1) setVfb(el,it,false,it.typed);
     list.appendChild(el);
   });
   updateV();
 }
-function setVfb(el,it,ok){
+function setVfb(el,it,ok,val){
   const fb=$(".fb",el);
   if(ok){ fb.innerHTML=`✓ <b>${it.part}</b>`; }
+  else if(vIsInfinitive(val||"",it)){
+    fb.innerHTML=`🎤 발음은 잘 들렸어요! 여기서는 <b>과거분사</b> 형태 <span class="sol">${it.part}</span>를 말해야 해요.`;
+  }
   else { fb.innerHTML=`✗ 정답: <span class="sol">${it.part}</span>`; }
+  addSpk(fb,it.part);
 }
 function checkV(el,it,inp){
   if(!inp.value.trim()) return;
-  const ok = norm(inp.value)===norm(it.part);
+  const ok = vMatch(inp.value,it);
   it.state = ok?1:-1; it.typed=inp.value;
   el.classList.toggle("ok",ok); el.classList.toggle("no",!ok);
-  setVfb(el,it,ok);
+  setVfb(el,it,ok,inp.value);
+  const mb=$(".mic",el);
   if(ok) inp.readOnly=true;
+  if(mb) mb.disabled=inp.readOnly;
   updateV();
 }
 function updateV(){
@@ -950,7 +983,7 @@ P.order=P.items.map((_,i)=>i); shuffle(P.order);
 S.order=S.items.map((_,i)=>i); shuffle(S.order);
 renderV(); renderP(); renderS();
 /* 마이크를 못 쓰는 인앱 브라우저(카톡·픽클 내장 등)면 2·3번 랩 상단에 안내 */
-if(!SR){ addMicNote("p2"); addMicNote("p3"); }
+if(!SR){ addMicNote("p1"); addMicNote("p2"); addMicNote("p3"); }
 /* 다른 앱으로 넘어가면 마이크 중지 */
 document.addEventListener("visibilitychange",()=>{ if(document.hidden) micAbort(); });
 </script>
