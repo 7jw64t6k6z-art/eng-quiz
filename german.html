@@ -183,10 +183,10 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
  <section class="part" id="p4">
   <div class="hero">
    <h2>🎮 믹스 게임 (4지선다)</h2>
-   <p>1~3파트가 골고루 섞여 한 판 <b>30문제</b>가 나옵니다. 연속으로 맞히면 콤보 보너스 점수! · 문제 은행 86개</p>
+   <p><b>과거분사(50개) + 문장 변환(20문장)</b> 문제 은행에서 골고루 랜덤으로 골라 한 판 <b>30문제</b>가 나옵니다. 연속으로 맞히면 콤보 보너스 점수! · 문제 은행 70개</p>
    <div class="toolbar">
      <button class="btn pri" id="g-start30">30문제 시작</button>
-     <button class="btn" id="g-startall">전체(86) 시작</button>
+     <button class="btn" id="g-startall">전체(70) 시작</button>
    </div>
   </div>
   <div class="gbox" id="g-area">
@@ -524,15 +524,7 @@ function buildPool(){
     pool.push({type:"verb",q:`Partizip II von <span style="color:var(--accent)">${v.inf}</span>?`,sub:"불규칙 과거분사",img:null,
       correct:v.part,opts:shuffle([v.part,...distractors])});
   });
-  PICS.forEach(p=>{
-    const pron=p.sex==="m"?"ihm":"ihr";
-    const others=PICS.filter(x=>x.id!==p.id);
-    pool.push({type:"sym",q:`Was fehlt ${pron}?`,sub:`그림 · ${p.page}`,img:IMG[p.img],
-      correct:p.sym[0],opts:shuffle([p.sym[0],...shuffle(others.map(o=>o.sym[0])).slice(0,3)])});
-    const advPool=PICS.filter(x=>x.id!==p.id).map(o=>o.adv[0]);
-    pool.push({type:"adv",q:`Was rätst du ${pron}?`,sub:`그림 · ${p.page}`,img:IMG[p.img],
-      correct:p.adv[0],opts:shuffle([p.adv[0],...shuffle(advPool).slice(0,3)])});
-  });
+  /* 그림 증상(PICS) 문제는 게임 모드에서 제외 — 2번 탭에서만 연습 */
   [...SENT_A,...SENT_B].forEach(s=>{
     pool.push({type:"sent",q:`<span style="font-size:14.5px;color:#3a4552">${s.src}</span>`,
       sub:"올바르게 바꾼 문장은?",img:null,correct:s.sol,opts:shuffle([...s.opts])});
@@ -544,10 +536,10 @@ function takeMix(n){
   const all=buildPool();
   if(n>=all.length) return shuffle(all);
   const verb=shuffle(all.filter(q=>q.type==="verb"));
-  const pic=shuffle(all.filter(q=>q.type==="sym"||q.type==="adv"));
   const sent=shuffle(all.filter(q=>q.type==="sent"));
-  const a=Math.round(n*0.4), b=Math.round(n*0.33);
-  let picked=[...verb.slice(0,a),...pic.slice(0,b),...sent.slice(0,n-a-b)];
+  /* 문제 은행 비율(과거분사 50 : 문장 변환 20)에 맞춰 뽑기 */
+  const a=Math.round(n*verb.length/all.length);
+  let picked=[...verb.slice(0,a),...sent.slice(0,n-a)];
   const rest=all.filter(q=>!picked.includes(q));
   picked=picked.concat(shuffle(rest).slice(0,Math.max(0,n-picked.length)));
   return shuffle(picked).slice(0,n);
@@ -566,7 +558,7 @@ function renderG(){
       정답 ${G.right} / ${G.qs.length} (${pct}%) · 최고 콤보 ${G.best}</div>
       <div class="toolbar" style="justify-content:center">
         <button class="btn pri" onclick="startGame(30)">30문제 다시</button>
-        <button class="btn" onclick="startGame(86)">전체 다시</button>
+        <button class="btn" onclick="startGame(buildPool().length)">전체 다시</button>
       </div>`;
     return;
   }
