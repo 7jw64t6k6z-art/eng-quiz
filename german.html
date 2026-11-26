@@ -625,12 +625,14 @@ $$(".tab").forEach(t=>t.addEventListener("click",()=>{
 let activeInput=null;
 function hideUmlaut(){$("#umlaut").classList.remove("on");}
 document.addEventListener("focusin",e=>{
+  if(e.target.closest && e.target.closest("#umlaut")) return;
   if(e.target.matches("input.ans, input[type=text]")){activeInput=e.target;$("#umlaut").classList.add("on");}
   else hideUmlaut();
 });
 document.addEventListener("focusout",e=>{
   if(e.target.matches("input.ans")) setTimeout(()=>{ if(!document.activeElement||!document.activeElement.matches("input")) hideUmlaut(); },150);
 });
+$$("#umlaut button").forEach(b=>b.addEventListener("mousedown",e=>e.preventDefault()));
 $$("#umlaut button").forEach(b=>b.addEventListener("click",e=>{
   e.preventDefault();
   const inp=activeInput;
