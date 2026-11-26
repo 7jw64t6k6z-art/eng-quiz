@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#04060a" />
+<title>🎄 Merry Christmas</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;background:#04060a;overflow:hidden;overscroll-behavior:none}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",system-ui,sans-serif}
+  #cv{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;cursor:grab}
+  #cv.grabbing{cursor:grabbing}
+  .hud{position:fixed;left:50%;transform:translateX(-50%);
+    bottom:calc(env(safe-area-inset-bottom,0px) + 15px);
+    display:flex;gap:7px;z-index:5;pointer-events:none}
+  .pill{pointer-events:auto;appearance:none;-webkit-appearance:none;cursor:pointer;
+    border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.05);
+    color:rgba(224,240,236,.66);font-size:12px;font-weight:500;line-height:1;letter-spacing:.01em;
+    padding:9px 13px;border-radius:999px;
+    backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);
+    transition:background .3s,color .3s,border-color .3s,box-shadow .3s,transform .12s;
+    white-space:nowrap;font-family:inherit}
+  .pill:hover{color:rgba(235,250,246,.85);border-color:rgba(255,255,255,.2)}
+  .pill:active{transform:scale(.955)}
+  .pill.on{color:#04140e;background:rgba(170,255,214,.9);border-color:rgba(170,255,214,.62);
+    box-shadow:0 0 20px rgba(110,255,190,.22)}
+  @media (max-width:420px){ .pill{font-size:11.5px;padding:8px 11px} }
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="hud">
+  <button class="pill on" id="bSpin" aria-pressed="true">🔄 회전</button>
+  <button class="pill on" id="bSnow" aria-pressed="true">❄️ 눈</button>
+  <button class="pill" id="bMusic" aria-pressed="false">🎵 캐롤</button>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  var cv = document.getElementById('cv');
+  var ctx = cv.getContext('2d', { alpha: false });
+  var TAU = Math.PI * 2;
+  var VW = 0, VH = 0, DPR = 1, CX = 0, CY = 0, BASE = 120;
+
+  /* ───────────── palette ───────────── */
+  var COLORS = [
+    [8, 62, 40],     // 0 deep green
+    [16, 116, 70],   // 1 green
+    [26, 168, 104],  // 2 mid green
+    [50, 214, 132],  // 3 bright green
+    [148, 252, 198], // 4 mint spark
+    [255, 255, 255], // 5 white
+    [255, 46, 56],   // 6 red
+    [255, 190, 66],  // 7 gold
+    [255, 226, 152], // 8 pale gold
+    [70, 140, 255],  // 9 blue
+    [255, 120, 190], // 10 pink
+    [120, 238, 255], // 11 cyan
+    [162, 118, 255], // 12 violet
+    [255, 138, 56]   // 13 orange
+  ];
+  var NCOL = COLORS.length;
+
+  /* ───────────── particle store ───────────── */
+  var _x = [], _y = [], _z = [], _c = [], _s = [], _ph = [], _tw = [];
+
+  function addP(x, y, z, c, s, tw) {
+    _x.push(x); _y.push(y); _z.push(z);
+    _c.push(c); _s.push(s); _ph.push(Math.random() * TAU); _tw.push(tw);
+  }
+
+  /* ───────────── geometry helpers ───────────── */
+  var TOP_Y = 3.90;
+  var BASE_R = 1.00;
+
+  function envR(y) {
+    var t = Math.max(0, Math.min(1, y / TOP_Y));
+    return BASE_R * Math.pow(1 - t, 0.86);
+  }
+
+  /* ───────────── the tree: stacked conical skirts ───────────── */
+  (function buildTree() {
+    var TIERS = 5;
+
+    for (var ti = 0; ti < TIERS; ti++) {
+      var yb = TOP_Y * Math.pow(ti / TIERS, 0.84);
+      var yt = TOP_Y * Math.pow((ti + 1) / TIERS, 0.84);
+      var Rb = envR(yb) * (ti === 0 ? 1.00 : 1.01);
+      var Rt = envR(yt) * (ti === TIERS - 1 ? 0.10 : 0.58);
+      var n = Math.round(560 + 300 * (1 - ti / TIERS));
+
+      for (var k = 0; k < n; k++) {
+        var u = Math.pow((k + Math.random()) / n, 0.70) * 0.9;   // denser near the skirt, dark gap at the top
+        var ang = k * 2.399963 + ti * 2.7 + (Math.random() - 0.5) * 0.05;
+        var rr = Rb + (Rt - Rb) * u;
+        rr *= 1 + 0.03 * Math.sin(ang * 7 + ti * 1.3);     // soft scalloped edge
+
+        var inner = Math.random() < 0.16;
+        var r = inner ? rr * (0.35 + 0.5 * Math.random()) : rr * (0.97 + 0.05 * Math.random());
+
+        /* the top of a tier tucks under the skirt above it, so it sits in shadow */
+        var shade = 0.10 + 0.40 * u;
+        var q = Math.random(), c;
+        if (q < 0.010) c = 5;
+        else if (q < 0.042) c = 4;
+        else if (q < 0.17 + 0.13 * (1 - u)) c = 3;
+        else if (q < 0.55) c = 2;
+        else if (q < 0.86) c = 1;
+        else c = 0;
+        if (Math.random() < shade) c = (Math.random() < 0.25 ? 1 : 0);
+        if (inner) c = Math.random() < 0.25 ? 1 : 0;
+
+        var sz = inner ? (3.2 + Math.random() * 0.6) : (4.4 + Math.random() * 1.7);
+        var tw = (c === 4 || c === 5) ? 1 : (inner ? 0.08 : 0.28);
+        addP(Math.cos(ang) * r, yb + (yt - yb) * u + (Math.random() - 0.5) * 0.02,
+             Math.sin(ang) * r, c, sz, tw);
+      }
+
+      /* bright rim where the skirt meets the tier below */
+      var rimN = Math.round(110 + 70 * (1 - ti / TIERS));
+      for (var m = 0; m < rimN; m++) {
+        var a2 = m / rimN * TAU + ti * 0.9;
+        var r2 = Rb * (0.99 + 0.02 * Math.random()) * (1 + 0.035 * Math.sin(a2 * 7 + ti * 1.3));
+        addP(Math.cos(a2) * r2, yb + (Math.random() - 0.5) * 0.022, Math.sin(a2) * r2,
+             Math.random() < 0.22 ? 3 : 2, 4.2 + Math.random() * 1.0, 0.38);
+      }
+    }
+  })();
+
+  /* ───────────── spiral garland (red + gold) ───────────── */
+  (function buildGarland() {
+    var N = 620, TURNS = 4.6;
+    for (var i = 0; i < N; i++) {
+      var t = i / N;
+      var a = t * TURNS * TAU + 0.85;
+      var y = 0.10 + t * TOP_Y * 0.93;
+      var rr = envR(y) * 1.055 + 0.01;
+      var jit = (Math.random() - 0.5) * 0.028;
+      var seg = Math.floor(i / 18) % 3;
+      var c = seg === 2 ? 7 : 6;
+      if (Math.random() < 0.06) c = seg === 2 ? 8 : 7;
+      addP(Math.cos(a) * (rr + jit), y + (Math.random() - 0.5) * 0.016,
+           Math.sin(a) * (rr + jit), c, 3.8 + Math.random() * 1.2, 0.4);
+    }
+    var N2 = 260;
+    for (var j = 0; j < N2; j++) {
+      var t2 = j / N2;
+      var a2 = t2 * 3.9 * TAU + 0.85 + Math.PI;
+      var y2 = 0.16 + t2 * TOP_Y * 0.86;
+      var r2 = envR(y2) * 1.02 + 0.008;
+      var seg2 = Math.floor(j / 26) % 3;
+      addP(Math.cos(a2) * r2, y2, Math.sin(a2) * r2,
+           seg2 === 2 ? 7 : 6, 3.5 + Math.random() * 0.9, 0.35);
+    }
+  })();
+
+  /* ───────────── ornaments ───────────── */
+  (function buildOrnaments() {
+    var ORN = [6, 7, 9, 10, 11, 5, 13, 8];
+    for (var i = 0; i < 110; i++) {
+      var t = Math.pow(Math.random(), 0.7);
+      var y = 0.18 + t * TOP_Y * 0.88;
+      var a = Math.random() * TAU;
+      var rr = envR(y) * (1.0 + Math.random() * 0.03);
+      addP(Math.cos(a) * rr, y, Math.sin(a) * rr,
+           ORN[(Math.random() * ORN.length) | 0], 6.5 + Math.random() * 3.5, 0.65);
+    }
+  })();
+
+  /* ───────────── star on top (billboarded) ───────────── */
+  var STAR_Y = TOP_Y + 0.20;
+  var starGeo = [];
+
+  (function buildStar() {
+    var R = 0.24, r0 = 0.100, thick = 0.070;
+
+    function put(a, b, d, ci, s, tw) { starGeo.push([a, b, d, ci, s, tw]); }
+
+    var V = [];
+    for (var v = 0; v < 10; v++) {
+      var ang = -Math.PI / 2 + v * Math.PI / 5;
+      var rr = (v % 2 === 0) ? R : r0;
+      V.push([Math.cos(ang) * rr, Math.sin(ang) * rr]);
+    }
+
+    /* front and back outlines give the star volume */
+    var layers = [[thick, 16], [-thick * 0.75, 12]];
+    for (var L = 0; L < layers.length; L++) {
+      var dz = layers[L][0], nSeg = layers[L][1];
+      for (var e = 0; e < 10; e++) {
+        var A = V[e], B = V[(e + 1) % 10];
+        for (var s2 = 0; s2 < nSeg; s2++) {
+          var tt = s2 / nSeg;
+          put(A[0] + (B[0] - A[0]) * tt, A[1] + (B[1] - A[1]) * tt, dz,
+              Math.random() < 0.25 ? 8 : 7, 5.0 + Math.random() * 1.6, 0.45);
+        }
+      }
+    }
+
+    /* lit body of the star */
+    for (var k = 0; k < 120; k++) {
+      var ra = Math.random() * TAU, rd = Math.pow(Math.random(), 0.65) * R * 0.72;
+      put(Math.cos(ra) * rd, Math.sin(ra) * rd, (Math.random() - 0.5) * thick * 1.4,
+          Math.random() < 0.35 ? 8 : 7, 4.4 + Math.random() * 1.2, 0.3);
+    }
+
+    /* sparks that hover around it */
+    for (var h = 0; h < 30; h++) {
+      var a3 = Math.random() * TAU, b3 = Math.acos(2 * Math.random() - 1);
+      var r3 = 0.26 + Math.random() * 0.20;
+      put(Math.sin(b3) * Math.cos(a3) * r3, Math.cos(b3) * r3 * 1.05,
+          Math.sin(b3) * Math.sin(a3) * r3, Math.random() < 0.55 ? 7 : 8,
+          3.8 + Math.random() * 2.4, 1);
+    }
+  })();
+
+  /* ───────────── gift boxes ───────────── */
+  function addGift(gx, gz, w, h, d, rotY, bodyCol, ribCol) {
+    var cs = Math.cos(rotY), sn = Math.sin(rotY);
+    function put(a, b, c, ci, s) {
+      addP(gx + a * cs + c * sn, b, gz - a * sn + c * cs, ci, s, 0.14);
+    }
+    var NX = Math.max(6, Math.round(w * 44));
+    var NZ = Math.max(6, Math.round(d * 44));
+    var NY = Math.max(5, Math.round(h * 44));
+    var i, j, a, b, c2, jx, jy;
+
+    /* top face */
+    for (i = 0; i <= NX; i++) {
+      for (j = 0; j <= NZ; j++) {
+        a = -w / 2 + w * (i + (Math.random() - 0.5) * 0.55) / NX;
+        c2 = -d / 2 + d * (j + (Math.random() - 0.5) * 0.55) / NZ;
+        put(a, h, c2, bodyCol, 4.6);
+      }
+    }
+    /* front / back faces */
+    for (i = 0; i <= NX; i++) {
+      for (j = 0; j <= NY; j++) {
+        a = -w / 2 + w * (i + (Math.random() - 0.5) * 0.55) / NX;
+        jy = h * (j + (Math.random() - 0.5) * 0.55) / NY;
+        put(a, jy, d / 2, bodyCol, 4.6);
+        put(a, jy, -d / 2, bodyCol, 4.6);
+      }
+    }
+    /* left / right faces */
+    for (i = 0; i <= NZ; i++) {
+      for (j = 0; j <= NY; j++) {
+        c2 = -d / 2 + d * (i + (Math.random() - 0.5) * 0.55) / NZ;
+        jy = h * (j + (Math.random() - 0.5) * 0.55) / NY;
+        put(w / 2, jy, c2, bodyCol, 4.6);
+        put(-w / 2, jy, c2, bodyCol, 4.6);
+      }
+    }
+
+    /* ribbon: two crossing bands plus the bow */
+    var M = 12;
+    for (i = 0; i < M; i++) {
+      var t = i / (M - 1);
+      var u = (t - 0.5);
+      var hh = (0.04 + 0.92 * t) * h;
+      put(u * w, h, 0, ribCol, 4.6);
+      put(0, h, u * d, ribCol, 4.6);
+      put(0, hh, d / 2, ribCol, 4.6);
+      put(0, hh, -d / 2, ribCol, 4.6);
+      put(w / 2, hh, 0, ribCol, 4.6);
+      put(-w / 2, hh, 0, ribCol, 4.6);
+    }
+    for (i = 0; i < 20; i++) {
+      var aa = Math.random() * TAU, rr = Math.random() * w * 0.16;
+      put(Math.cos(aa) * rr * 1.2, h + 0.008 + Math.random() * h * 0.1,
+          Math.sin(aa) * rr * 0.9, ribCol, 4.2);
+    }
+  }
+
+  (function buildGifts() {
+    addGift(-0.62, 0.56, 0.26, 0.22, 0.23, 0.30, 6, 7);
+    addGift(0.68, 0.46, 0.23, 0.18, 0.21, -0.45, 9, 7);
+    addGift(0.06, 0.86, 0.20, 0.16, 0.19, 0.15, 2, 7);
+    addGift(-0.52, -0.56, 0.24, 0.19, 0.22, 0.75, 12, 8);
+    addGift(0.64, -0.48, 0.20, 0.15, 0.18, -0.25, 10, 7);
+    addGift(-0.86, 0.02, 0.18, 0.14, 0.17, -0.6, 13, 5);
+  })();
+
+  /* ───────────── ground sparkle carpet ───────────── */
+  (function buildGround() {
+    for (var i = 0; i < 150; i++) {
+      var a = Math.random() * TAU;
+      var r = 0.85 + Math.pow(Math.random(), 0.75) * 0.75;
+      addP(Math.cos(a) * r, -0.015 + Math.random() * 0.015, Math.sin(a) * r,
+           Math.random() < 0.6 ? 1 : 2, 3.2 + Math.random() * 0.8, 0.4);
+    }
+  })();
+
+  /* freeze */
+  var NP = _x.length;
+  var PX = new Float32Array(_x), PY = new Float32Array(_y), PZ = new Float32Array(_z);
+  var PCOL = new Uint8Array(_c), PSZ = new Float32Array(_s);
+  var PPH = new Float32Array(_ph), PTW = new Float32Array(_tw);
+
+  /* ───────────── glow sprites ───────────── */
+  var SIZES = [5, 9, 15];
+  var SS = Math.min(3, Math.max(2, Math.round(window.devicePixelRatio || 2)));
+  var sprites = [];
+
+  function makeSprite(rgb, size) {
+    var c = document.createElement('canvas');
+    var n = Math.ceil(size * SS);
+    c.width = c.height = n;
+    var g = c.getContext('2d');
+    var r = n / 2;
+    var gr = g.createRadialGradient(r, r, 0, r, r, r);
+    var R = rgb[0], G = rgb[1], B = rgb[2];
+    gr.addColorStop(0, 'rgba(' + Math.min(255, R + 60) + ',' + Math.min(255, G + 60) + ',' + Math.min(255, B + 60) + ',1)');
+    gr.addColorStop(0.20, 'rgba(' + R + ',' + G + ',' + B + ',0.80)');
+    gr.addColorStop(0.40, 'rgba(' + R + ',' + G + ',' + B + ',0.14)');
+    gr.addColorStop(0.62, 'rgba(' + R + ',' + G + ',' + B + ',0.03)');
+    gr.addColorStop(1, 'rgba(' + R + ',' + G + ',' + B + ',0)');
+    g.fillStyle = gr;
+    g.fillRect(0, 0, n, n);
+    return c;
+  }
+
+  for (var ci = 0; ci < NCOL; ci++) {
+    sprites[ci] = [];
+    for (var si = 0; si < SIZES.length; si++) sprites[ci][si] = makeSprite(COLORS[ci], SIZES[si]);
+  }
+
+  function bigGlow(rgb, size, falloff) {
+    var c = document.createElement('canvas');
+    c.width = c.height = size;
+    var g = c.getContext('2d');
+    var r = size / 2;
+    var gr = g.createRadialGradient(r, r, 0, r, r, r);
+    gr.addColorStop(0, 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',1)');
+    gr.addColorStop(0.14, 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + (0.5 * falloff) + ')');
+    gr.addColorStop(0.40, 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + (0.11 * falloff) + ')');
+    gr.addColorStop(1, 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',0)');
+    g.fillStyle = gr;
+    g.fillRect(0, 0, size, size);
+    return c;
+  }
+
+  var GLOW_STAR = bigGlow([255, 214, 120], 256, 1);
+  var GLOW_GROUND = bigGlow([26, 170, 110], 256, 0.8);
+
+  /* ───────────── background stars & snow ───────────── */
+  var bgStars = [];
+  for (var bsi = 0; bsi < 160; bsi++) {
+    bgStars.push({
+      x: Math.random(), y: Math.random(),
+      ph: Math.random() * TAU,
+      sp: 0.5 + Math.random() * 1.5,
+      c: Math.random() < 0.15 ? 2 : (Math.random() < 0.32 ? 8 : 5)
+    });
+  }
+
+  var snow = [];
+  for (var sni = 0; sni < 150; sni++) {
+    snow.push({
+      x: Math.random() * 1.2 - 0.1,
+      y: Math.random(),
+      z: Math.random(),
+      vy: 0.05 + Math.random() * 0.12,
+      ph: Math.random() * TAU,
+      sw: 0.4 + Math.random() * 1.2
+    });
+  }
+
+  /* ───────────── sparks ───────────── */
+  var sparks = [];
+
+  function burst() {
+    for (var i = 0; i < 110; i++) {
+      var t = Math.pow(Math.random(), 0.8);
+      var y = 0.2 + t * TOP_Y * 0.9;
+      var a = Math.random() * TAU;
+      var rr = envR(y) * (0.85 + Math.random() * 0.3);
+      var sp = 0.35 + Math.random() * 0.95;
+      var col = Math.random();
+      sparks.push({
+        x: Math.cos(a) * rr, y: y, z: Math.sin(a) * rr,
+        vx: Math.cos(a) * sp, vy: 0.15 + Math.random() * 0.7, vz: Math.sin(a) * sp,
+        life: 0, max: 0.9 + Math.random() * 1.0,
+        c: col < 0.4 ? 8 : (col < 0.68 ? 5 : (col < 0.86 ? 7 : 4)),
+        ph: Math.random() * TAU
+      });
+    }
+  }
+
+  /* ───────────── camera / state ───────────── */
+  var yaw = 0.55, pitch = 0.10, zoom = 1;
+  var dYaw = 0, dPitch = 0;
+  var camD = 9.4, FOCUS_Y = 1.72;
+  var spinOn = true, snowOn = true, musicOn = false;
+  var time = 0, last = 0;
+
+  var gSky = null, gGround = null;
+
+  function makeGrads() {
+    gSky = ctx.createRadialGradient(CX, CY - VH * 0.10, 0, CX, CY - VH * 0.10, Math.max(VW, VH) * 0.7);
+    gSky.addColorStop(0, 'rgba(14,52,40,0.26)');
+    gSky.addColorStop(0.45, 'rgba(8,26,26,0.12)');
+    gSky.addColorStop(1, 'rgba(4,6,10,0)');
+
+    gGround = ctx.createRadialGradient(CX, CY + VH * 0.335, 0, CX, CY + VH * 0.335, Math.max(VW, VH) * 0.30);
+    gGround.addColorStop(0, 'rgba(20,105,70,0.10)');
+    gGround.addColorStop(1, 'rgba(4,6,10,0)');
+  }
+
+  function layout() {
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    VW = window.innerWidth;
+    VH = window.innerHeight;
+    cv.width = Math.round(VW * DPR);
+    cv.height = Math.round(VH * DPR);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    BASE = Math.min(VH / 4.7, VW / 2.95);
+    CX = VW * 0.5;
+    CY = VH * 0.5 + VH * 0.03;
+    makeGrads();
+  }
+
+  /* ───────────── batching buckets ───────────── */
+  var NAL = 6, NSZ = 3;
+  var NK = NCOL * NAL * NSZ;
+  var bkX = [], bkY = [], bkCount = new Array(NK);
+  for (var q0 = 0; q0 < NK; q0++) {
+    bkX.push(new Float32Array(4096));
+    bkY.push(new Float32Array(4096));
+    bkCount[q0] = 0;
+  }
+
+  /* ───────────── rendering ───────────── */
+  function drawFlake(f) {
+    var fx = (f.x + Math.sin(f.ph) * 0.014 * f.sw) * VW;
+    var fy = f.y * VH;
+    var sz = (SIZES[0] * 0.34 + f.z * SIZES[1] * 0.48) * (BASE / 130);
+    ctx.globalAlpha = 0.06 + f.z * 0.34;
+    var img = sprites[f.z > 0.74 ? 5 : 4][f.z > 0.62 ? 1 : 0];
+    ctx.drawImage(img, fx - sz / 2, fy - sz / 2, sz, sz);
+  }
+
+  function stepSnow(dt) {
+    for (var i = 0; i < snow.length; i++) {
+      var f = snow[i];
+      f.y += f.vy * dt * (0.35 + f.z * 0.85);
+      f.ph += dt * 0.8;
+      if (f.y > 1.06) { f.y = -0.06; f.x = Math.random() * 1.2 - 0.1; }
+    }
+  }
+
+  function render(dt) {
+    var f = BASE * zoom * camD;
+    var cosY = Math.cos(yaw), sinY = Math.sin(yaw);
+    var cosP = Math.cos(pitch), sinP = Math.sin(pitch);
+
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = '#04060a';
+    ctx.fillRect(0, 0, VW, VH);
+    ctx.fillStyle = gSky;
+    ctx.fillRect(0, 0, VW, VH);
+
+    ctx.globalCompositeOperation = 'lighter';
+
+    for (var i = 0; i < bgStars.length; i++) {
+      var st = bgStars[i];
+      ctx.globalAlpha = 0.12 + 0.38 * (0.5 + 0.5 * Math.sin(time * st.sp + st.ph));
+      var ssz = SIZES[0] * 0.55;
+      ctx.drawImage(sprites[st.c][0], st.x * VW - ssz / 2, st.y * VH - ssz / 2, ssz, ssz);
+    }
+
+    ctx.globalAlpha = 0.65;
+    var gw = Math.max(VW, VH) * 0.7;
+    ctx.drawImage(GLOW_GROUND, CX - gw / 2, CY + VH * 0.335 - gw / 2, gw, gw);
+
+    for (var s3 = 0; s3 < snow.length; s3++) if (snow[s3].z < 0.5) drawFlake(snow[s3]);
+
+    /* ── particles ── */
+    for (var b = 0; b < NK; b++) bkCount[b] = 0;
+
+    for (var p = 0; p < NP; p++) {
+      var x = PX[p], y = PY[p] - FOCUS_Y, z = PZ[p];
+
+      var X = x * cosY + z * sinY;
+      var Z = -x * sinY + z * cosY;
+      var Y = y * cosP - Z * sinP;
+      var Z2 = y * sinP + Z * cosP;
+
+      var depth = camD - Z2;
+      if (depth < 0.8) continue;
+      var sc = f / depth;
+      var sxp = CX + X * sc;
+      var syp = CY - Y * sc;
+      if (sxp < -40 || sxp > VW + 40 || syp < -40 || syp > VH + 40) continue;
+
+      var tw = PTW[p];
+      var twinkle = 1;
+      if (tw > 0) {
+        var w = 0.5 + 0.5 * Math.sin(time * 2.6 + PPH[p] + p * 0.61);
+        twinkle = 1 - tw * 0.5 + tw * 1.0 * w;
+      }
+      var fog = 1 - 0.38 * Math.min(1, Math.max(0, (depth - (camD - 2.4)) / 4.6));
+      var a = fog * twinkle;
+      if (a <= 0.02) continue;
+      if (a > 1) a = 1;
+
+      var al = (a * (NAL - 1)) | 0;
+      var szp = PSZ[p] * (camD / depth) * zoom;
+      var szb = szp < 7.0 ? 0 : (szp < 11.5 ? 1 : 2);
+
+      var key = PCOL[p] * (NAL * NSZ) + al * NSZ + szb;
+      var idx = bkCount[key];
+      if (idx < 4096) {
+        bkX[key][idx] = sxp;
+        bkY[key][idx] = syp;
+        bkCount[key] = idx + 1;
+      }
+    }
+
+    for (var kk = 0; kk < NK; kk++) {
+      var cnt = bkCount[kk];
+      if (!cnt) continue;
+      var col = (kk / (NAL * NSZ)) | 0;
+      var rest = kk - col * NAL * NSZ;
+      var alv = (rest / NSZ) | 0;
+      var szv = rest - alv * NSZ;
+      ctx.globalAlpha = 0.10 + (alv / (NAL - 1)) * 0.80;
+      var img = sprites[col][szv];
+      var S = SIZES[szv], half = S / 2;
+      var ax = bkX[kk], ay = bkY[kk];
+      for (var n2 = 0; n2 < cnt; n2++) ctx.drawImage(img, ax[n2] - half, ay[n2] - half, S, S);
+    }
+
+    /* ── star, billboarded so it always reads as a star ── */
+    var sbase = STAR_Y - FOCUS_Y;
+    for (var sg = 0; sg < starGeo.length; sg++) {
+      var g = starGeo[sg];
+      var gb = sbase + g[1];
+      var gY = gb * cosP - g[2] * sinP;
+      var gZ = gb * sinP + g[2] * cosP;
+      var gd = camD - gZ;
+      if (gd < 0.8) continue;
+      var gsc = f / gd;
+      var gtw = g[5];
+      var gal = 1 - gtw * 0.45 + gtw * 0.45 * (0.5 + 0.5 * Math.sin(time * 3.2 + sg * 1.9));
+      gal *= 1 - 0.3 * Math.min(1, Math.max(0, (gd - (camD - 2)) / 4));
+      if (gal < 0.03) continue;
+      ctx.globalAlpha = Math.min(1, gal);
+      var gsz2 = g[4] * (camD / gd) * zoom;
+      var gidx = gsz2 < 7.0 ? 0 : (gsz2 < 11.5 ? 1 : 2);
+      var GS = SIZES[gidx];
+      ctx.drawImage(sprites[g[3]][gidx], CX + g[0] * gsc - GS / 2, CY - gY * gsc - GS / 2, GS, GS);
+    }
+
+    /* ── sparks ── */
+    for (var s4 = sparks.length - 1; s4 >= 0; s4--) {
+      var k4 = sparks[s4];
+      k4.life += dt;
+      if (k4.life > k4.max) { sparks.splice(s4, 1); continue; }
+      k4.x += k4.vx * dt;
+      k4.y += k4.vy * dt;
+      k4.z += k4.vz * dt;
+      k4.vy -= 1.05 * dt;
+      k4.vx *= Math.pow(0.35, dt);
+      k4.vz *= Math.pow(0.35, dt);
+
+      var xx = k4.x, yy = k4.y - FOCUS_Y, zz = k4.z;
+      var X4 = xx * cosY + zz * sinY;
+      var Z4 = -xx * sinY + zz * cosY;
+      var Y4 = yy * cosP - Z4 * sinP;
+      var Z24 = yy * sinP + Z4 * cosP;
+      var d4 = camD - Z24;
+      if (d4 < 0.7) continue;
+      var lifeT = k4.life / k4.max;
+      var al4 = (1 - lifeT) * (0.6 + 0.4 * Math.sin(time * 16 + k4.ph));
+      if (al4 < 0.03) continue;
+      var sc4 = f / d4;
+      var spx = CX + X4 * sc4, spy = CY - Y4 * sc4;
+      var sz4 = (4.2 + 3.6 * (1 - lifeT)) * Math.min(1.7, BASE / 130);
+
+      if (k4.hx !== undefined) {
+        ctx.globalAlpha = Math.min(0.5, al4 * 0.45);
+        ctx.drawImage(sprites[k4.c][1], k4.hx - sz4 * 0.55, k4.hy - sz4 * 0.55, sz4 * 1.1, sz4 * 1.1);
+      }
+      k4.hx = spx; k4.hy = spy;
+
+      ctx.globalAlpha = Math.min(1, al4);
+      ctx.drawImage(sprites[k4.c][1], spx - sz4 / 2, spy - sz4 / 2, sz4, sz4);
+    }
+
+    /* ── star halo ── */
+    var syr = (STAR_Y - FOCUS_Y) * cosP;
+    var sz2 = (STAR_Y - FOCUS_Y) * sinP;
+    var ssc = f / (camD - sz2);
+    var gsz = (0.48 + 0.04 * Math.sin(time * 1.7)) * ssc;
+    ctx.globalAlpha = 0.45;
+    ctx.drawImage(GLOW_STAR, CX - gsz / 2, CY - syr * ssc - gsz / 2, gsz, gsz);
+    ctx.globalAlpha = 0.12 + 0.03 * Math.sin(time * 2.3);
+    ctx.drawImage(GLOW_STAR, CX - gsz * 1.4, CY - syr * ssc - gsz * 1.4, gsz * 2.8, gsz * 2.8);
+
+    for (var s5 = 0; s5 < snow.length; s5++) if (snow[s5].z >= 0.5) drawFlake(snow[s5]);
+
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  /* ───────────── loop ───────────── */
+  var dragging = false;
+  var frameCount = 0, fpsT = 0, slowStrikes = 0;
+  window.__fps = 0;
+
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (!last) { last = now; fpsT = now; }
+    var dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    time += dt;
+
+    if (spinOn && !dragging) yaw += dt * 0.27;
+    if (!dragging) {
+      yaw += dYaw * dt;
+      pitch += dPitch * dt;
+      var damp = Math.pow(0.0018, dt);
+      dYaw *= damp; dPitch *= damp;
+      if (Math.abs(dYaw) < 0.0003) dYaw = 0;
+      if (Math.abs(dPitch) < 0.0003) dPitch = 0;
+    }
+    pitch = Math.max(-0.42, Math.min(0.72, pitch));
+
+    if (snowOn) stepSnow(dt);
+    render(dt);
+
+    frameCount++;
+    if (now - fpsT > 500) {
+      var fps = Math.round(frameCount / ((now - fpsT) / 1000));
+      window.__fps = fps;
+      frameCount = 0;
+      fpsT = now;
+      if (fps < 32 && DPR > 1.4) {
+        slowStrikes++;
+        if (slowStrikes > 10) { DPR = 1; layout(); slowStrikes = -1e9; }
+      } else if (slowStrikes > 0) {
+        slowStrikes--;
+      }
+    }
+  }
+
+  /* ───────────── interaction ───────────── */
+  var pointers = new Map();
+  var lastPt = null, downPt = null, downTime = 0, moved = 0;
+  var pinchStart = 0, pinchZoom = 1;
+
+  cv.addEventListener('pointerdown', function (e) {
+    try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    cv.classList.add('grabbing');
+    if (pointers.size === 1) {
+      dragging = true;
+      lastPt = { x: e.clientX, y: e.clientY };
+      downPt = { x: e.clientX, y: e.clientY };
+      downTime = performance.now();
+      moved = 0;
+      dYaw = 0; dPitch = 0;
+    } else if (pointers.size === 2) {
+      var it = pointers.values();
+      var a = it.next().value, b = it.next().value;
+      pinchStart = Math.hypot(a.x - b.x, a.y - b.y);
+      pinchZoom = zoom;
+    }
+  });
+
+  cv.addEventListener('pointermove', function (e) {
+    if (!pointers.has(e.pointerId)) return;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (pointers.size === 2) {
+      var it = pointers.values();
+      var a = it.next().value, b = it.next().value;
+      var d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (pinchStart > 0) zoom = Math.max(0.55, Math.min(2.8, pinchZoom * (d / pinchStart)));
+      return;
+    }
+    if (!dragging || !lastPt) return;
+
+    var dx = e.clientX - lastPt.x;
+    var dy = e.clientY - lastPt.y;
+    moved += Math.abs(dx) + Math.abs(dy);
+    yaw += dx * 0.0062;
+    pitch = Math.max(-0.42, Math.min(0.72, pitch + dy * 0.0042));
+    dYaw = dx * 0.09;
+    dPitch = dy * 0.06;
+    lastPt = { x: e.clientX, y: e.clientY };
+  });
+
+  function endPointer(e) {
+    pointers.delete(e.pointerId);
+    if (pointers.size < 2) pinchStart = 0;
+    if (pointers.size === 1) {
+      var it = pointers.values();
+      var a = it.next().value;
+      lastPt = { x: a.x, y: a.y };
+      dragging = true;
+      return;
+    }
+    if (pointers.size === 0) {
+      dragging = false;
+      lastPt = null;
+      cv.classList.remove('grabbing');
+      if (downPt && moved < 12 && performance.now() - downTime < 450) {
+        burst();
+        dYaw = 0; dPitch = 0;
+      }
+      downPt = null;
+    }
+  }
+  cv.addEventListener('pointerup', endPointer);
+  cv.addEventListener('pointercancel', endPointer);
+
+  cv.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    zoom = Math.max(0.55, Math.min(2.8, zoom * Math.exp(-e.deltaY * 0.0012)));
+  }, { passive: false });
+
+  /* ───────────── music box carol ───────────── */
+  var audio = null, musicTimer = null;
+
+  var N = {
+    C3: 130.81, D3: 146.83, E3: 164.81, F3: 174.61, G3: 196.00, A3: 220.00, B3: 246.94,
+    C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, B4: 493.88,
+    C5: 523.25, D5: 587.33, E5: 659.25, G5: 783.99
+  };
+
+  var MELODY = [
+    ['E4', 1], ['E4', 1], ['E4', 2],
+    ['E4', 1], ['E4', 1], ['E4', 2],
+    ['E4', 1], ['G4', 1], ['C4', 1], ['D4', 1], ['E4', 4],
+    ['F4', 1], ['F4', 1], ['F4', 1], ['F4', 1],
+    ['F4', 1], ['E4', 0.5], ['E4', 0.5], ['E4', 1], ['E4', 1],
+    ['E4', 1], ['D4', 1], ['D4', 1], ['E4', 1],
+    ['D4', 2], ['G4', 2],
+    ['E4', 1], ['E4', 1], ['E4', 2],
+    ['E4', 1], ['E4', 1], ['E4', 2],
+    ['E4', 1], ['G4', 1], ['C4', 1], ['D4', 1], ['E4', 4],
+    ['F4', 1], ['F4', 1], ['F4', 1], ['F4', 1],
+    ['F4', 1], ['E4', 0.5], ['E4', 0.5], ['E4', 1], ['E4', 1],
+    ['G4', 1], ['G4', 1], ['F4', 1], ['D4', 1],
+    ['C4', 4], ['-', 1]
+  ];
+
+  var BASS = [
+    [0, 'C3', 4], [4, 'G3', 4], [8, 'C3', 4], [12, 'F3', 4],
+    [16, 'C3', 6], [22, 'G3', 2], [24, 'C3', 4], [28, 'G3', 4],
+    [32, 'C3', 4], [36, 'G3', 4], [40, 'C3', 4], [44, 'F3', 4],
+    [48, 'C3', 6], [54, 'G3', 2], [56, 'C3', 4], [60, 'C3', 2]
+  ];
+
+  function bell(freq, at, dur, vol, type) {
+    if (!audio) return;
+    var t = audio.currentTime + at;
+    var o1 = audio.createOscillator();
+    var o2 = audio.createOscillator();
+    var g1 = audio.createGain();
+    var g2 = audio.createGain();
+    var master = audio.createGain();
+    var filt = audio.createBiquadFilter();
+
+    o1.type = type || 'sine';
+    o2.type = 'sine';
+    o1.frequency.value = freq;
+    o2.frequency.value = freq * 2.005;
+    g1.gain.value = 1;
+    g2.gain.value = 0.16;
+
+    filt.type = 'lowpass';
+    filt.frequency.value = 5200;
+    filt.Q.value = 0.4;
+
+    master.gain.setValueAtTime(0.0001, t);
+    master.gain.exponentialRampToValueAtTime(vol, t + 0.012);
+    master.gain.exponentialRampToValueAtTime(vol * 0.3, t + Math.min(dur * 0.5, 0.35));
+    master.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.55);
+
+    o1.connect(g1); g1.connect(filt);
+    o2.connect(g2); g2.connect(filt);
+    filt.connect(master); master.connect(audio.destination);
+    o1.start(t); o2.start(t);
+    o1.stop(t + dur + 0.7);
+    o2.stop(t + dur + 0.7);
+  }
+
+  function scheduleCarol() {
+    if (!audio) return;
+    var beat = 60 / 128;
+    var t = 0.12;
+    for (var i = 0; i < MELODY.length; i++) {
+      var note = MELODY[i][0], beats = MELODY[i][1];
+      if (note !== '-') {
+        bell(N[note], t, beats * beat, 0.21, 'sine');
+        bell(N[note] * 2, t, beats * beat * 0.45, 0.03, 'sine');
+      }
+      t += beats * beat;
+    }
+    for (var j = 0; j < BASS.length; j++) {
+      var bb = BASS[j];
+      bell(N[bb[1]] * 0.5, bb[0] * beat + 0.12, bb[2] * beat, 0.07, 'triangle');
+    }
+    musicTimer = setTimeout(scheduleCarol, (t + 1.1) * 1000);
+  }
+
+  function startMusic() {
+    if (!audio) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      audio = new AC();
+    }
+    if (audio.state === 'suspended') audio.resume();
+    if (musicTimer) { clearTimeout(musicTimer); musicTimer = null; }
+    scheduleCarol();
+  }
+
+  function stopMusic() {
+    if (musicTimer) { clearTimeout(musicTimer); musicTimer = null; }
+    if (audio) {
+      try { audio.close(); } catch (err) {}
+      audio = null;
+    }
+  }
+
+  /* ───────────── buttons ───────────── */
+  var bSpin = document.getElementById('bSpin');
+  var bSnow = document.getElementById('bSnow');
+  var bMusic = document.getElementById('bMusic');
+
+  bSpin.addEventListener('click', function () {
+    spinOn = !spinOn;
+    bSpin.classList.toggle('on', spinOn);
+    bSpin.setAttribute('aria-pressed', spinOn ? 'true' : 'false');
+  });
+
+  bSnow.addEventListener('click', function () {
+    snowOn = !snowOn;
+    bSnow.classList.toggle('on', snowOn);
+    bSnow.setAttribute('aria-pressed', snowOn ? 'true' : 'false');
+  });
+
+  bMusic.addEventListener('click', function () {
+    musicOn = !musicOn;
+    bMusic.classList.toggle('on', musicOn);
+    bMusic.setAttribute('aria-pressed', musicOn ? 'true' : 'false');
+    if (musicOn) startMusic(); else stopMusic();
+  });
+
+  /* ───────────── go ───────────── */
+  layout();
+  window.addEventListener('resize', layout);
+  window.addEventListener('orientationchange', function () { setTimeout(layout, 150); });
+
+  requestAnimationFrame(frame);
+
+  window.__tree = { burst: burst, sparks: function () { return sparks.length; } };
+})();
+</script>
+</body>
+</html>
