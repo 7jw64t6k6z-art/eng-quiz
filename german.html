@@ -157,7 +157,7 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
  <section class="part" id="p2">
   <div class="hero">
    <h2>2. 그림 보고 증상 · 조언 말하기</h2>
-   <p>그림을 보고 <b>Was fehlt ihm/ihr?</b>(증상)와 <b>Was rätst du ihm/ihr?</b>(조언)를 독일어로 쓰세요. 조언은 정해진 답 하나가 아니라, <b>성별(ihm/ihr · er/sie)만 맞으면 어떤 내용이든 정답</b>이에요. (<b>Ich rate ihm, dass er viel Wasser trinkt.</b> / <b>Er sollte sich ausruhen.</b> / <b>Ich rate ihr, zum Arzt zu gehen.</b> 모두 OK!) · 총 8문제<br>🎤 <b>말하기</b>를 누르고 독일어로 말하면 다 말한 뒤에 바로 채점돼요. 타이핑도 그대로 됩니다.</p>
+   <p>그림을 보고 <b>Was fehlt ihm/ihr?</b>(증상)와 <b>Was rätst du ihm/ihr?</b>(조언)를 독일어로 쓰세요. 조언은 정해진 답 하나가 아니라, <b>성별(ihm/ihr · er/sie)만 맞으면 어떤 내용이든 정답</b>이에요. (<b>Er sollte viel Wasser trinken.</b> / <b>Sie sollte sich ausruhen.</b> / <b>Ich rate ihr, zum Arzt zu gehen.</b> 모두 OK!) · 총 8문제<br>🎤 <b>말하기</b>를 누르고 독일어로 말하면 다 말한 뒤에 바로 채점돼요. 타이핑도 그대로 됩니다.</p>
    <div class="toolbar">
      <button class="btn" id="p2-retry">✗ 틀린 것만 다시</button>
      <button class="btn" id="p2-reset">↺ 전체 초기화</button>
@@ -217,44 +217,44 @@ const GENERIC_ADV=["zum arzt geht","sich ausruht","viel schläft","im bett bleib
 const PICS=[
  {id:"p3-1",img:"p3-1",sex:"m",page:"3페이지 ①",
   sym:["Ihm ist übel.","Ihm ist schlecht."],
-  adv:["Ich rate ihm, dass er zum Arzt geht."],
+  adv:["Er sollte zum Arzt gehen."],
   advTails:GENERIC_ADV,
-  tip:"남자 → ihm / er. ‘Ihm ist übel.’는 ‘그는 속이 안 좋다(=토할 것 같다)’. 조언절에서는 동사가 문장 끝에서 3인칭 단수(geht)!"},
+  tip:"남자 → ihm / er. ‘Ihm ist übel.’는 ‘그는 속이 안 좋다(=토할 것 같다)’. 조언은 ‘Er sollte zum Arzt gehen.’처럼 쓰면 돼요!"},
  {id:"p3-2",img:"p3-2",sex:"f",page:"3페이지 ②",
   sym:["Sie hat Halsschmerzen.","Ihr Hals tut weh."],
-  adv:["Ich rate ihr, dass sie eine heiße Suppe isst."],
+  adv:["Sie sollte eine heiße Suppe essen."],
   advTails:GENERIC_ADV,
   tip:"여자 → ihr / sie. 복수 명사 Halsschmerzen는 haben과 함께 ‘Sie hat Halsschmerzen.’"},
  {id:"p3-3",img:"p3-3",sex:"m",page:"3페이지 ③",
   sym:["Seine Hand tut weh.","Seine Hand ist verletzt.","Ihm tut die Hand weh."],
-  adv:["Ich rate ihm, dass er zum Arzt geht."],
+  adv:["Er sollte zum Arzt gehen."],
   advTails:GENERIC_ADV,
-  tip:"신체 부위가 주어면 ‘Seine Hand tut weh.’(X tut weh). ‘dass er … geht’ — 동사는 geht!"},
+  tip:"신체 부위가 주어면 ‘Seine Hand tut weh.’(X tut weh). 조언은 ‘Er sollte zum Arzt gehen.’!"},
  {id:"p3-4",img:"p3-4",sex:"f",page:"3페이지 ④",
   sym:["Sie hat Husten."],
-  adv:["Ich rate ihr, dass sie Tee trinkt."],
+  adv:["Sie sollte Tee trinken."],
   advTails:GENERIC_ADV,
-  tip:"‘Sie hat Husten.’ 조언절에서는 ‘dass sie Tee trinkt’ — trinken이 아니라 trinkt."},
+  tip:"‘Sie hat Husten.’ 조언은 ‘Sie sollte Tee trinken.’ — sollte 뒤에는 동사원형!"},
  {id:"p2-1",img:"p2-1",sex:"m",page:"2페이지 ①",
   sym:["Er hat Fieber."],
-  adv:["Ich rate ihm, dass er viel schläft."],
+  adv:["Er sollte viel schlafen."],
   advTails:GENERIC_ADV,
-  tip:"‘Er hat Fieber.’ 조언절 ‘dass er viel schläft’ — schlafen → schläft."},
+  tip:"‘Er hat Fieber.’ 조언은 ‘Er sollte viel schlafen.’ — sollte 뒤에는 동사원형!"},
  {id:"p2-2",img:"p2-2",sex:"f",page:"2페이지 ②",
   sym:["Sie hat Bauchschmerzen.","Ihr Bauch tut weh."],
-  adv:["Ich rate ihr, dass sie eine heiße Suppe isst."],
+  adv:["Sie sollte eine heiße Suppe essen."],
   advTails:GENERIC_ADV,
-  tip:"‘Sie hat Bauchschmerzen.’ ‘dass sie eine heiße Suppe isst’ — essen → isst."},
+  tip:"‘Sie hat Bauchschmerzen.’ 조언은 ‘Sie sollte eine heiße Suppe essen.’"},
  {id:"p2-3",img:"p2-3",sex:"m",page:"2페이지 ③",
   sym:["Er hat Ohrenschmerzen.","Ihm tun die Ohren weh.","Seine Ohren tun weh."],
-  adv:["Ich rate ihm, dass er zum Arzt geht."],
+  adv:["Er sollte zum Arzt gehen."],
   advTails:GENERIC_ADV,
-  tip:"손글씨 오답 포인트: ‘gehen’이 아니라 ‘dass er zum Arzt geht’!"},
+  tip:"손글씨 오답 포인트: ‘Er sollte zum Arzt gehen.’처럼 조언 문장으로!"},
  {id:"p2-4",img:"p2-4",sex:"f",page:"2페이지 ④",
   sym:["Ihr Bein tut weh.","Ihr Bein ist verletzt.","Sie hat Schmerzen im Bein."],
-  adv:["Ich rate ihr, dass sie im Bett bleibt."],
+  adv:["Sie sollte im Bett bleiben."],
   advTails:GENERIC_ADV,
-  tip:"‘Sie hat Bein tut weh’는 틀린 문장! → ‘Ihr Bein tut weh.’ / ‘bleiben’이 아니라 ‘dass sie im Bett bleibt’."}
+  tip:"‘Sie hat Bein tut weh’는 틀린 문장! → ‘Ihr Bein tut weh.’ / 조언은 ‘Sie sollte im Bett bleiben.’"}
 ];
 
 const SENT_A=[
@@ -518,7 +518,7 @@ function renderP(){
         <div class="fb" data-fb="1" style="display:none"></div>
         <div class="field"><label>2) Was rätst du ${pron}?</label>
           <div class="ansrow">
-            <input class="ans" data-k="2" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Ich rate ${pron}, dass ${subj} …">
+            <input class="ans" data-k="2" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="예: ${subj==='er'?'Er':'Sie'} sollte zu Hause bleiben.">
             <button class="mic" type="button" data-mic="2">🎤 말하기</button>
           </div>
           <div class="micst" data-st="2"></div></div>
