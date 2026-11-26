@@ -157,7 +157,7 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
  <section class="part" id="p2">
   <div class="hero">
    <h2>2. 그림 보고 증상 · 조언 말하기</h2>
-   <p>그림을 보고 <b>Was fehlt ihm/ihr?</b>(증상)와 <b>Was rätst du ihm/ihr?</b>(조언)를 독일어로 쓰세요. 조언은 <b>Ich rate ihm/ihr, dass er/sie … + 동사 3인칭 단수</b> 형태입니다. · 총 8문제<br>🎤 <b>말하기</b>를 누르고 독일어로 말하면 다 말한 뒤에 바로 채점돼요. 타이핑도 그대로 됩니다.</p>
+   <p>그림을 보고 <b>Was fehlt ihm/ihr?</b>(증상)와 <b>Was rätst du ihm/ihr?</b>(조언)를 독일어로 쓰세요. 조언은 정해진 답 하나가 아니라, <b>성별(ihm/ihr · er/sie)만 맞으면 어떤 내용이든 정답</b>이에요. (<b>Ich rate ihm, dass er viel Wasser trinkt.</b> / <b>Er sollte sich ausruhen.</b> / <b>Ich rate ihr, zum Arzt zu gehen.</b> 모두 OK!) · 총 8문제<br>🎤 <b>말하기</b>를 누르고 독일어로 말하면 다 말한 뒤에 바로 채점돼요. 타이핑도 그대로 됩니다.</p>
    <div class="toolbar">
      <button class="btn" id="p2-retry">✗ 틀린 것만 다시</button>
      <button class="btn" id="p2-reset">↺ 전체 초기화</button>
@@ -291,6 +291,7 @@ function norm(s){
     .replace(/[.,!?;:]/g," ").replace(/\s+/g," ").trim();
 }
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 
 /* ---------- 말하기 연습: 음성인식(SR) + 모범답안 읽어주기(TTS) ---------- */
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
@@ -420,9 +421,9 @@ function say(text,btn){
   }
   try{ speechSynthesis.speak(u); }catch(e){ if(btn) btn.textContent=old; }
 }
-function addSpk(fb,text){
+function addSpk(fb,text,label){
   const b=document.createElement("button");
-  b.type="button"; b.className="spk"; b.textContent="🔊 정답 발음 듣기";
+  b.type="button"; b.className="spk"; b.textContent=label||"🔊 정답 발음 듣기";
   b.addEventListener("click",()=>say(text,b));
   fb.appendChild(b);
 }
@@ -495,7 +496,7 @@ $("#v-reset").addEventListener("click",()=>{
 });
 
 /* ---------- part 2 ---------- */
-const P={items:PICS.map(p=>({...p,s1:0,s2:0,t1:"",t2:"",wrong:false}))};
+const P={items:PICS.map(p=>({...p,s1:0,s2:0,t1:"",t2:"",r2:null,wrong:false}))};
 function renderP(){
   const list=$("#p2-list"); list.innerHTML="";
   P.items.forEach((p,n)=>{
@@ -554,23 +555,128 @@ function renderP(){
   });
   updateP();
 }
-function adviceCheck(p,val){
-  const n=norm(val);
-  const m=n.match(/^ich rate (ihm|ihr) dass (er|sie) (.+)$/);
-  const want=p.sex==="m"?["ihm","er"]:["ihr","sie"];
-  if(!m || m[1]!==want[0] || m[2]!==want[1]) return false;
-  return p.advTails.includes(m[3].trim());
+/* ---------- 조언 채점: 모범답안 1개 강제 X · "말이 되면 정답" ----------
+   원칙) 성별(ihm/er ↔ ihr/sie)만 확인하고, dass절에 동사 원형을 쓴 것 같은
+        명백한 실수만 가볍게 잡아 준다. 나머지 자연스러운 조언 문장은 모두 정답. */
+const ADV_THIRD={gehen:"geht",bleiben:"bleibt",trinken:"trinkt",schlafen:"schläft",nehmen:"nimmt",
+ essen:"isst",ausruhen:"ausruht",machen:"macht",haben:"hat",sein:"ist",fahren:"fährt",lesen:"liest",
+ sprechen:"spricht",helfen:"hilft",arbeiten:"arbeitet",lernen:"lernt",spielen:"spielt",kochen:"kocht",
+ kaufen:"kauft",holen:"holt",bringen:"bringt",sagen:"sagt",warten:"wartet",duschen:"duscht",
+ aufstehen:"aufsteht",anrufen:"anruft",tun:"tut",rauchen:"raucht",laufen:"läuft",tragen:"trägt",
+ schwimmen:"schwimmt",singen:"singt",üben:"übt",wiederholen:"wiederholt",putzen:"putzt",
+ waschen:"wäscht",besuchen:"besucht",tanzen:"tanzt",öffnen:"öffnet",frühstücken:"frühstückt"};
+const ADV_THIRD_N={}, ADV_INF_OF={};
+Object.keys(ADV_THIRD).forEach(k=>{ ADV_THIRD_N[norm(k)]=ADV_THIRD[k]; ADV_INF_OF[norm(ADV_THIRD[k])]=k; });
+const THIRD_SET=new Set(Object.keys(ADV_INF_OF));
+const MODALS=new Set(["sollte","soll","sollst","muss","musst","kann","kannst","darf","will","mag","muesste","müsste","koennte","könnte"]);
+const NOT_VERB_EN=new Set(["morgen","offen","oben","unten","neben","gegen","wegen","zwischen","allen","beiden",
+ "keinen","meinen","deinen","seinen","ihren","unseren","diesen","einen","einigen","vielen",
+ "tropfen","tabletten","husten","ferien","eltern","schmerzen","ohren","augen"]);
+function infWord(w){
+  if(!w) return null;
+  if(ADV_THIRD_N[w]) return ADV_THIRD_N[w];              // 아는 원형 → 3인칭 단수형
+  if(NOT_VERB_EN.has(w)) return null;
+  if(/^ge[a-zäöüß]{2,}en$/.test(w)) return null;          // 과거분사(gegessen 등)
+  if(/^[a-zäöüß]{3,}en$/.test(w)) return "?";             // 원형처럼 생긴 단어
+  return null;
+}
+function replaceLastWord(s,fix){
+  const m=s.match(/^(.*?)([^\s]+)$/);
+  return m? m[1]+fix : s;
+}
+function fixGender(raw,p){
+  let s=raw;
+  if(p.sex==="m"){
+    s=s.replace(/\bihr\b/g,"ihm");
+    s=s.replace(/(\bdass\s+)(sie|Sie)\b/gi,(m,a,b)=>a+(b[0]==="S"?"Er":"er"));
+    s=s.replace(/^(sie|Sie)\b/,(m)=>m==="Sie"?"Er":"er");
+  }else{
+    s=s.replace(/\bihm\b/g,"ihr");
+    s=s.replace(/(\bdass\s+)(er|Er)\b/gi,(m,a,b)=>a+(b[0]==="E"?"Sie":"sie"));
+    s=s.replace(/^(er|Er)\b/,(m)=>m==="Er"?"Sie":"sie");
+  }
+  return s;
+}
+function adviceEval(p,val){
+  const raw=String(val||"").replace(/\s+/g," ").trim().replace(/[.!?]+$/,"").trim();
+  const isM=p.sex==="m";
+  const want=isM?{pron:"ihm",subj:"er",badPron:"ihr",badSubj:"sie"}
+                :{pron:"ihr",subj:"sie",badPron:"ihm",badSubj:"er"};
+  const ex=p.adv[0]||"";
+  const cleanEx=(t)=>{ t=String(t||"").trim(); return !t?ex:(/[.!?]$/.test(t)?t:t+"."); };
+  const OUT=(ok,msg,example)=>({ok,msg:msg||"",example:cleanEx(example||ex)});
+  if(!raw) return OUT(false,"먼저 조언을 한 문장으로 적어 보세요.");
+  let n=norm(raw)
+    .replace(/\bich\s+(rate|raete|rat|ratte|ratet|rathe|rede)\b/g,"ich rate")
+    .replace(/\b(ich rate (?:ihm|ihr))\s+das\b/,"$1 dass");
+  const ws=n.split(" ").filter(Boolean);
+  const has=(w)=>new RegExp("(^|\\s)"+w+"(\\s|$)").test(n);
+  const last=ws[ws.length-1]||"";
+  const hasDass=/\bdass\b/.test(n);
+  const genderMsg=isM?"남자 그림이라 ‘ihm’과 ‘er’를 써야 해요!":"여자 그림이라 ‘ihr’과 ‘sie’를 써야 해요!";
+
+  /* 1) 성별(ihm/ihr · er/sie) 확인 */
+  const fixes=[];
+  if(has(want.badPron) && !has(want.pron)) fixes.push("‘"+want.badPron+"’ → ‘"+want.pron+"’");
+  if(hasDass){
+    const m=n.match(/\bdass\s+(\S+)/);
+    if(m && (m[1]==="er"||m[1]==="sie") && m[1]!==want.subj) fixes.push("‘"+m[1]+"’ → ‘"+want.subj+"’");
+  }
+  const m0=n.match(/^(er|sie)\s+(sollte|soll|muss|kann|darf|will|mag|muesste|müsste)\b/);
+  if(m0 && m0[1]!==want.subj && !fixes.some(f=>f.indexOf("‘"+m0[1]+"’")===0)) fixes.push("‘"+m0[1]+"’ → ‘"+want.subj+"’");
+  if(fixes.length) return OUT(false,genderMsg+" ("+fixes.join(", ")+")",fixGender(raw,p));
+
+  /* 2) dass절에 동사 원형을 그대로 쓴 명백한 실수만 가볍게 잡기 */
+  if(hasDass){
+    const tail=n.split(/\bdass\b/).pop().trim();
+    const tw=tail.split(" ").filter(Boolean);
+    const tl=tw[tw.length-1]||"";
+    const conv=(tl && !MODALS.has(tl)) ? infWord(tl) : null;
+    if(conv){
+      const fix=(conv==="?")?null:conv;
+      return OUT(false,"‘dass’ 뒤에는 동사 원형 대신 3인칭 단수형을 써요! ("+tl+" → "+(fix||"3인칭 단수")+")",
+                 fix?replaceLastWord(raw,fix):ex);
+    }
+  }
+
+  /* 3) sollte/muss/kann 뒤에 3인칭 단수를 쓴 실수만 살짝 */
+  const mm=n.match(/\b(sollte|soll|muss|kann|darf|muesste|müsste)\s+(.+)$/);
+  if(mm && THIRD_SET.has(last))
+    return OUT(false,"‘"+mm[1]+"’ 뒤에는 동사 원형을 써요! ("+last+" → "+(ADV_INF_OF[last]||"원형")+")");
+
+  /* 4) 너무 짧은 답 */
+  if(ws.length===1)
+    return OUT(false,"조언을 2~3단어 이상으로 말해 보세요. (‘"+want.subj+" sollte zum Arzt gehen’)");
+
+  /* 5) 그 밖에는 말이 되는 조언이면 모두 정답 */
+  return OUT(true);
 }
 function paintP(el,p){
   const rows=[["1",p.s1],["2",p.s2]];
   rows.forEach(([k,st])=>{
     const inp=$(`input[data-k="${k}"]`,el), fb=$(`.fb[data-fb="${k}"]`,el);
     const mb=$(`.mic[data-mic="${k}"]`,el);
-    const model = k==="1" ? p.sym[0] : p.adv[0];
     inp.classList.remove("ok","no");
-    if(st===1){inp.classList.add("ok");inp.readOnly=true;fb.style.display="block";fb.className="fb ok";fb.style.color="var(--ok)";fb.innerHTML=`✓ <b>정답</b> — ${model}`;addSpk(fb,model);}
-    else if(st===-1){inp.classList.add("no");fb.style.display="block";fb.className="fb no";fb.style.color="var(--no)";fb.innerHTML=`✗ 모범답안: <span class="sol">${model}</span><span class="tip">${p.tip}</span>`;addSpk(fb,model);}
-    else {fb.style.display="none";fb.innerHTML="";inp.readOnly=false;}
+    if(k==="1"){
+      const model=p.sym[0];
+      if(st===1){inp.classList.add("ok");inp.readOnly=true;fb.style.display="block";fb.className="fb ok";fb.style.color="var(--ok)";fb.innerHTML=`✓ <b>정답</b> — ${model}`;addSpk(fb,model);}
+      else if(st===-1){inp.classList.add("no");fb.style.display="block";fb.className="fb no";fb.style.color="var(--no)";fb.innerHTML=`✗ 모범답안: <span class="sol">${model}</span><span class="tip">${p.tip}</span>`;addSpk(fb,model);}
+      else {fb.style.display="none";fb.innerHTML="";inp.readOnly=false;}
+    }else{
+      const r=p.r2||{msg:"",example:p.adv[0]||""};
+      if(st===1){
+        inp.classList.add("ok");inp.readOnly=true;
+        fb.style.display="block";fb.className="fb ok";fb.style.color="var(--ok)";
+        fb.innerHTML=`✓ <b>좋은 조언이에요!</b> 문법도 정확해요 👍<span class="sol" style="display:block;margin-top:3px">“${esc(p.t2.trim())}”</span>`;
+        addSpk(fb,p.t2.trim(),"🔊 내 문장 듣기");
+      }else if(st===-1){
+        inp.classList.add("no");
+        fb.style.display="block";fb.className="fb no";fb.style.color="var(--no)";
+        fb.innerHTML=`✗ <b>여기만 고쳐 볼까요?</b>${r.msg?`<span class="tip">${r.msg}</span>`:""}`+
+          `<span class="sol" style="display:block;margin-top:3px">예) ${esc(r.example||p.adv[0]||"")}</span>`;
+        addSpk(fb,(r.example||p.adv[0]||""),"🔊 예시 발음 듣기");
+      }else {fb.style.display="none";fb.innerHTML="";inp.readOnly=false;}
+    }
     if(mb) mb.disabled=inp.readOnly;
   });
 }
@@ -580,8 +686,8 @@ function checkP(el,p,k,inp){
     const ok=p.sym.some(s=>norm(s)===norm(inp.value));
     p.s1=ok?1:-1;
   }else{
-    const ok=adviceCheck(p,inp.value);
-    p.s2=ok?1:-1;
+    const r=adviceEval(p,inp.value);
+    p.r2=r; p.s2=r.ok?1:-1;
   }
   paintP(el,p); updateP();
 }
