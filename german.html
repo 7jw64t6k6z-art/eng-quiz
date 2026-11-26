@@ -87,6 +87,32 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
 .hintbox ul{margin:0 0 8px;padding-left:16px;color:#3a4552}
 .hintbox ul:last-child{margin-bottom:0}
 .hintbox li{margin:1px 0}
+/* --- 말하기 연습 (음성인식 · 읽어주기) --- */
+.ansrow{display:flex;align-items:center;gap:7px;width:100%}
+.ansrow .ans{flex:1 1 auto;min-width:0;width:auto}
+.field .ansrow .ans{width:auto}
+.mic{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+  font-family:inherit;font-size:12.5px;font-weight:800;line-height:1;padding:0 12px;height:40px;
+  border-radius:11px;border:1.5px solid var(--accent-line);background:var(--accent-soft);color:var(--accent);
+  cursor:pointer;white-space:nowrap;touch-action:manipulation;transition:.15s}
+.mic:active{transform:scale(.96)}
+.mic.live{background:var(--no-bg);border-color:var(--no-line);color:var(--no);animation:micpulse 1.1s infinite}
+.mic[disabled]{opacity:.4;cursor:default;animation:none}
+.mic.off{opacity:.55}
+@keyframes micpulse{0%,100%{box-shadow:0 0 0 0 rgba(195,59,78,.30)}55%{box-shadow:0 0 0 7px rgba(195,59,78,0)}}
+.micst{display:none;font-size:11.5px;font-weight:800;line-height:1.45;margin-top:4px;color:var(--sub)}
+.micst.on{display:block}
+.micst.live,.micst.err{color:var(--no)}
+.micst.ok{color:var(--ok)}
+.spk{display:flex;width:fit-content;align-items:center;gap:5px;margin-top:8px;font-family:inherit;font-size:11.5px;
+  font-weight:800;padding:6px 10px;border-radius:9px;border:1px solid var(--accent-line);
+  background:#fff;color:var(--accent);cursor:pointer;touch-action:manipulation}
+.spk:active{transform:scale(.97)}
+.spk.playing{background:var(--accent-soft)}
+.micnote{display:flex;gap:7px;align-items:flex-start;margin-top:10px;padding:9px 11px;border-radius:11px;
+  background:var(--gold-bg);border:1px solid #f0dca8;color:#8a5a00;font-size:12px;font-weight:700;line-height:1.5}
+.micnote.flash{animation:noteFlash .8s 2}
+@keyframes noteFlash{0%,100%{background:var(--gold-bg)}50%{background:#ffe6b8}}
 .divider{display:flex;align-items:center;gap:9px;margin:16px 2px 10px;color:var(--sub);font-size:12px;font-weight:800;letter-spacing:-.2px}
 .divider::after{content:"";flex:1;height:1px;background:var(--line)}
 /* game */
@@ -152,7 +178,7 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
  <section class="part" id="p2">
   <div class="hero">
    <h2>2. 그림 보고 증상 · 조언 말하기</h2>
-   <p>그림을 보고 <b>Was fehlt ihm/ihr?</b>(증상)와 <b>Was rätst du ihm/ihr?</b>(조언)를 독일어로 쓰세요. 조언은 <b>Ich rate ihm/ihr, dass er/sie … + 동사 3인칭 단수</b> 형태입니다. · 총 8문제</p>
+   <p>그림을 보고 <b>Was fehlt ihm/ihr?</b>(증상)와 <b>Was rätst du ihm/ihr?</b>(조언)를 독일어로 쓰세요. 조언은 <b>Ich rate ihm/ihr, dass er/sie … + 동사 3인칭 단수</b> 형태입니다. · 총 8문제<br>🎤 <b>말하기</b>를 누르고 독일어로 말하면 다 말한 뒤에 바로 채점돼요. 타이핑도 그대로 됩니다.</p>
    <div class="toolbar">
      <button class="btn" id="p2-retry">✗ 틀린 것만 다시</button>
      <button class="btn" id="p2-reset">↺ 전체 초기화</button>
@@ -166,7 +192,7 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
  <section class="part" id="p3">
   <div class="hero">
    <h2>3. 문장 변환 (Perfekt · 의견 dass절)</h2>
-   <p>주어진 문장을 <b>Perfekt</b>(1~10) 또는 <b>Ich denke/finde/bin der Meinung, dass …</b>(11~20)로 바꿔 쓰세요. · 총 20문장</p>
+   <p>주어진 문장을 <b>Perfekt</b>(1~10) 또는 <b>Ich denke/finde/bin der Meinung, dass …</b>(11~20)로 바꿔 쓰세요. · 총 20문장<br>🎤 <b>말하기</b>로 말해도 되고 타이핑해도 돼요. 채점이 끝나면 <b>🔊 정답 발음 듣기</b>로 모범답안을 들어 보세요.</p>
    <div class="toolbar">
      <button class="btn" id="s-retry">✗ 틀린 것만 다시</button>
      <button class="btn" id="s-reset">↺ 전체 초기화</button>
@@ -302,6 +328,141 @@ function norm(s){
 }
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
+/* ---------- 말하기 연습: 음성인식(SR) + 모범답안 읽어주기(TTS) ---------- */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+const MIC_NOTE = "이 브라우저에선 마이크 인식이 안 될 수 있어요. Safari에서 링크를 열면 🎤 말하기가 잘 돼요!";
+let micSess = null;
+
+function addMicNote(partId){
+  const hero=$("#"+partId+" .hero");
+  if(!hero || $(".micnote",hero)) return;
+  const d=document.createElement("div");
+  d.className="micnote"; d.id=partId+"-micnote";
+  d.innerHTML="⚠️ <span>"+MIC_NOTE+"</span>";
+  hero.appendChild(d);
+  $$("#"+partId+" .mic").forEach(b=>b.classList.add("off"));
+}
+function flashMicNote(){
+  const n=$("#p2-micnote")||$("#p3-micnote");
+  if(!n) return;
+  try{ n.scrollIntoView({block:"center",behavior:"smooth"}); }catch(e){}
+  n.classList.remove("flash"); void n.offsetWidth; n.classList.add("flash");
+}
+function micIdle(s){
+  if(!s || !s.btn) return;
+  s.btn.classList.remove("live");
+  s.btn.textContent="🎤 말하기";
+}
+function micAbort(){
+  if(!micSess) return;
+  const s=micSess; micSess=null; s.canceled=true;
+  try{ s.rec.abort(); }catch(e){}
+  micIdle(s);
+  if(s.st){ s.st.className="micst"; s.st.textContent=""; }
+}
+function setInpFromSpeech(inp,txt){
+  if(inp.readOnly) return;
+  inp.value=txt;
+  inp.dispatchEvent(new Event("input",{bubbles:true}));
+}
+/* inp=대상 입력칸, btn=🎤 버튼, st=상태줄, onDone=인식 끝나면 실행할 자동 채점 */
+function micToggle(inp,btn,st,onDone){
+  if(!SR){ flashMicNote(); return; }
+  if(inp.readOnly) return;
+  const cur=micSess;
+  if(cur && cur.inp===inp && !cur.ending){
+    cur.ending=true;
+    if(st){ st.className="micst live on"; st.textContent="⏳ 인식 마무리 중..."; }
+    try{ cur.rec.stop(); }catch(e){}
+    return;
+  }
+  if(cur){ micSess=null; cur.canceled=true; try{ cur.rec.abort(); }catch(e){ } micIdle(cur); }
+  let rec;
+  try{ rec=new SR(); }
+  catch(e){
+    if(st){ st.className="micst err on"; st.textContent="🎤 마이크를 열 수 없어요. 페이지를 새로고침해 보세요."; }
+    return;
+  }
+  rec.lang="de-DE"; rec.interimResults=true; rec.continuous=false; rec.maxAlternatives=1;
+  const s={inp,btn,st,rec,text:"",got:false,canceled:false,ending:false,err:null};
+  micSess=s;
+  btn.classList.add("live"); btn.textContent="🎙️ 중지";
+  if(st){ st.className="micst live on"; st.textContent="🎙️ 듣는 중... 누르면 중지"; }
+  rec.onresult=(e)=>{
+    let txt="";
+    for(let i=0;i<e.results.length;i++){
+      const r=e.results[i];
+      txt+=(r && r[0] ? r[0].transcript : "")+(i<e.results.length-1?" ":"");
+    }
+    s.text=txt.replace(/\s+/g," ").trim();
+    if(s.text){ s.got=true; setInpFromSpeech(inp,s.text); }
+    if(s.st && micSess===s && !s.ending){
+      st.className="micst live on";
+      st.textContent="🎙️ 듣는 중... 누르면 중지"+(s.text?` · “${s.text}”`:"");
+    }
+  };
+  rec.onerror=(e)=>{ s.err=(e && e.error) || "error"; };
+  rec.onend=()=>{
+    if(micSess===s) micSess=null;
+    micIdle(s);
+    if(s.canceled) return;
+    const err=s.err;
+    if(err && err!=="aborted"){
+      if(st){
+        st.className="micst err on";
+        st.textContent = (err==="not-allowed"||err==="service-not-allowed")
+          ? "🎤 마이크 사용이 막혀 있어요. 브라우저 설정에서 마이크를 허용해 주세요."
+          : (err==="no-speech" ? "🤔 아무 소리도 안 들렸어요. 한 번 더 눌러 말해 보세요."
+          : (err==="network" ? "📶 인터넷 연결을 확인한 뒤 다시 해 보세요."
+          : "🎤 인식이 안 됐어요. 한 번 더 눌러 말해 보세요."));
+      }
+      return;
+    }
+    if(!s.got){
+      if(st){ st.className="micst err on"; st.textContent="🤔 잘 안 들렸어요. 한 번 더 눌러 또박또박 말해 보세요."; }
+      return;
+    }
+    if(st){ st.className="micst ok on"; st.textContent=`✓ 들었어요: “${s.text}” — 바로 채점!`; }
+    try{ onDone(); }catch(e){}
+  };
+  try{ rec.start(); }
+  catch(e){
+    micSess=null; micIdle(s);
+    if(st){ st.className="micst err on"; st.textContent="🎤 마이크를 시작할 수 없어요. 잠시 뒤 다시 눌러 주세요."; }
+  }
+}
+
+function deVoice(){
+  if(!("speechSynthesis" in window)) return null;
+  let vs=[];
+  try{ vs=speechSynthesis.getVoices()||[]; }catch(e){ return null; }
+  return vs.find(v=>/^de([-_]|$)/i.test(v.lang||"")) || vs.find(v=>/german|deutsch/i.test(v.name||"")) || null;
+}
+/* 모범답안을 독일어로 천천히(0.9) 읽어 줌 */
+function say(text,btn){
+  if(!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance==="undefined"){
+    if(btn){ const old=btn.textContent; btn.textContent="⚠️ 발음 듣기 지원 안 됨"; setTimeout(()=>{btn.textContent=old;},1600); }
+    return;
+  }
+  try{ speechSynthesis.cancel(); }catch(e){}
+  let u;
+  try{ u=new SpeechSynthesisUtterance(text); }catch(e){ return; }
+  u.lang="de-DE"; u.rate=0.9;
+  const v=deVoice(); if(v) u.voice=v;
+  const old=btn?btn.textContent:"";
+  if(btn){
+    u.onstart=()=>{ btn.classList.add("playing"); btn.textContent="🔊 재생 중..."; };
+    u.onend=u.onerror=()=>{ btn.classList.remove("playing"); btn.textContent=old; };
+  }
+  try{ speechSynthesis.speak(u); }catch(e){ if(btn) btn.textContent=old; }
+}
+function addSpk(fb,text){
+  const b=document.createElement("button");
+  b.type="button"; b.className="spk"; b.textContent="🔊 정답 발음 듣기";
+  b.addEventListener("click",()=>say(text,b));
+  fb.appendChild(b);
+}
+
 /* ---------- part 1 ---------- */
 const V={items:VERBS.map(v=>({...v,state:0})),order:null,shuffle:true};
 function vOrder(){
@@ -384,10 +545,18 @@ function renderP(){
       <img src="${IMG[p.img]}" alt="그림 ${n+1}">
       <div class="pic-body">
         <div class="field"><label>1) Was fehlt ${pron}?</label>
-          <input class="ans" data-k="1" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="증상 한 문장"></div>
+          <div class="ansrow">
+            <input class="ans" data-k="1" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="증상 한 문장">
+            <button class="mic" type="button" data-mic="1">🎤 말하기</button>
+          </div>
+          <div class="micst" data-st="1"></div></div>
         <div class="fb" data-fb="1" style="display:none"></div>
         <div class="field"><label>2) Was rätst du ${pron}?</label>
-          <input class="ans" data-k="2" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Ich rate ${pron}, dass ${subj} …"></div>
+          <div class="ansrow">
+            <input class="ans" data-k="2" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Ich rate ${pron}, dass ${subj} …">
+            <button class="mic" type="button" data-mic="2">🎤 말하기</button>
+          </div>
+          <div class="micst" data-st="2"></div></div>
         <div class="fb" data-fb="2" style="display:none"></div>
         <button class="hintbtn">💡 힌트 보기</button>
         <div class="hintbox">
@@ -397,6 +566,14 @@ function renderP(){
       </div>`;
     const inputs=$$("input",el);
     inputs[0].value=p.t1; inputs[1].value=p.t2;
+    /* 🎤 말하기 버튼 → 인식된 음성으로 채우고 자동 채점 */
+    $$(".mic",el).forEach(b=>{
+      const k=b.dataset.mic;
+      const minp=inputs.find(x=>x.dataset.k===k);
+      const mst=$(`.micst[data-st="${k}"]`,el);
+      b.addEventListener("mousedown",e=>e.preventDefault());
+      b.addEventListener("click",()=>micToggle(minp,b,mst,()=>checkP(el,p,k,minp)));
+    });
     inputs.forEach(inp=>{
       const k=inp.dataset.k;
       inp.addEventListener("focus",()=>{activeInput=inp;});
@@ -424,10 +601,13 @@ function paintP(el,p){
   const rows=[["1",p.s1],["2",p.s2]];
   rows.forEach(([k,st])=>{
     const inp=$(`input[data-k="${k}"]`,el), fb=$(`.fb[data-fb="${k}"]`,el);
+    const mb=$(`.mic[data-mic="${k}"]`,el);
+    const model = k==="1" ? p.sym[0] : p.adv[0];
     inp.classList.remove("ok","no");
-    if(st===1){inp.classList.add("ok");inp.readOnly=true;fb.style.display="block";fb.className="fb ok";fb.style.color="var(--ok)";fb.innerHTML=`✓ <b>정답</b> — ${k==="1"?p.sym[0]:p.adv[0]}`;}
-    else if(st===-1){inp.classList.add("no");fb.style.display="block";fb.className="fb no";fb.style.color="var(--no)";fb.innerHTML=`✗ 모범답안: <span class="sol">${k==="1"?p.sym[0]:p.adv[0]}</span><span class="tip">${p.tip}</span>`;}
-    else {fb.style.display="none";inp.readOnly=false;}
+    if(st===1){inp.classList.add("ok");inp.readOnly=true;fb.style.display="block";fb.className="fb ok";fb.style.color="var(--ok)";fb.innerHTML=`✓ <b>정답</b> — ${model}`;addSpk(fb,model);}
+    else if(st===-1){inp.classList.add("no");fb.style.display="block";fb.className="fb no";fb.style.color="var(--no)";fb.innerHTML=`✗ 모범답안: <span class="sol">${model}</span><span class="tip">${p.tip}</span>`;addSpk(fb,model);}
+    else {fb.style.display="none";fb.innerHTML="";inp.readOnly=false;}
+    if(mb) mb.disabled=inp.readOnly;
   });
 }
 function checkP(el,p,k,inp){
@@ -470,16 +650,23 @@ function renderS(){
         <span class="qn">${n}</span>
         <div style="flex:1;min-width:0">
           <div class="qtxt" style="font-size:14.5px;color:#3a4552">${it.src}</div>
-          <input class="ans" style="width:100%;margin-top:7px" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${it.grp==="A"?"Perfekt 문장으로":"Ich denke, dass …"}">
+          <div class="ansrow" style="margin-top:7px">
+            <input class="ans" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${it.grp==="A"?"Perfekt 문장으로":"Ich denke, dass …"}">
+            <button class="mic" type="button">🎤 말하기</button>
+          </div>
+          <div class="micst"></div>
           <div class="fb"></div>
         </div></div>`;
     const inp=$("input",el);
     inp.value=it.typed;
+    const micb=$(".mic",el), micst=$(".micst",el);
+    micb.addEventListener("mousedown",e=>e.preventDefault());
+    micb.addEventListener("click",()=>micToggle(inp,micb,micst,()=>checkS(el,it,inp)));
     inp.addEventListener("focus",()=>{activeInput=inp;});
     inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();checkS(el,it,inp);inp.blur();}});
-    inp.addEventListener("input",()=>{it.typed=inp.value;it.state=0;el.classList.remove("ok","no");updateS();});
+    inp.addEventListener("input",()=>{it.typed=inp.value;it.state=0;el.classList.remove("ok","no");micb.disabled=false;updateS();});
     inp.addEventListener("blur",()=>{if(inp.value.trim())checkS(el,it,inp);});
-    if(it.state===1){inp.readOnly=true;setSfb(el,it,true);}
+    if(it.state===1){inp.readOnly=true;micb.disabled=true;setSfb(el,it,true);}
     else if(it.state===-1){setSfb(el,it,false);}
     $(it.grp==="A"?"#s-list-a":"#s-list-b").appendChild(el);
   });
@@ -494,6 +681,7 @@ function setSfb(el,it,ok){
     const extra = it.grp==="B" ? `<span class="tip">‘Ich finde, dass …’ / ‘Ich bin der Meinung, dass …’도 정답! 조언 동사는 맨 뒤 3인칭 단수로.</span>` : ``;
     fb.innerHTML=`✗ 모범답안: <span class="sol">${it.sol}</span>${extra}`;
   }
+  addSpk(fb,it.sol);
 }
 function checkS(el,it,inp){
   if(!inp.value.trim())return;
@@ -501,7 +689,9 @@ function checkS(el,it,inp){
   it.state=ok?1:-1; it.typed=inp.value;
   el.classList.toggle("ok",ok); el.classList.toggle("no",!ok);
   setSfb(el,it,ok);
+  const mb=$(".mic",el);
   if(ok) inp.readOnly=true;
+  if(mb) mb.disabled=inp.readOnly;
   updateS();
 }
 function updateS(){
@@ -611,6 +801,7 @@ $$(".tab").forEach(t=>t.addEventListener("click",()=>{
   $("#"+t.dataset.p).classList.add("on");
   window.scrollTo({top:0,behavior:"smooth"});
   hideUmlaut();
+  micAbort();
 }));
 
 /* ---------- umlaut bar ---------- */
@@ -640,6 +831,10 @@ $$("#umlaut button").forEach(b=>b.addEventListener("click",e=>{
 /* ---------- boot ---------- */
 V.order=V.items.map((_,i)=>i); shuffle(V.order);
 renderV(); renderP(); renderS();
+/* 마이크를 못 쓰는 인앱 브라우저(카톡·픽클 내장 등)면 2·3번 랩 상단에 안내 */
+if(!SR){ addMicNote("p2"); addMicNote("p3"); }
+/* 다른 앱으로 넘어가면 마이크 중지 */
+document.addEventListener("visibilitychange",()=>{ if(document.hidden) micAbort(); });
 </script>
 </body>
 </html>
