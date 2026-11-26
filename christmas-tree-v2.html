@@ -55,12 +55,12 @@
 
   /* ───────────── geometry ───────────── */
   var TOP_Y = 4.00;      // 트리 높이
-  var BASE_R = 1.66;     // 밑동 반지름 (통통한 비율: 폭 3.3 : 높이 4.0)
+  var BASE_R = 1.74;     // 밑동 반지름 (통통한 비율)
   var TIERS = 8;
 
   function envR(y) {
     var t = Math.max(0, Math.min(1, y / TOP_Y));
-    return BASE_R * Math.pow(1 - t, 0.80);
+    return BASE_R * Math.pow(1 - t, 0.44);
   }
 
   function patchNoise(a, y, ti) {
@@ -109,7 +109,7 @@
 
           var sz = inner ? (4.6 + Math.random() * 1.6) : (5.4 + Math.random() * 2.2);
           var tw = lvl >= 4 ? 1 : (inner ? 0.05 : 0.22);
-          if (lvl >= 4 && Math.random() < 0.5) { lvl = 5; tw = 1; }
+          if (lvl >= 4 && Math.random() < 0.30) { lvl = 5; tw = 1; }
           addP(Math.cos(a) * rad, py, Math.sin(a) * rad, lvl, sz, tw);
         }
       }
@@ -298,10 +298,10 @@
   }
 
   (function buildGifts() {
-    addGift(-1.16, 1.20, 0.50, 0.58, 0.46, 0.18, 10, 7);   // 보라 + 금리본
-    addGift(-0.52, 1.62, 0.62, 0.50, 0.54, -0.14, 2, 7);    // 초록 + 금리본
-    addGift(0.68, 1.60, 0.50, 0.42, 0.46, 0.10, 9, 7);      // 파랑 + 금리본
-    addGift(1.30, 1.16, 0.68, 0.56, 0.58, -0.24, 6, 7);     // 빨강 + 금리본
+    addGift(-1.24, 1.16, 0.52, 0.60, 0.48, 0.18, 10, 7);   // 보라 + 금리본
+    addGift(-0.54, 1.74, 0.64, 0.52, 0.56, -0.14, 2, 7);    // 초록 + 금리본
+    addGift(0.72, 1.72, 0.52, 0.44, 0.48, 0.10, 9, 7);      // 파랑 + 금리본
+    addGift(1.38, 1.18, 0.70, 0.58, 0.60, -0.24, 6, 7);     // 빨강 + 금리본
   })();
 
   /* ───────────── 눈이 덮인 넓은 바닥 ───────────── */
