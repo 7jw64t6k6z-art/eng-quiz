@@ -76,6 +76,13 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
 .pic-hd .qn{color:var(--accent);font-size:12px}
 .pic-hd .gender{font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:6px;background:#f2f4f8;color:var(--sub)}
 .pic img{width:100%;max-height:230px;object-fit:contain;display:block;background:#f7f8fa}
+.emoji-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+  background:linear-gradient(180deg,#f7f9ff,#edf1fd);border-bottom:1px solid var(--line);padding:24px 14px}
+.emoji-card .emoji{font-size:64px;line-height:1}
+.emoji-card .emoji-label{font-size:13px;font-weight:800;color:var(--accent);letter-spacing:-.2px}
+.badge{display:inline-block;font-size:10px;font-weight:800;padding:2px 6px;border-radius:6px;
+  background:var(--accent-soft);color:var(--accent);margin-right:5px;vertical-align:1px}
+.badge.b{background:var(--gold-bg);color:var(--gold)}
 .pic-body{padding:10px 13px 13px;display:flex;flex-direction:column;gap:8px}
 .field label{display:block;font-size:11.5px;font-weight:800;color:var(--sub);margin-bottom:3px}
 .field .ans{width:100%}
@@ -131,8 +138,8 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
   <div class="hd-top"><div class="hd-title">🇩🇪 독일어 수행평가 연습 <em>Übungsblatt 4</em></div></div>
   <nav class="tabs" id="tabs">
     <button class="tab on" data-p="p1">과거분사<span class="n">50</span></button>
-    <button class="tab" data-p="p2">그림 증상<span class="n">8</span></button>
-    <button class="tab" data-p="p3">문장 변환<span class="n">20</span></button>
+    <button class="tab" data-p="p2">그림 증상<span class="n">11</span></button>
+    <button class="tab" data-p="p3">문장 변환<span class="n">35</span></button>
   </nav>
  </div>
 </header>
@@ -157,12 +164,13 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
  <section class="part" id="p2">
   <div class="hero">
    <h2>2. 그림 보고 증상 · 조언 말하기</h2>
-   <p>그림을 보고 <b>Was fehlt ihm/ihr?</b>(증상)와 <b>Was rätst du ihm/ihr?</b>(조언)를 독일어로 쓰세요. 조언은 정해진 답 하나가 아니라, <b>성별(ihm/ihr · er/sie)만 맞으면 어떤 내용이든 정답</b>이에요. (<b>Er sollte viel Wasser trinken.</b> / <b>Sie sollte sich ausruhen.</b> / <b>Ich rate ihr, zum Arzt zu gehen.</b> 모두 OK!) · 총 8문제<br>🎤 <b>말하기</b>를 누르고 독일어로 말하면 다 말한 뒤에 바로 채점돼요. 타이핑도 그대로 됩니다.</p>
+   <p>그림을 보고 <b>Was fehlt ihm/ihr?</b>(증상)와 <b>Was rätst du ihm/ihr?</b>(조언)를 독일어로 쓰세요. 조언은 정해진 답 하나가 아니라, <b>성별(ihm/ihr · er/sie)만 맞으면 어떤 내용이든 정답</b>이에요. (<b>Er sollte viel Wasser trinken.</b> / <b>Sie sollte sich ausruhen.</b> / <b>Ich rate ihr, zum Arzt zu gehen.</b> 모두 OK!) · 총 11문제(22칸) — 그림이 없는 증상은 상황 카드로 나와요.<br>🎤 <b>말하기</b>를 누르고 독일어로 말하면 다 말한 뒤에 바로 채점돼요. 타이핑도 그대로 됩니다.</p>
    <div class="toolbar">
+     <button class="btn on" id="p2-shuffle">🔀 순서 섞기</button>
      <button class="btn" id="p2-retry">✗ 틀린 것만 다시</button>
      <button class="btn" id="p2-reset">↺ 전체 초기화</button>
    </div>
-   <div class="prog"><div class="bar"><i id="p2-bar"></i></div><div class="stat" id="p2-stat">0 / 16</div></div>
+   <div class="prog"><div class="bar"><i id="p2-bar"></i></div><div class="stat" id="p2-stat">0 / 22</div></div>
   </div>
   <div class="list" id="p2-list"></div>
  </section>
@@ -171,17 +179,19 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
  <section class="part" id="p3">
   <div class="hero">
    <h2>3. 문장 변환 (Perfekt · 의견 dass절)</h2>
-   <p>주어진 문장을 <b>Perfekt</b>(1~10) 또는 <b>Ich denke/finde/bin der Meinung, dass …</b>(11~20)로 바꿔 쓰세요. · 총 20문장<br>🎤 <b>말하기</b>로 말해도 되고 타이핑해도 돼요. 채점이 끝나면 <b>🔊 정답 발음 듣기</b>로 모범답안을 들어 보세요.</p>
+   <p>주어진 문장을 <b>Perfekt</b>(20문장) 또는 <b>Ich denke/finde/bin der Meinung, dass …</b>(15문장)로 바꿔 쓰세요. · 총 35문장<br>🔀 <b>순서 섞기</b>를 켜면 35문장이 한 줄로 섞여 나오고, 끄면 Aufgabe 순서대로 나와요.<br>🎤 <b>말하기</b>로 말해도 되고 타이핑해도 돼요. 채점이 끝나면 <b>🔊 정답 발음 듣기</b>로 모범답안을 들어 보세요.</p>
    <div class="toolbar">
+     <button class="btn on" id="s-shuffle">🔀 순서 섞기</button>
      <button class="btn" id="s-retry">✗ 틀린 것만 다시</button>
      <button class="btn" id="s-reset">↺ 전체 초기화</button>
    </div>
-   <div class="prog"><div class="bar"><i id="s-bar"></i></div><div class="stat" id="s-stat">0 / 20</div></div>
+   <div class="prog"><div class="bar"><i id="s-bar"></i></div><div class="stat" id="s-stat">0 / 35</div></div>
   </div>
-  <div class="divider">Aufgabe 1 · Perfekt로 바꾸기 (1~10)</div>
+  <div class="divider" id="s-div-a">Aufgabe 1 · Perfekt로 바꾸기 (1~20)</div>
   <div class="list" id="s-list-a"></div>
-  <div class="divider">Aufgabe 3 · 의견 말하기 (11~20)</div>
+  <div class="divider" id="s-div-b">Aufgabe 3 · 의견 말하기 (21~35)</div>
   <div class="list" id="s-list-b"></div>
+  <div class="list" id="s-list-all"></div>
  </section>
 
  <div class="foot">Übungsblatt 4 · 독일어 수행평가 대비 연습장</div>
@@ -254,7 +264,23 @@ const PICS=[
   sym:["Ihr Bein tut weh.","Ihr Bein ist verletzt.","Sie hat Schmerzen im Bein."],
   adv:["Sie sollte im Bett bleiben."],
   advTails:GENERIC_ADV,
-  tip:"‘Sie hat Bein tut weh’는 틀린 문장! → ‘Ihr Bein tut weh.’ / 조언은 ‘Sie sollte im Bett bleiben.’"}
+  tip:"‘Sie hat Bein tut weh’는 틀린 문장! → ‘Ihr Bein tut weh.’ / 조언은 ‘Sie sollte im Bett bleiben.’"},
+ /* ↓ Hilfen Aufgabe 2(사진 2)에 있던 표현 중 그림이 없는 증상 — 상황 카드로 출제 */
+ {id:"b-1",img:null,emoji:"🤕",label:"남자 · 머리가 아픔",sex:"m",page:"상황 카드 ①",
+  sym:["Er hat Kopfschmerzen.","Sein Kopf tut weh.","Ihm tut der Kopf weh."],
+  adv:["Er sollte sich ausruhen."],
+  advTails:GENERIC_ADV,
+  tip:"두통은 복수 명사 Kopfschmerzen + haben → ‘Er hat Kopfschmerzen.’ / ‘Sein Kopf tut weh.’도 정답!"},
+ {id:"b-2",img:null,emoji:"😣",label:"여자 · 등/허리가 아픔",sex:"f",page:"상황 카드 ②",
+  sym:["Sie hat Rückenschmerzen.","Ihr Rücken tut weh."],
+  adv:["Sie sollte sich ausruhen."],
+  advTails:GENERIC_ADV,
+  tip:"등·허리 통증 Rückenschmerzen도 복수 명사 → ‘Sie hat Rückenschmerzen.’ / ‘Ihr Rücken tut weh.’"},
+ {id:"b-3",img:null,emoji:"🦶",label:"남자 · 발이 아픔/다침",sex:"m",page:"상황 카드 ③",
+  sym:["Sein Fuß tut weh.","Sein Fuß ist verletzt."],
+  adv:["Er sollte zum Arzt gehen."],
+  advTails:GENERIC_ADV,
+  tip:"신체 부위가 주어 → ‘Sein Fuß tut weh.’ 다친 거면 ‘Sein Fuß ist verletzt.’"}
 ];
 
 const SENT_A=[
@@ -280,6 +306,27 @@ const SENT_B=[
  {src:"Wir sollten für den Klimaschutz das Wasser nicht verschmutzen.",sol:"Ich denke, dass wir für den Klimaschutz das Wasser nicht verschmutzen sollten."},
  {src:"Alle Menschen sollten Zeitungen recyceln.",sol:"Ich denke, dass alle Menschen Zeitungen recyceln sollten."},
  {src:"Wir sollten mehr Bio-Obst essen.",sol:"Ich denke, dass wir mehr Bio-Obst essen sollten."}
+];
+/* Das unregelmäßige Perfekt(사진 1·5) 동사로 만든 추가 연습 10문장 */
+const SENT_A2=[
+ {src:"Er kommt nach Hause.",sol:"Er ist nach Hause gekommen."},
+ {src:"Sie fährt nach Berlin.",sol:"Sie ist nach Berlin gefahren."},
+ {src:"Wir sehen einen Film.",sol:"Wir haben einen Film gesehen."},
+ {src:"Ich lese ein Buch.",sol:"Ich habe ein Buch gelesen."},
+ {src:"Er isst eine Pizza.",sol:"Er hat eine Pizza gegessen."},
+ {src:"Sie schläft im Bett.",sol:"Sie hat im Bett geschlafen."},
+ {src:"Wir sprechen Deutsch.",sol:"Wir haben Deutsch gesprochen."},
+ {src:"Er trifft seine Freunde.",sol:"Er hat seine Freunde getroffen."},
+ {src:"Sie schwimmt im Meer.",sol:"Sie ist im Meer geschwommen."},
+ {src:"Ich vergesse das Wort.",sol:"Ich habe das Wort vergessen."}
+];
+/* 의견(dass절) 추가 연습 5문장 */
+const SENT_B2=[
+ {src:"Man sollte viel Wasser trinken.",sol:"Ich denke, dass man viel Wasser trinken sollte."},
+ {src:"Wir sollten mehr schlafen.",sol:"Ich denke, dass wir mehr schlafen sollten."},
+ {src:"Alle Menschen sollten Sport treiben.",sol:"Ich denke, dass alle Menschen Sport treiben sollten."},
+ {src:"Wir sollten Handy im Unterricht nicht benutzen.",sol:"Ich denke, dass wir Handy im Unterricht nicht benutzen sollten."},
+ {src:"Deutsch lernen ist sehr wichtig.",sol:"Ich denke, dass Deutsch lernen sehr wichtig ist."}
 ];
 
 /* ---------- helpers ---------- */
@@ -496,10 +543,12 @@ $("#v-reset").addEventListener("click",()=>{
 });
 
 /* ---------- part 2 ---------- */
-const P={items:PICS.map(p=>({...p,s1:0,s2:0,t1:"",t2:"",r2:null,wrong:false}))};
+const P={items:PICS.map(p=>({...p,s1:0,s2:0,t1:"",t2:"",r2:null,wrong:false})),order:null,shuffle:true};
+function pOrder(){ if(!P.order) P.order=P.items.map((_,i)=>i); return P.order; }
 function renderP(){
   const list=$("#p2-list"); list.innerHTML="";
-  P.items.forEach((p,n)=>{
+  pOrder().forEach((idx,n)=>{
+    const p=P.items[idx];
     const el=document.createElement("div");
     el.className="pic";
     const pron=p.sex==="m"?"ihm":"ihr";
@@ -507,7 +556,8 @@ function renderP(){
     el.innerHTML=`
       <div class="pic-hd"><span class="qn">${n+1}</span><span class="gender">${p.sex==="m"?"남자 · ihm":"여자 · ihr"}</span>
         <span style="margin-left:auto;font-size:11px;color:#9aa3b0;font-weight:700">${p.page}</span></div>
-      <img src="${IMG[p.img]}" alt="그림 ${n+1}">
+      ${IMG[p.img]?`<img src="${IMG[p.img]}" alt="그림 ${n+1}">`
+        :`<div class="emoji-card"><div class="emoji">${p.emoji||"💬"}</div><div class="emoji-label">${p.label||"상황 카드"}</div></div>`}
       <div class="pic-body">
         <div class="field"><label>1) Was fehlt ${pron}?</label>
           <div class="ansrow">
@@ -698,28 +748,45 @@ function updateP(){
   $("#p2-bar").style.width=(ok/total*100)+"%";
   $("#p2-stat").innerHTML=`<b>${ok}</b> / ${total} 정답`+(no?` · 오답 ${no}`:"");
 }
-$("#p2-retry").addEventListener("click",()=>{
-  let any=false;
-  P.items.forEach(p=>{if(p.s1===-1||p.s2===-1)any=true;});
-  if(!any){alert("틀린 문제가 없어요!");return;}
-  P.items.forEach(p=>{ if(p.s1===-1){p.s1=0;p.t1="";} if(p.s2===-1){p.s2=0;p.t2="";} });
+$("#p2-shuffle").addEventListener("click",e=>{
+  P.shuffle=!P.shuffle;
+  e.currentTarget.classList.toggle("on",P.shuffle);
+  e.currentTarget.textContent=P.shuffle?"🔀 순서 섞기":"➡️ 원래 순서";
+  P.order=P.items.map((_,i)=>i); if(P.shuffle) shuffle(P.order);
   renderP();
 });
-$("#p2-reset").addEventListener("click",()=>{P.items.forEach(p=>{p.s1=0;p.s2=0;p.t1="";p.t2="";});renderP();});
+$("#p2-retry").addEventListener("click",()=>{
+  const wrong=P.items.map((p,i)=>i).filter(i=>P.items[i].s1===-1||P.items[i].s2===-1);
+  if(!wrong.length){alert("틀린 문제가 없어요!");return;}
+  P.items.forEach(p=>{ if(p.s1===-1){p.s1=0;p.t1="";} if(p.s2===-1){p.s2=0;p.t2="";} });
+  P.order=wrong; renderP();
+});
+$("#p2-reset").addEventListener("click",()=>{
+  P.items.forEach(p=>{p.s1=0;p.s2=0;p.t1="";p.t2="";});
+  P.order=P.items.map((_,i)=>i); if(P.shuffle) shuffle(P.order); renderP();
+});
 
 /* ---------- part 3 ---------- */
-const S={items:[...SENT_A.map(s=>({...s,grp:"A"})),...SENT_B.map(s=>({...s,grp:"B"}))].map(s=>({...s,state:0,typed:""}))};
+const S={items:[...SENT_A.map(s=>({...s,grp:"A"})),...SENT_A2.map(s=>({...s,grp:"A"})),
+              ...SENT_B.map(s=>({...s,grp:"B"})),...SENT_B2.map(s=>({...s,grp:"B"}))].map(s=>({...s,state:0,typed:""})),
+         order:null,shuffle:true};
+function sOrder(){ if(!S.order) S.order=S.items.map((_,i)=>i); return S.order; }
 function renderS(){
-  ["#s-list-a","#s-list-b"].forEach(id=>$(id).innerHTML="");
-  let n=0;
-  S.items.forEach(it=>{
-    n++;
+  ["#s-list-a","#s-list-b","#s-list-all"].forEach(id=>$(id).innerHTML="");
+  const shuf=S.shuffle;
+  ["#s-list-a","#s-list-b"].forEach(id=>{ $(id).style.display=shuf?"none":"flex"; });
+  ["#s-div-a","#s-div-b"].forEach(id=>{ $(id).style.display=shuf?"none":"flex"; });
+  $("#s-list-all").style.display=shuf?"flex":"none";
+  const all=$("#s-list-all");
+  sOrder().forEach((idx,n)=>{
+    const it=S.items[idx];
+    const target = shuf ? all : (it.grp==="A"?$("#s-list-a"):$("#s-list-b"));
     const el=document.createElement("div");
     el.className="item"+(it.state===1?" ok":it.state===-1?" no":"");
     el.innerHTML=`<div class="row" style="align-items:flex-start">
         <span class="qn">${n}</span>
         <div style="flex:1;min-width:0">
-          <div class="qtxt" style="font-size:14.5px;color:#3a4552">${it.src}</div>
+          <div class="qtxt" style="font-size:14.5px;color:#3a4552"><span class="badge${it.grp==="B"?" b":""}">${it.grp==="A"?"Perfekt":"dass"}</span>${it.src}</div>
           <div class="ansrow" style="margin-top:7px">
             <input class="ans" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${it.grp==="A"?"Perfekt 문장으로":"Ich denke, dass …"}">
             <button class="mic" type="button">🎤 말하기</button>
@@ -738,7 +805,7 @@ function renderS(){
     inp.addEventListener("blur",()=>{if(inp.value.trim())checkS(el,it,inp);});
     if(it.state===1){inp.readOnly=true;micb.disabled=true;setSfb(el,it,true);}
     else if(it.state===-1){setSfb(el,it,false);}
-    $(it.grp==="A"?"#s-list-a":"#s-list-b").appendChild(el);
+    target.appendChild(el);
   });
   updateS();
 }
@@ -753,9 +820,20 @@ function setSfb(el,it,ok){
   }
   addSpk(fb,it.sol);
 }
+/* 의견(dass절) 문항: 앞부분이 Ich denke/finde/glaube/bin der Meinung/Ansicht 이고 dass절이 같으면 정답 */
+function opinionOk(a,b){
+  if(a===b) return true;
+  const ia=a.indexOf(" dass "), ib=b.indexOf(" dass ");
+  if(ia<1) return false;
+  const pa=a.slice(0,ia), ta=a.slice(ia+6).trim();
+  const tb=(ib>0?b.slice(ib+6):b).trim();
+  const pre=/^(ich\s+(denke|finde|glaube|meine|bin\s+der\s+meinung|bin\s+der\s+ansicht)|meiner\s+meinung\s+nach)$/.test(pa);
+  return pre && ta===tb;
+}
 function checkS(el,it,inp){
   if(!inp.value.trim())return;
-  const ok=norm(inp.value)===norm(it.sol);
+  let ok=norm(inp.value)===norm(it.sol) || (it.alt||[]).some(a=>norm(a)===norm(inp.value));
+  if(!ok && it.grp==="B") ok=opinionOk(norm(inp.value),norm(it.sol));
   it.state=ok?1:-1; it.typed=inp.value;
   el.classList.toggle("ok",ok); el.classList.toggle("no",!ok);
   setSfb(el,it,ok);
@@ -769,12 +847,23 @@ function updateS(){
   $("#s-bar").style.width=(ok/S.items.length*100)+"%";
   $("#s-stat").innerHTML=`<b>${ok}</b> / ${S.items.length} 정답`+(no?` · 오답 ${no}`:"");
 }
-$("#s-retry").addEventListener("click",()=>{
-  if(!S.items.some(i=>i.state===-1)){alert("틀린 문제가 없어요!");return;}
-  S.items.forEach(i=>{if(i.state===-1){i.state=0;i.typed="";}});
+$("#s-shuffle").addEventListener("click",e=>{
+  S.shuffle=!S.shuffle;
+  e.currentTarget.classList.toggle("on",S.shuffle);
+  e.currentTarget.textContent=S.shuffle?"🔀 순서 섞기":"➡️ 원래 순서";
+  S.order=S.items.map((_,i)=>i); if(S.shuffle) shuffle(S.order);
   renderS();
 });
-$("#s-reset").addEventListener("click",()=>{S.items.forEach(i=>{i.state=0;i.typed="";});renderS();});
+$("#s-retry").addEventListener("click",()=>{
+  const wrong=S.items.map((it,i)=>i).filter(i=>S.items[i].state===-1);
+  if(!wrong.length){alert("틀린 문제가 없어요!");return;}
+  S.items.forEach(i=>{if(i.state===-1){i.state=0;i.typed="";}});
+  S.order=wrong; renderS();
+});
+$("#s-reset").addEventListener("click",()=>{
+  S.items.forEach(i=>{i.state=0;i.typed="";});
+  S.order=S.items.map((_,i)=>i); if(S.shuffle) shuffle(S.order); renderS();
+});
 
 
 /* ---------- tabs ---------- */
@@ -814,6 +903,8 @@ $$("#umlaut button").forEach(b=>b.addEventListener("click",e=>{
 
 /* ---------- boot ---------- */
 V.order=V.items.map((_,i)=>i); shuffle(V.order);
+P.order=P.items.map((_,i)=>i); shuffle(P.order);
+S.order=S.items.map((_,i)=>i); shuffle(S.order);
 renderV(); renderP(); renderS();
 /* 마이크를 못 쓰는 인앱 브라우저(카톡·픽클 내장 등)면 2·3번 랩 상단에 안내 */
 if(!SR){ addMicNote("p2"); addMicNote("p3"); }
