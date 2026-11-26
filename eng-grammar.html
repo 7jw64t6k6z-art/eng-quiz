@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>2026 10월 고1 영어 · 어법 양자택일</title>
+<style>
+:root{
+  --bg:#f4f6fa; --card:#ffffff; --ink:#1b2230; --sub:#69707e; --line:#e5e8ee;
+  --accent:#3563e9; --accent-soft:#eef2fe; --accent-line:#c7d5fb;
+  --ok:#0f7a55; --ok-bg:#e9f8f1; --ok-line:#9ad8c1;
+  --no:#c5374b; --no-bg:#fdeef0; --no-line:#f2b3bd;
+  --radius:16px; --hdh:118px;
+}
+*,*::before,*::after{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0; padding:0;}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Pretendard","Pretendard Variable",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR","Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.6; word-break:keep-all;
+  -webkit-text-size-adjust:100%; text-size-adjust:100%;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+button{font-family:inherit; cursor:pointer;}
+
+/* ---------- header ---------- */
+.hd{position:sticky; top:0; z-index:60; background:rgba(255,255,255,.95);
+  -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line); padding-top:env(safe-area-inset-top);}
+.hd-top{display:flex; align-items:baseline; gap:7px; padding:10px 14px 2px;}
+.hd-title{font-size:15px; font-weight:800; letter-spacing:-.35px; flex:1 1 auto; min-width:0;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.hd-title em{font-style:normal; color:var(--accent); font-size:11px; font-weight:800; margin-left:5px;
+  background:var(--accent-soft); padding:2px 6px; border-radius:6px; vertical-align:1.5px;}
+.hd-prog{display:flex; align-items:center; gap:9px; padding:4px 14px 6px;}
+.bar{flex:1 1 auto; height:7px; background:#e8ebf1; border-radius:999px; overflow:hidden;}
+.bar-fill{height:100%; width:0%; background:linear-gradient(90deg,#5b84f2,#3563e9); border-radius:999px;
+  transition:width .35s cubic-bezier(.4,0,.2,1);}
+.stat{font-size:11.5px; color:var(--sub); white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:700;}
+.stat b{color:var(--accent); font-weight:800;}
+.stat i{font-style:normal; color:var(--ok); font-weight:800;}
+.hd-row{display:flex; gap:6px; overflow-x:auto; padding:0 11px 8px; scrollbar-width:none;}
+.hd-row::-webkit-scrollbar{display:none;}
+.tool{border:1px solid var(--line); background:#fff; color:var(--ink); font-size:11.8px; font-weight:750;
+  padding:7px 10px; border-radius:999px; white-space:nowrap; flex:0 0 auto; transition:transform .08s, background .15s, color .15s, border-color .15s;}
+.tool:active{transform:scale(.96);}
+.tool.on{background:var(--accent); border-color:var(--accent); color:#fff;}
+.tool.danger{color:#9aa1ae;}
+.chip{border:1px solid var(--line); background:#fff; color:var(--sub); font-size:12px; font-weight:800;
+  min-width:36px; height:31px; padding:0 8px; border-radius:999px; flex:0 0 auto;
+  font-variant-numeric:tabular-nums; position:relative; transition:transform .08s, background .15s, color .15s, border-color .15s;}
+.chip:active{transform:scale(.94);}
+.chip.act{background:var(--accent); border-color:var(--accent); color:#fff;}
+.chip.done{border-color:var(--ok-line); color:var(--ok); background:var(--ok-bg);}
+.chip.done.act{background:var(--ok); border-color:var(--ok); color:#fff;}
+.chip .dot{position:absolute; top:3px; right:4px; width:5px; height:5px; border-radius:50%; background:var(--ok); display:none;}
+.chip.no-dot .dot{background:var(--no);}
+.chip.hasq .dot{display:block;}
+.sep{flex:0 0 auto; width:1px; background:var(--line); margin:4px 3px;}
+
+/* ---------- list ---------- */
+.wrap{max-width:760px; margin:0 auto; padding:14px 12px 40px;}
+.tip{font-size:12px; color:var(--sub); line-height:1.55; padding:0 4px 10px; font-weight:600;}
+.tip b{color:var(--ink);}
+
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  margin:0 0 14px; box-shadow:0 1px 2px rgba(20,30,60,.04); overflow:hidden;
+  scroll-margin-top:calc(var(--hdh) + 10px); transition:box-shadow .25s, border-color .25s;}
+.card.flash{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);}
+.card-hd{display:flex; align-items:center; gap:9px; padding:12px 14px 10px; border-bottom:1px solid #f0f2f6; background:#fbfcfe;}
+.num{flex:0 0 auto; min-width:44px; height:27px; padding:0 9px; border-radius:8px; background:var(--ink); color:#fff;
+  font-size:13px; font-weight:800; display:inline-flex; align-items:center; justify-content:center; letter-spacing:-.2px;}
+.card.full .num{background:var(--ok);}
+.card.half .num{background:var(--accent);}
+.ttl{flex:1 1 auto; font-size:13.5px; font-weight:750; letter-spacing:-.25px; line-height:1.35; min-width:0;}
+.cnt{flex:0 0 auto; font-size:11.5px; font-weight:800; color:var(--sub); font-variant-numeric:tabular-nums;
+  background:#f1f3f8; padding:3px 8px; border-radius:999px;}
+.card.full .cnt{color:var(--ok); background:var(--ok-bg);}
+.body{padding:15px 15px 6px; font-size:16.5px; line-height:2.05; letter-spacing:.05px; color:#222a38;}
+.body p{margin:0 0 12px;}
+.body i{font-style:italic;}
+
+/* ---------- blank ---------- */
+.blank{display:inline-flex; align-items:center; flex-wrap:wrap; gap:3px; padding:2px 3px 2px 5px; margin:2px 3px;
+  max-width:100%;
+  border:1px dashed var(--accent-line); background:var(--accent-soft); border-radius:11px; vertical-align:middle;
+  transition:background .2s, border-color .2s;}
+.blank .bn{font-size:9.5px; font-weight:800; color:#93a0bb; line-height:1; padding-right:1px; font-variant-numeric:tabular-nums; align-self:flex-start; margin-top:3px;}
+.opt{min-height:40px; min-width:46px; padding:6px 12px; border:1px solid var(--accent-line); background:#fff; color:var(--ink);
+  font-size:15.5px; font-weight:750; border-radius:8px; line-height:1.15; letter-spacing:.1px;
+  transition:transform .07s, background .18s, color .18s, border-color .18s, box-shadow .18s;}
+.opt:active{transform:scale(.95);}
+.blank.ok{background:var(--ok-bg); border:1px solid var(--ok-line);}
+.blank.ok .opt{opacity:.5;}
+.blank.ok .opt.correct{opacity:1; background:var(--ok); border-color:var(--ok); color:#fff; box-shadow:0 1px 3px rgba(15,122,85,.28);}
+.blank.no{background:var(--no-bg); border:1px solid var(--no-line);}
+.blank.no .opt{opacity:.55; color:#8d94a1;}
+.blank.no .opt.wrong{opacity:1; background:var(--no); border-color:var(--no); color:#fff; text-decoration:line-through;
+  box-shadow:0 1px 3px rgba(197,55,75,.25);}
+.blank.no .opt.correct{opacity:1; background:#fff; border:1.5px solid var(--ok); color:var(--ok); font-weight:800;}
+body.reveal .blank{border-style:solid; border-color:var(--ok-line); background:var(--ok-bg);}
+body.reveal .blank .opt{opacity:.45;}
+body.reveal .blank .opt.correct{opacity:1; background:#fff; border:1.5px solid var(--ok); color:var(--ok);}
+
+/* ---------- explanation ---------- */
+.exp-wrap{border-top:1px solid #f0f2f6; padding:9px 14px 13px; background:#fcfdff;}
+.exp-btn{border:1px solid var(--line); background:#fff; color:var(--sub); font-size:11.8px; font-weight:800;
+  padding:6px 11px; border-radius:999px;}
+.exp-btn.on{background:var(--accent-soft); border-color:var(--accent-line); color:var(--accent);}
+.exps{list-style:none; margin:9px 0 0; padding:0; display:none;}
+.exps.open{display:block;}
+.exp-line{display:none; align-items:flex-start; gap:6px; flex-wrap:wrap; font-size:13px; line-height:1.55;
+  padding:6px 0; border-bottom:1px dashed #eef0f5; color:#3a4252;}
+.exp-line:last-child{border-bottom:0;}
+.exp-line.show{display:flex;}
+.exp-line .en{flex:0 0 auto; width:16px; height:16px; border-radius:5px; background:#eef1f7; color:var(--sub);
+  font-size:10.5px; font-weight:800; display:inline-flex; align-items:center; justify-content:center; margin-top:2px;}
+.exp-line.okcentry .en{background:var(--ok-bg); color:var(--ok);}
+.exp-line.nox .en{background:var(--no-bg); color:var(--no);}
+.exp-line .tag{flex:0 0 auto; font-size:10.5px; font-weight:800; color:var(--accent); background:var(--accent-soft);
+  border-radius:5px; padding:1px 6px; margin-top:2px;}
+.exp-line .ans{flex:0 0 auto; font-size:13px; font-weight:800; color:var(--ok);}
+.exp-line .why{flex:1 1 100%; color:#4a5364; font-size:12.5px;}
+
+/* ---------- toast / footer ---------- */
+.toast{position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(14px);
+  background:rgba(27,34,48,.94); color:#fff; font-size:13px; font-weight:700; padding:10px 16px; border-radius:999px;
+  opacity:0; pointer-events:none; transition:opacity .22s, transform .22s; z-index:90; max-width:88vw; text-align:center;}
+.toast.on{opacity:1; transform:translateX(-50%) translateY(0);}
+.foot{text-align:center; font-size:12px; color:var(--sub); line-height:1.7; padding:8px 6px 0;}
+.foot b{color:var(--ink);}
+.foot .reset2{margin-top:10px; border:1px solid var(--line); background:#fff; color:var(--sub);
+  font-size:12px; font-weight:800; padding:8px 14px; border-radius:999px;}
+
+@media (max-width:430px){
+  .body{font-size:15.5px; line-height:2;}
+  .opt{min-height:42px; padding:6px 10px; font-size:15px; min-width:44px;}
+  .ttl{font-size:12.8px;}
+  .hd-title{font-size:13.5px;}
+  .stat{font-size:10.8px;}
+}
+</style>
+</head>
+<body>
+<header class="hd" id="hd">
+  <div class="hd-top">
+    <div class="hd-title">2026 10월 고1 영어 <em>어법 양자택일</em></div>
+  </div>
+  <div class="hd-prog">
+    <div class="bar"><div class="bar-fill" id="bar"></div></div>
+    <div class="stat" id="stat">0 / 120 어법 완료 · 정답률 —</div>
+  </div>
+  <div class="hd-row" id="tools">
+    <button class="tool" id="btnShuffle">🔀 지문 섞기</button>
+    <button class="tool" id="btnWrong">✗ 틀린 것만</button>
+    <button class="tool" id="btnReveal">👁 정답 보기</button>
+    <button class="tool danger" id="btnReset">↺ 전체 초기화</button>
+  </div>
+  <div class="hd-row" id="jump"></div>
+</header>
+
+<main class="wrap">
+  <div class="tip">빈칸의 <b>두 단어 중 어법상 맞는 것</b>을 손가락으로 탭하세요. 틀리면 정답이 표시되고 아래에 한 줄 해설이 열립니다.</div>
+  <div id="list"></div>
+  <div class="foot" id="foot"></div>
+</main>
+<div class="toast" id="toast"></div>
+
+<script id="data" type="application/json">[{"num":18,"title":"연수 비용 지원 요청 이메일","parts":["My name is Karen Whitfield, a marketing assistant in the marketing department. As part of my efforts to contribute more to the department, I would like ",{"id":"18-1","ix":1,"opts":["receiving","to receive"],"correct":1,"tag":"준동사","exp":"would like는 목적어로 to부정사를 취한다"}," additional training to further develop my skills. Over the last quarter, I noticed our department ",{"id":"18-2","ix":2,"opts":["need","needs"],"correct":1,"tag":"수일치","exp":"주어 our department가 단수이므로 needs"}," to better attract potential customers for our products online. For this reason, I'm requesting that the company ",{"id":"18-3","ix":3,"opts":["covers","cover"],"correct":1,"tag":"that절·가정법","exp":"request that + 주어 + (should) 동사원형 — covers는 불가"}," part of my training cost. I have recently searched for training courses and found Smart Growth Training's two-week course ",{"id":"18-4","ix":4,"opts":["that","what"],"correct":0,"tag":"관계대명사","exp":"선행사 the course가 있으므로 that (what은 선행사를 포함)"}," focuses on digital marketing strategies. It costs $1,600, and I strongly believe it would be ",{"id":"18-5","ix":5,"opts":["helpful","helpfully"],"correct":0,"tag":"형용사/부사","exp":"believe + 목적어 + 형용사 보어(2형식)이므로 helpful"}," for my current work. I hope you will consider my request positively."]},{"num":19,"title":"여름학교 통보에 좌절한 방학 첫날","parts":["It was the last day of school before summer vacation. After months of quizzes and assignments, I couldn't wait ",{"id":"19-1","ix":1,"opts":["to leave","leaving"],"correct":0,"tag":"준동사","exp":"couldn't wait + to부정사 (~하기를 기다릴 수 없었다)"}," everything behind. Could anything be sweeter? I practically danced while cleaning out my locker, and nothing could ",{"id":"19-2","ix":2,"opts":["ruin","be ruined"],"correct":0,"tag":"능동/수동","exp":"주어 nothing이 mood를 ruin하는 능동태"}," my mood. As ",{"id":"19-3","ix":3,"opts":["I zipped","I zipping"],"correct":0,"tag":"접속사","exp":"접속사 as 뒤에는 '주어 + 정동사(zipped)'가 와야 한다"}," up my backpack, ready to leave, my science teacher, Mr. Manta, called me aside. \"Rafe,\" he said, \"you haven't turned in your final lab report, ",{"id":"19-4","ix":4,"opts":["although","despite"],"correct":1,"tag":"접속사/전치사","exp":"뒤에 명사구(all my warnings)가 오므로 전치사 despite"}," all my warnings this past month.\" The words hit me like cold water. He was right, but I totally forgot about it. \"To make up for it, you must attend summer school,\" he added. Instead of lazy mornings and endless free time, I'd be ",{"id":"19-5","ix":5,"opts":["spend","spending"],"correct":1,"tag":"준동사","exp":"I'd(=I would) be + 현재분사 — 과거 시점에서 본 미래진행"}," my vacation at a lab table — the last thing I wanted to do with my precious summer."]},{"num":20,"title":"세계 시민 정체성은 겹쳐 쌓는 것","parts":["We might not think of ourselves as global citizens yet, but it's both necessary and possible ",{"id":"20-1","ix":1,"opts":["doing","to do"],"correct":1,"tag":"준동사","exp":"가주어 it에 대응하는 진주어는 to부정사"}," so. Some people ",{"id":"20-2","ix":2,"opts":["is","are"],"correct":1,"tag":"수일치","exp":"주어 Some people이 복수이므로 are"}," skeptical about the idea of global citizenship, but for most of human history, people didn't think of themselves as citizens of nation-states. After all, for most of human history, nation-states didn't exist. The rise of nation-states over the last few centuries ",{"id":"20-3","ix":3,"opts":["have led","has led"],"correct":1,"tag":"수일치","exp":"주어 The rise가 단수 — of 이하의 복수명사에 끌리지 말 것"}," people to add state citizenship to other identities, such as family, people group, or religion. ",{"id":"20-4","ix":4,"opts":["Given","Giving"],"correct":0,"tag":"분사구문","exp":"Given = ~을 고려하면 (수동 분사구문)"}," the connections between people around the world and the common challenges we face, we need to layer global citizenship on to these other identities. This doesn't mean that global citizenship ",{"id":"20-5","ix":5,"opts":["replaces","replace"],"correct":0,"tag":"수일치","exp":"that절 안에서도 주어 global citizenship은 단수이므로 replaces"}," these other identities. There's not a single story about our identities. Instead, it's precisely because we have obligations to our families, those in our community, and those around the world."]},{"num":21,"title":"타이타닉 갑판 의자와 커리어","parts":["Among unsatisfied professionals, there's a repeating theme — the belief that someday (a mysterious day in the future) things will ",{"id":"21-1","ix":1,"opts":["miraculously","miraculous"],"correct":0,"tag":"형용사/부사","exp":"동사 change를 수식하는 부사 miraculously"}," change and they'll stumble into the perfect job or career. At the same time, they (typically) do little ",{"id":"21-2","ix":2,"opts":["to meaningfully alter","meaningfully altering"],"correct":0,"tag":"준동사","exp":"do little to + 동사원형 (~하려고 거의 애쓰지 않는다)"}," their current situation. They don't like their job, so what do they do? They head to job boards and search for roles with a similar job title, ",{"id":"21-3","ix":3,"opts":["hoping","hoped"],"correct":0,"tag":"분사구문","exp":"주어 they가 hope하는 능동 관계이므로 hoping"}," that the universe will sprinkle a bit of magic on their career if they just hit the refresh button in a different department or company. Efforts like this make professionals ",{"id":"21-4","ix":4,"opts":["to feel","feel"],"correct":1,"tag":"준동사·5형식","exp":"make + 목적어 + 동사원형 보어 — to feel은 불가"}," like they are doing something, when really they're just setting themselves up to take a new role and quickly become just as disenchanted as they were before. It's like rearranging deck chairs on the Titanic. If you keep ",{"id":"21-5","ix":5,"opts":["to play","playing"],"correct":1,"tag":"준동사","exp":"keep + 동명사 (~하는 것을 계속하다)"}," the same game, you'll win the same prizes."]},{"num":22,"title":"시간 감각은 사회가 만든 관습","parts":["Sociologists argue that our perception and usage of time ",{"id":"22-1","ix":1,"opts":["is","are"],"correct":1,"tag":"수일치","exp":"주어가 'perception and usage'로 복수이므로 are"}," not just basic properties of nature, like a clock ticking away in the background, ",{"id":"22-2","ix":2,"opts":["nor they are","nor are they"],"correct":1,"tag":"어순·도치","exp":"부정어 nor가 문두에 오면 'nor + 동사 + 주어'로 도치"}," simply psychological phenomena of individual experience. Instead, how we perceive and understand time ",{"id":"22-3","ix":3,"opts":["are","is"],"correct":1,"tag":"수일치","exp":"how절 전체는 하나의 절이므로 단수 취급 — is"}," to a large degree shaped by tradition and cultural norms. Eviatar Zerubavel's work, <i>The Seven Day Circle</i>, demonstrates how the week, a fundamental unit of time, is a social invention that ",{"id":"22-4","ix":4,"opts":["varies","vary"],"correct":0,"tag":"수일치","exp":"관계대명사 that의 선행사는 a social invention(단수)"}," across cultures, ",{"id":"22-5","ix":5,"opts":["influencing","influenced"],"correct":0,"tag":"분사구문","exp":"주어 the week가 influence하는 능동 관계이므로 influencing"}," how people structure their activities and rhythms of life. Why do we consider a nine-to-five job routine? Why don't many of us work on the weekends? These numbers and patterns aren't really dictated by nature or any essential human characteristic, but are rather social creations that we internalize and come to accept as \"normal.\""]},{"num":23,"title":"내부 고발자 보호가 필요한 이유","parts":["In recent years, the number of illegal actions in particular at the corporate level ",{"id":"23-1","ix":1,"opts":["has grown","have grown"],"correct":0,"tag":"수일치","exp":"'the number of + 복수명사'는 단수 취급하므로 has grown"},", or at least the number of cases that came to light, increased. Such misconduct has often only been exposed because brave informants ",{"id":"23-2","ix":2,"opts":["have risked","risking"],"correct":0,"tag":"접속사절","exp":"because절에는 '주어 + 정동사'가 필요 — risking은 준동사라 비문"}," a great deal in order to put an end to it. Hence, it is no surprise ",{"id":"23-3","ix":3,"opts":["that","what"],"correct":0,"tag":"접속사","exp":"선행사 없이 완전한 절을 이끄는 접속사 that (what은 불가)"}," whistleblower protection has come into focus. If violations of law and order go ",{"id":"23-4","ix":4,"opts":["undetecting","undetected"],"correct":1,"tag":"능동/수동","exp":"'발각되지 않은 채로' — go + 과거분사"}," and unpunished for years because employees of a company fear to report illegal activities for fear of reprisals or consequences, it can have several negative effects. It can harm the company ",{"id":"23-5","ix":5,"opts":["themselves","itself"],"correct":1,"tag":"재귀대명사","exp":"선행사 the company가 단수이므로 itself"},", but also third-parties, the economy in general, the general public, and even the rule of law could be affected. Protecting those ",{"id":"23-6","ix":6,"opts":["which","who"],"correct":1,"tag":"관계대명사","exp":"선행사 those(사람)를 받는 주격 who"}," would assist in reducing unlawful or even criminal behaviour has two main functions: Protecting the individual's actions as well as protecting the public good. A well-balanced whistleblower protection may have positive effects on both of these."]},{"num":24,"title":"목표에 대한 환상이 행동을 막는다","parts":["Unfortunately, sometimes the idea of a goal is disconnected from the daily reality of ",{"id":"24-1","ix":1,"opts":["that","what"],"correct":1,"tag":"관계대명사","exp":"전치사 of 뒤에서 '~하는 것'을 뜻하는 what (선행사 포함)"}," it will take to achieve it. We fall in love with the idea of a goal, ",{"id":"24-2","ix":2,"opts":["pushed","pushing"],"correct":1,"tag":"분사구문","exp":"주어 we가 push하는 능동 관계이므로 pushing"}," out of mind how different our day-to-day will need to be for us to make it happen. In fact, research even suggests that positive fantasies about our future can lead us ",{"id":"24-3","ix":3,"opts":["putting","to put"],"correct":1,"tag":"준동사","exp":"lead + 목적어 + to부정사"}," less effort into our goals because our fantasies provide us with a false and premature sense of accomplishment. We romanticize a goal — falling in love with the idea of a change. In the process, we gloss over the intricacies and challenges of ",{"id":"24-4","ix":4,"opts":["integrating","integrate"],"correct":0,"tag":"준동사","exp":"전치사 of 뒤에는 동명사"}," a complex new behavior into our life. As one study nicely summed it up, ",{"id":"24-5","ix":5,"opts":["fantasizing","fantasized"],"correct":0,"tag":"동명사","exp":"문장 주어 자리이므로 동명사 fantasizing"}," about a positive future \"seduces a person to mentally enjoy the desired future in the here and now\" — and because we don't reflect on why our fantasy is not yet our future, \"a necessity to act is not induced.\""]},{"num":29,"title":"불멸의 히드라, 인간 노화에 도움이 될까","parts":["Since hydra and the immortal jellyfish don't exhibit obvious signs of aging, they ",{"id":"29-1","ix":1,"opts":["are often called","often call"],"correct":0,"tag":"수동태","exp":"주어 they가 '불리는' 대상이므로 수동태 are called"}," biologically immortal. This doesn't mean they don't die. Nor does it even mean that they cannot die of biological causes. But, unlike most every animal, their likelihood of dying ",{"id":"29-2","ix":2,"opts":["does not increase","do not increase"],"correct":0,"tag":"수일치","exp":"주어 their likelihood가 단수이므로 does not"}," with age. Species such as hydra and the immortal jellyfish excite gerontologists because they may provide clues about how to defeat the aging process. But their property of being able to regenerate entire body parts, or even a whole organism, ",{"id":"29-3","ix":3,"opts":["makes","making"],"correct":0,"tag":"정동사","exp":"주어 their property에 대응하는 정동사 makes — making은 비문"}," them more similar to trees than to us. ",{"id":"29-4","ix":4,"opts":["Despite","Although"],"correct":1,"tag":"접속사/전치사","exp":"뒤에 절(we may learn ~)이 오므로 접속사 Although"}," we may learn some fascinating things about their lack of apparent aging, it is not at all clear how relevant those findings will be to human aging. Sometimes biology is universal, especially if it relates to fundamental mechanisms. But in other cases, even discoveries in rats or mice, which are mammals and biologically much closer to us, are difficult ",{"id":"29-5","ix":5,"opts":["translating","to translate"],"correct":1,"tag":"준동사","exp":"be difficult to + 동사원형"}," into humans. It may be a very long time before any findings ",{"id":"29-6","ix":6,"opts":["gaining","gained"],"correct":1,"tag":"분사","exp":"'얻어진' 발견 — 수동의 과거분사"}," from hydra or jellyfish are useful to us."]},{"num":30,"title":"보조금이 낳는 왜곡","parts":["Subsidies, taxes, and regulations can all lead to power plants that ",{"id":"30-1","ix":1,"opts":["pollute","pollutes"],"correct":0,"tag":"수일치","exp":"관계대명사 that의 선행사 power plants가 복수이므로 pollute"}," less by switching away from coal. In all cases, profits can be higher from ",{"id":"30-2","ix":2,"opts":["making","make"],"correct":0,"tag":"준동사","exp":"전치사 from 뒤에는 동명사 making"}," the transition, even ",{"id":"30-3","ix":3,"opts":["taking","taken"],"correct":0,"tag":"분사구문","exp":"주어가 costs를 take하는 능동 관계이므로 taking"}," the related costs into account. The power plants prefer subsidies over regulations or taxes. The reason is obvious. They prefer to receive money from the government rather than pay the costs themselves. But the \"expansion\" of their opportunity set through subsidies has to ",{"id":"30-4","ix":4,"opts":["match","be matched"],"correct":1,"tag":"수동태","exp":"주어 the expansion이 '상쇄되는' 대상이므로 수동태"}," by the contraction of the opportunity set of others. The electricity companies' \"freedom\" is decreased at the expense of the ordinary individual, ",{"id":"30-5","ix":5,"opts":["which","who"],"correct":1,"tag":"관계대명사","exp":"선행사 the ordinary individual(사람)을 받는 who"}," must suffer from increased taxation to pay for the subsidy. Moreover, from the perspective of pure efficiency, the subsidy distorts the economy because the electricity company is not facing the full costs of ",{"id":"30-6","ix":6,"opts":["that","what"],"correct":1,"tag":"관계대명사","exp":"전치사 of 뒤에서 '~하는 것'을 뜻하는 what"}," it does, even if it is successful in limiting emissions. Indeed, electricity prices may end up lower than they should be and electricity consumption higher, which will worsen global warming, even though the emissions per unit of electricity ",{"id":"30-7","ix":7,"opts":["has been reduced","have been reduced"],"correct":1,"tag":"수일치","exp":"주어 the emissions가 복수이므로 have been reduced"},"."]},{"num":31,"title":"스타트렉 경제학과 희소성","parts":["Few people may view the Star Trek universe through an economic lens, but ",{"id":"31-1","ix":1,"opts":["do so","doing so"],"correct":1,"tag":"동명사","exp":"but 뒤 주어 자리이므로 동명사 doing so"}," provides a window into a world that might soon be upon us. All of classical economics ",{"id":"31-2","ix":2,"opts":["bases","is based"],"correct":1,"tag":"수동태","exp":"be based on ~에 근거하다"}," on the notion that there isn't usually enough of anything to give everyone everything they want or need. Because of that, we use markets and pricing ",{"id":"31-3","ix":3,"opts":["allocating","to allocate"],"correct":1,"tag":"준동사","exp":"목적을 나타내는 to부정사"}," those goods, services, and resources to where they might result in the highest benefit. In Star Trek, however, there isn't much ",{"id":"31-4","ix":4,"opts":["scarcity","scarce"],"correct":0,"tag":"품사","exp":"much 뒤에는 명사가 와야 하므로 명사 scarcity"},". Technology has allowed that society to ",{"id":"31-5","ix":5,"opts":["reproduce","reproducing"],"correct":0,"tag":"준동사","exp":"allow + 목적어 + to부정사 (뒤 transport·communicate·travel과 병렬)"}," any food they want, transport themselves thousands of miles in the blink of an eye, communicate over light-years, and travel among the stars. All of humanity in that world has been fully educated so that they can participate in this prosperity. Everyone is an explorer, researcher, engineer, artist, doctor, or counselor. Generative AI has the potential to allow many dimensions of our own society to be similarly highly abundant."]},{"num":32,"title":"'들린다'고 느끼게 하려면","parts":["People, whether customers or otherwise, want to feel ",{"id":"32-1","ix":1,"opts":["heard","hearing"],"correct":0,"tag":"능동/수동","exp":"'이해받는' 느낌이므로 수동의 과거분사 heard"},". When someone calls customer service, asks to speak to a manager, or ",{"id":"32-2","ix":2,"opts":["comes","coming"],"correct":0,"tag":"병렬구조","exp":"calls·asks와 병렬을 이루는 정동사 comes"}," into your office with something on their mind, they want to feel like someone is listening to their concerns and going to address them. But for someone to feel heard, three things ",{"id":"32-3","ix":3,"opts":["have to happen","has to happen"],"correct":0,"tag":"수일치","exp":"주어 three things가 복수이므로 have to"},". First, they have to feel like the other person paid attention to ",{"id":"32-4","ix":4,"opts":["that","what"],"correct":1,"tag":"관계대명사","exp":"전치사 to 뒤에서 '~한 것'을 뜻하는 what"}," they said. Second, they have to feel like the other person understood what they said. And third, the other person has to demonstrate that they listened. This last part is key. Imagine ",{"id":"32-5","ix":5,"opts":["to talk","talking"],"correct":1,"tag":"준동사","exp":"imagine + 동명사"}," to someone who provided no response. They might have attended to everything we said. They might even have understood it completely. But without some sort of outward signal that ",{"id":"32-6","ix":6,"opts":["indicate","indicates"],"correct":1,"tag":"수일치","exp":"관계대명사 that의 선행사 signal이 단수이므로 indicates"}," they listened, it's impossible to know whether or not they actually did."]},{"num":33,"title":"공간과 경험은 분리될 수 없다","parts":["The very fact that all of our experiences \"take place\" in a physical space ",{"id":"33-1","ix":1,"opts":["make","makes"],"correct":1,"tag":"수일치","exp":"주어 The very fact가 단수이므로 makes"}," the space inseparable from what defines it, from the event that took place in it. The tree and the ground beneath are inseparable from what took place there. This intertwining of space, place, and experience challenges the idea of place as passive backdrop. If place and space are central to the very heart of experience, we must accept the possibility that the spatial framework ",{"id":"33-2","ix":2,"opts":["are","is"],"correct":1,"tag":"수일치","exp":"주어 the spatial framework가 단수이므로 is"}," the medium of all experiences — actions, thoughts, memories, and feelings of every place — not merely a background or context exterior to experience (as commonly supposed). Belgian literary critic Georges Poulet made the point elegantly, writing of the space ",{"id":"33-3","ix":3,"opts":["creating","created"],"correct":1,"tag":"분사","exp":"'창조된' 공간 — 수동의 과거분사"}," in Marcel Proust's great novel <i>In Search of Lost Time</i>: \"Beings surround ",{"id":"33-4","ix":4,"opts":["themselves","them"],"correct":0,"tag":"재귀대명사","exp":"주어 Beings와 같은 대상을 가리키므로 재귀대명사 themselves"}," with the places ",{"id":"33-5","ix":5,"opts":["where","which"],"correct":0,"tag":"관계부사","exp":"'~하는 곳'이라는 장소의 부사절을 이끄는 where"}," they find themselves, the way one wraps oneself up in a garment that is at one and the same time a disguise and a characterization.\" Without places, beings ",{"id":"33-6","ix":6,"opts":["would be","will be"],"correct":0,"tag":"가정법","exp":"Without(~이 없다면)에 이어지는 가정법 과거 would be"}," only abstractions."]},{"num":34,"title":"모델은 단순화 가정 위에 세워진다","parts":["No matter how you choose to delineate your evolutionary system of interest — let's say it's cell phones — there will be some things that your model just needs to take as a given, such as the fact that new ideas ",{"id":"34-1","ix":1,"opts":["emerge","emerges"],"correct":0,"tag":"수일치","exp":"주어 new ideas가 복수이므로 emerge"}," at particular times. Indeed, all models must make ",{"id":"34-2","ix":2,"opts":["simplifying","simplified"],"correct":0,"tag":"분사","exp":"'단순화하는' 가정 — 능동의 현재분사"}," assumptions of this nature. When Wallace and Darwin presented their verbal model of biological evolution, there ",{"id":"34-3","ix":3,"opts":["was","were"],"correct":0,"tag":"수일치","exp":"little knowledge는 불가산명사라 단수 취급 — was"}," little knowledge of how variation generation and inheritance worked. They just took as a given that these things happened somehow. Even at the finest level of detail, we need simplifying assumptions. Physicists, for example, must take as a given the mass and charge of fundamental particles. In a model of atomic bonds, physicists don't attempt to explain why electrons have their particular mass and charge, they just accept the ",{"id":"34-4","ix":4,"opts":["measuring","measured"],"correct":1,"tag":"분사","exp":"'측정된' 값 — 수동의 과거분사"}," values and move on. The key point is that we can build useful models at one level of analysis ",{"id":"34-5","ix":5,"opts":["unless","without"],"correct":1,"tag":"접속사/전치사","exp":"뒤에 명사구가 오므로 전치사 without"}," a complete accounting of what's happening at all other levels."]},{"num":35,"title":"번아웃은 개인이 아니라 구조의 문제","parts":["The recognition of burnout as an occupational phenomenon by the WHO in 2019 ",{"id":"35-1","ix":1,"opts":["marking","marked"],"correct":1,"tag":"정동사","exp":"문장 주어 The recognition에 대응하는 정동사 marked — marking은 비문"}," an important moment in the discourse on workplace mental health. This designation reframes clinical assessment and organizational responsibility, ",{"id":"35-2","ix":2,"opts":["shifted","shifting"],"correct":1,"tag":"분사구문","exp":"주어 This designation이 shift하는 능동 관계이므로 shifting"}," attention to systemic prevention. It invites employers ",{"id":"35-3","ix":3,"opts":["adopting","to adopt"],"correct":1,"tag":"준동사","exp":"invite + 목적어 + to부정사"}," structural interventions rather than relying solely on individual-level remedies. In practice, this means clinicians should collaborate with occupational health and leadership ",{"id":"35-4","ix":4,"opts":["to address","addressing"],"correct":0,"tag":"준동사","exp":"목적을 나타내는 to부정사"}," root causes. Individuals can help themselves recover from burnout by changing patterns that contribute to stress. It signaled a shift away from viewing burnout as a personal failing or a matter of individual resilience, toward understanding it as a structural issue ",{"id":"35-5","ix":5,"opts":["rooted","rooting"],"correct":0,"tag":"분사","exp":"'뿌리를 둔' — 수동의 과거분사"}," in organizational culture, leadership practices, and the broader socio-economic context of work. This reframing is essential, ",{"id":"35-6","ix":6,"opts":["as","like"],"correct":0,"tag":"접속사","exp":"뒤에 절(it opens ~)이 오므로 접속사 as(~이므로)"}," it opens the door to systemic interventions and policy-level changes rather than placing the burden solely on individuals to cope or adapt."]},{"num":36,"title":"소리는 뇌가 만드는 심리적 개념","parts":["All sound begins with some kind of motion, something ",{"id":"36-1","ix":1,"opts":["that","what"],"correct":0,"tag":"관계대명사","exp":"선행사 something이 있으므로 that"}," disturbs molecules in air, water, steel, wood, or other medium. Isaac Newton noted that light waves ",{"id":"36-2","ix":2,"opts":["are","is"],"correct":0,"tag":"수일치","exp":"주어 light waves가 복수이므로 are"}," colorless; the perception of color only ",{"id":"36-3","ix":3,"opts":["occurs","occur"],"correct":0,"tag":"수일치","exp":"주어 the perception이 단수이므로 occurs"}," in the brain of a living organism. The same is true of sound. Thus perception of sound begins at our eardrums — before it hits our eardrums, it is nothing more than the disturbance of molecules. We can measure that disturbance with gauges and instruments, but ",{"id":"36-4","ix":4,"opts":["unless","until"],"correct":1,"tag":"접속사","exp":"'뇌에 닿기 전까지는'이라는 시점을 나타내는 until"}," it hits a brain, it is not sound. You may have heard the old philosophical riddle, \"If a tree falls in the forest and no one is there ",{"id":"36-5","ix":5,"opts":["hearing","to hear"],"correct":1,"tag":"준동사","exp":"'들을 사람' — 명사를 뒤에서 꾸미는 to부정사"}," it, does it make a sound?\" No, because sound is a psychological concept, a product of brains. That tree will disturb molecules and make a mess, but if no creature hears it, no bird, fox, or human, it has not ",{"id":"36-6","ix":6,"opts":["make","made"],"correct":1,"tag":"조동사+과거분사","exp":"has not + 과거분사 made"}," sound."]},{"num":37,"title":"원격 근무가 만드는 인위적 틈","parts":["When people are collaborating face to face they can easily see each other and the range of different communication cues ",{"id":"37-1","ix":1,"opts":["using","being used"],"correct":1,"tag":"분사","exp":"'사용되고 있는' — 수동의 현재분사 being used"},", so the task space is a subset of the communication space. Ishii, a professor at the MIT Media Lab, describes this as seamless communication ",{"id":"37-2","ix":2,"opts":["because of","because"],"correct":1,"tag":"접속사/전치사","exp":"뒤에 절(there is ~)이 오므로 접속사 because"}," there is no functional separation between the task and communication space. However, when people are working remotely, the task space is often ",{"id":"37-3","ix":3,"opts":["separating","separated"],"correct":1,"tag":"수동태","exp":"작업 공간이 '분리되는' 대상이므로 수동태"}," from the communication space. For example, when video conferencing, people may have the face of their collaborator on one screen, while ",{"id":"37-4","ix":4,"opts":["looking","looked"],"correct":0,"tag":"분사구문","exp":"주어 people이 look하는 능동 관계이므로 looking"}," at a shared document on another. In this case, it is impossible ",{"id":"37-5","ix":5,"opts":["to see","seeing"],"correct":0,"tag":"준동사","exp":"가주어 it에 대응하는 진주어 to부정사"}," many of the remote collaborator's communication cues at the same time as looking at the task space. So, there is an artificial seam between the communication space and task space. This is the type of impact of remote communication technology that ",{"id":"37-6","ix":6,"opts":["needs","need"],"correct":0,"tag":"수일치","exp":"관계대명사 that의 선행사 the type이 단수이므로 needs"}," to be predicted through communication models."]},{"num":38,"title":"반복하면 더 '진실'하게 들린다","parts":["In 1977, psychologists Lynn Hasher and David Goldstein asked a group of college students ",{"id":"38-1","ix":1,"opts":["how certain they were","how certain were they"],"correct":0,"tag":"간접의문문","exp":"간접의문문은 '의문사 + 주어 + 동사' 어순"}," that sixty general-knowledge trivia-like statements were either true or false. The students were asked ",{"id":"38-2","ix":2,"opts":["to evaluate","evaluating"],"correct":0,"tag":"준동사","exp":"be asked to + 동사원형"}," the sixty statements three times, at two-week intervals. Crucially, only twenty of the statements were repeated each time; the other forty ",{"id":"38-3","ix":3,"opts":["were","was"],"correct":0,"tag":"수일치","exp":"주어 the other forty가 복수이므로 were"}," new. The researchers then compared the 'truth-ratings' of the ",{"id":"38-4","ix":4,"opts":["repeating","repeated"],"correct":1,"tag":"분사","exp":"'반복된' 진술 — 수동의 과거분사"}," versus non-repeated statements. What they found was astonishing. Regardless of whether the statement was true or false, belief in the truth of the claim ",{"id":"38-5","ix":5,"opts":["raised","went up"],"correct":1,"tag":"동사","exp":"목적어 없이 '올라갔다'는 자동사 went up (raise는 목적어 필요)"}," as a function of repetition. In other words, ",{"id":"38-6","ix":6,"opts":["more often","the more often"],"correct":1,"tag":"비교급","exp":"'the + 비교급 ~, the + 비교급 ...' 구문"}," you hear a statement, the more \"true\" it sounds. This became known as the illusory truth effect."]},{"num":39,"title":"수심과 압력, 호흡 기체의 공급","parts":["The human body on the Earth's surface experiences constant air pressure equal to 16-18 tons per square meter of ",{"id":"39-1","ix":1,"opts":["their","its"],"correct":1,"tag":"대명사","exp":"선행사 The human body가 단수이므로 its"}," body surface. However, this pressure is not felt because external pressure ",{"id":"39-2","ix":2,"opts":["balances","is balanced"],"correct":1,"tag":"수동태","exp":"'균형이 맞춰지는' 대상이므로 수동태"}," by internal pressure in the lungs and air cavities of the body. During dives, in addition to atmospheric pressure, the pressure of the water also acts on the human body. ",{"id":"39-3","ix":3,"opts":["When submerging","When submerged"],"correct":1,"tag":"분사구문","exp":"인간이 '잠기는' 대상이므로 수동 분사구문 When submerged"}," underwater, ",{"id":"39-4","ix":4,"opts":["to avoid","avoiding"],"correct":0,"tag":"준동사","exp":"목적을 나타내는 to부정사"}," feeling the pressure of the surrounding environment, it is necessary to maintain the condition of equal external and internal pressure. To achieve this, air or a breathing mixture is supplied to the diver under pressure equal to the pressure ",{"id":"39-5","ix":5,"opts":["applied","applying"],"correct":0,"tag":"분사","exp":"'가해지는' 압력 — 수동의 과거분사"}," by the surrounding water. Water pressure increases ",{"id":"39-6","ix":6,"opts":["proportionally","proportional"],"correct":0,"tag":"형용사/부사","exp":"동사 increases를 수식하는 부사 proportionally"}," with depth. It increases by 1 bar for every 10 meters. It follows that a diver at a depth of 10 meters ",{"id":"39-7","ix":7,"opts":["experiences","experience"],"correct":0,"tag":"수일치","exp":"주어 a diver가 단수이므로 experiences"}," a pressure of 2 bar, and to stabilize pressure, the supply of a breathing mixture under pressure of 2 atmospheres is required."]},{"num":40,"title":"위협받는 미역취는 크게 외친다","parts":["Researchers recently found that goldenrods that live in peaceful areas without much threat from predators will issue chemical alarm calls that are incredibly specific — comprehensible only to their close kin — on the rare occasion they ",{"id":"40-1","ix":1,"opts":["attack","are attacked"],"correct":1,"tag":"수동태","exp":"'공격당할' 때이므로 수동태 are attacked"},". But goldenrods in more hostile territory signal to their neighbors using chemical phrases easily ",{"id":"40-2","ix":2,"opts":["understanding","understood"],"correct":1,"tag":"분사","exp":"'이해되는' — 수동의 과거분사"}," by all the goldenrod in the area, not just their biological kin. Instead of ",{"id":"40-3","ix":3,"opts":["used","using"],"correct":1,"tag":"준동사","exp":"전치사 of 뒤에는 동명사 using"}," coded whisper networks, these goldenrod broadcast the threat over loudspeaker, so to speak. It is the first time research has confirmed that these chemical communications are beneficial not only to the plant ",{"id":"40-4","ix":4,"opts":["receiving","received"],"correct":0,"tag":"분사","exp":"'메시지를 받는' 식물 — 능동의 현재분사"}," them but also to the sender. When times are truly tough, you do not want to be ",{"id":"40-5","ix":5,"opts":["left","leaving"],"correct":0,"tag":"수동태","exp":"'홀로 남겨진' 상태이므로 be + 과거분사"}," standing in a field alone. There will be no one ",{"id":"40-6","ix":6,"opts":["to mate","mating"],"correct":0,"tag":"준동사","exp":"'짝지을 사람' — 명사를 뒤에서 꾸미는 to부정사"}," with, no one to help bring in pollinators."]},{"num":41,"title":"다크 패턴과 지속가능한 웹 디자인","parts":["Patterns such as infinite scroll, autoplaying videos, or ",{"id":"41-1","ix":1,"opts":["requiring","require"],"correct":0,"tag":"준동사","exp":"such as 뒤 명사들과 병렬을 이루는 동명사 requiring"}," an account just to make a purchase all interfere with the user's control over their own experience. From a sustainability perspective, many of these patterns encourage overconsumption of data and attention. Infinite scroll keeps ",{"id":"41-2","ix":2,"opts":["loading","to load"],"correct":0,"tag":"준동사","exp":"keep + 동명사 (~하는 것을 계속하다)"}," new content whether the user wants it or not, increasing data usage and device processing. Autoplay forces media ",{"id":"41-3","ix":3,"opts":["to load","loading"],"correct":0,"tag":"준동사","exp":"force + 목적어 + to부정사"}," and play even for people who may never watch it. These choices consume more energy on both the user's device and the servers ",{"id":"41-4","ix":4,"opts":["delivered","delivering"],"correct":1,"tag":"분사","exp":"'콘텐츠를 전달하는' 서버 — 능동의 현재분사"}," the content. Take the decision by a popular music streaming platform to replace static album artwork with short video loops by default. This change significantly increases data usage and battery consumption, while the option to disable it ",{"id":"41-5","ix":5,"opts":["buries","is buried"],"correct":1,"tag":"수동태","exp":"'묻혀 있다'는 수동태"}," deep in the settings. As a result, most users consume more resources ",{"id":"41-6","ix":6,"opts":["if","unless"],"correct":1,"tag":"접속사","exp":"'~하지 않으면'이라는 조건의 unless"}," they actively search for a way to opt out.<br><br>It is important to acknowledge that web design always nudges behavior in some way. Showing consequences and highlighting options are all forms of influence. The ethical line is not whether nudging exists, but whether it is transparent, reversible, and aligned with the user's interests. In many cases, the most responsible approach is to make the lower-impact option the default, while keeping alternatives clearly available. Defaults are powerful, and when chosen carefully, they can reduce environmental impact without removing user agency."]},{"num":42,"title":"41·42번 공통 지문 — 기본값의 힘","parts":["Patterns such as infinite scroll, autoplaying videos, or requiring an account just to make a purchase all interfere with the user's control over their own experience. From a sustainability perspective, many of these patterns ",{"id":"42-1","ix":1,"opts":["encourages","encourage"],"correct":1,"tag":"수일치","exp":"주어 many of these patterns이 복수이므로 encourage"}," overconsumption of data and attention. Infinite scroll keeps loading new content whether the user wants it or not, ",{"id":"42-2","ix":2,"opts":["increased","increasing"],"correct":1,"tag":"분사구문","exp":"주어 Infinite scroll이 increase하는 능동 관계이므로 increasing"}," data usage and device processing. Autoplay forces media to load and play even for people ",{"id":"42-3","ix":3,"opts":["which","who"],"correct":1,"tag":"관계대명사","exp":"선행사 people(사람)을 받는 who"}," may never watch it. These choices consume more energy on both the user's device and the servers delivering the content. Take the decision by a popular music streaming platform ",{"id":"42-4","ix":4,"opts":["to replace","replacing"],"correct":0,"tag":"준동사","exp":"'~할 결정' — decision to + 동사원형"}," static album artwork with short video loops by default. This change significantly increases data usage and battery consumption, while the option to disable it is buried deep in the settings. As a result, most users consume more resources unless they actively search for a way to opt out.<br><br>It is important to acknowledge that web design always nudges behavior in some way. Showing consequences and highlighting options are all forms of influence. The ethical line is not ",{"id":"42-5","ix":5,"opts":["whether","that"],"correct":0,"tag":"접속사","exp":"'~인지 아닌지'를 뜻하며 but whether와 짝을 이루는 whether"}," nudging exists, but whether it is transparent, reversible, and aligned with the user's interests. In many cases, the most responsible approach is to make the lower-impact option the default, while keeping alternatives clearly available. Defaults are powerful, and when ",{"id":"42-6","ix":6,"opts":["chosen","choosing"],"correct":0,"tag":"분사구문","exp":"기본값이 '선택되는' 대상이므로 수동 분사구문 chosen"}," carefully, they can reduce environmental impact without removing user agency."]}]</script>
+<script>
+(function(){
+  var DATA = JSON.parse(document.getElementById('data').textContent);
+  var TOTAL = 0, MAP = {};
+  DATA.forEach(function(c){
+    c.blanks = [];
+    c.parts.forEach(function(p){
+      if (typeof p === 'object' && p && p.id){ c.blanks.push(p); MAP[p.id] = {card:c, b:p}; TOTAL++; }
+    });
+    c.n = c.blanks.length;
+  });
+
+  var KEY = 'eng_grammar_2026_10_v1';
+  var state = { answers:{}, order:[], reveal:false };
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (raw){ var s = JSON.parse(raw); if (s && typeof s === 'object'){ state.answers = s.answers || {}; state.order = s.order || []; state.reveal = !!s.reveal; } }
+  } catch(e){}
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+  var list = document.getElementById('list');
+  var jump = document.getElementById('jump');
+  var bar  = document.getElementById('bar');
+  var stat = document.getElementById('stat');
+  var foot = document.getElementById('foot');
+  var toastEl = document.getElementById('toast');
+  var toastT = null;
+  function toast(msg){
+    toastEl.textContent = msg; toastEl.classList.add('on');
+    clearTimeout(toastT); toastT = setTimeout(function(){ toastEl.classList.remove('on'); }, 1900);
+  }
+
+  function orderedCards(){
+    if (!state.order || state.order.length !== DATA.length) return DATA.slice();
+    var byNum = {}; DATA.forEach(function(c){ byNum[c.num] = c; });
+    var out = [];
+    state.order.forEach(function(n){ if (byNum[n]) { out.push(byNum[n]); delete byNum[n]; } });
+    DATA.forEach(function(c){ if (byNum[c.num]) out.push(c); });
+    return out;
+  }
+
+  function buildCard(c){
+    var art = document.createElement('article');
+    art.className = 'card'; art.id = 'c' + c.num; art.dataset.num = c.num;
+
+    var hd = document.createElement('div'); hd.className = 'card-hd';
+    var num = document.createElement('span'); num.className = 'num'; num.textContent = c.num + '번';
+    var ttl = document.createElement('div'); ttl.className = 'ttl'; ttl.textContent = c.title;
+    var cnt = document.createElement('span'); cnt.className = 'cnt'; cnt.id = 'cnt' + c.num; cnt.textContent = '0/' + c.n;
+    hd.appendChild(num); hd.appendChild(ttl); hd.appendChild(cnt);
+
+    var body = document.createElement('div'); body.className = 'body';
+    var p = document.createElement('p');
+    c.parts.forEach(function(part){
+      if (typeof part === 'string'){ p.insertAdjacentHTML('beforeend', part); return; }
+      var wrap = document.createElement('span');
+      wrap.className = 'blank'; wrap.id = 'b_' + part.id;
+      var bn = document.createElement('span'); bn.className = 'bn'; bn.textContent = part.ix; wrap.appendChild(bn);
+      part.opts.forEach(function(label, i){
+        var o = document.createElement('button');
+        o.type = 'button'; o.className = 'opt'; o.textContent = label;
+        o.dataset.b = part.id; o.dataset.i = i;
+        if (i === part.correct) o.classList.add('correct');
+        wrap.appendChild(o);
+      });
+      p.appendChild(wrap);
+    });
+    body.appendChild(p);
+
+    var ew = document.createElement('div'); ew.className = 'exp-wrap';
+    var eb = document.createElement('button'); eb.type = 'button'; eb.className = 'exp-btn';
+    eb.textContent = '💡 해설 보기'; ew.appendChild(eb);
+    var ol = document.createElement('ol'); ol.className = 'exps'; ol.id = 'ex' + c.num;
+    c.blanks.forEach(function(b){
+      var li = document.createElement('li'); li.className = 'exp-line'; li.id = 'e_' + b.id;
+      li.innerHTML = '<span class="en">' + b.ix + '</span><span class="tag">' + b.tag + '</span>'
+        + '<span class="ans">' + b.opts[b.correct] + '</span><span class="why">' + b.exp + '</span>';
+      ol.appendChild(li);
+    });
+    ew.appendChild(ol);
+
+    eb.addEventListener('click', function(){
+      var open = ol.classList.toggle('open');
+      eb.classList.toggle('on', open);
+      eb.textContent = open ? '💡 해설 접기' : '💡 해설 보기';
+      if (open) { Array.prototype.forEach.call(ol.children, function(li){ li.classList.add('show'); }); }
+      else if (!state.reveal) { syncShown(c); }
+    });
+
+    art.appendChild(hd); art.appendChild(body); art.appendChild(ew);
+    return art;
+  }
+
+  function syncShown(c){
+    var ol = document.getElementById('ex' + c.num);
+    if (!ol) return;
+    c.blanks.forEach(function(b){
+      var li = document.getElementById('e_' + b.id);
+      var a = state.answers[b.id];
+      li.classList.toggle('show', a !== undefined || state.reveal);
+      if (a === undefined) return;
+      var ok = a === b.correct;
+      li.classList.toggle('okcentry', ok);
+      li.classList.toggle('nox', !ok);
+    });
+  }
+
+  function paintBlank(bid){
+    var wrap = document.getElementById('b_' + bid);
+    var info = MAP[bid]; if (!wrap || !info) return;
+    var b = info.b;
+    var a = state.answers[bid];
+    wrap.classList.remove('ok','no');
+    Array.prototype.forEach.call(wrap.querySelectorAll('.opt'), function(o){
+      o.classList.remove('correct','wrong');
+      if (+o.dataset.i === b.correct) o.classList.add('correct');
+      if (a !== undefined && +o.dataset.i === a && a !== b.correct) o.classList.add('wrong');
+    });
+    if (a === undefined) return;
+    wrap.classList.add(a === b.correct ? 'ok' : 'no');
+  }
+
+  function cardStatus(c){
+    var done = 0;
+    c.blanks.forEach(function(b){ if (state.answers[b.id] !== undefined) done++; });
+    var art = document.getElementById('c' + c.num);
+    var cnt = document.getElementById('cnt' + c.num);
+    if (cnt) cnt.textContent = done + '/' + c.n;
+    if (art){ art.classList.toggle('full', done === c.n); art.classList.toggle('half', done > 0 && done < c.n); }
+    var chip = jump.querySelector('[data-jump="' + c.num + '"]');
+    if (chip){
+      chip.classList.toggle('done', done === c.n);
+      var wrong = c.blanks.some(function(b){ var a = state.answers[b.id]; return a !== undefined && a !== b.correct; });
+      chip.classList.toggle('hasq', done > 0 && done < c.n);
+      chip.classList.toggle('no-dot', wrong);
+    }
+    syncShown(c);
+  }
+
+  function stats(){
+    var done = 0, right = 0;
+    Object.keys(state.answers).forEach(function(id){
+      if (!MAP[id]) return;
+      done++;
+      if (state.answers[id] === MAP[id].b.correct) right++;
+    });
+    bar.style.width = (TOTAL ? (done / TOTAL * 100) : 0).toFixed(1) + '%';
+    var acc = done ? Math.round(right / done * 100) : null;
+    stat.innerHTML = '<b>' + done + '</b> / ' + TOTAL + ' 어법 완료 · 정답률 <i>' + (acc === null ? '—' : acc + '%') + '</i>';
+    foot.innerHTML = '전체 ' + DATA.length + '지문 · 어법 빈칸 ' + TOTAL + '개<br>'
+      + '완료 <b>' + done + '</b>개 · 정답 <b>' + right + '</b>개'
+      + (done ? ' · 오답 <b>' + (done - right) + '</b>개' : '')
+      + '<br><button class="reset2" id="btnReset2">↺ 전체 초기화</button>';
+    var r2 = document.getElementById('btnReset2');
+    if (r2) r2.addEventListener('click', doReset);
+  }
+
+  function refresh(){ stats(); DATA.forEach(cardStatus); }
+
+  function render(){
+    list.innerHTML = '';
+    orderedCards().forEach(function(c){ list.appendChild(buildCard(c)); });
+    refresh();
+  }
+
+  /* jump chips */
+  DATA.forEach(function(c){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip'; b.dataset.jump = c.num; b.textContent = c.num;
+    b.addEventListener('click', function(){ jumpTo(c.num); });
+    jump.appendChild(b);
+  });
+  var all = document.createElement('button');
+  all.type = 'button'; all.className = 'chip act'; all.dataset.jump = 'all'; all.textContent = '전체';
+  all.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); setActive(null); });
+  jump.insertBefore(all, jump.firstChild);
+  var sep = document.createElement('div'); sep.className = 'sep'; jump.insertBefore(sep, all.nextSibling);
+
+  function setActive(num){
+    Array.prototype.forEach.call(jump.querySelectorAll('.chip'), function(ch){
+      var on = num === null ? ch.dataset.jump === 'all' : ch.dataset.jump === String(num);
+      ch.classList.toggle('act', on);
+      if (on && num !== null) centerChip(ch);
+    });
+  }
+  function centerChip(chip){
+    var r = chip.getBoundingClientRect(), rr = jump.getBoundingClientRect();
+    if (r.left < rr.left + 6 || r.right > rr.right - 6){
+      jump.scrollLeft += (r.left - rr.left) - (rr.width / 2 - r.width / 2);
+    }
+  }
+  function jumpTo(num){
+    var el = document.getElementById('c' + num);
+    if (!el) return;
+    setActive(num);
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+    el.classList.add('flash');
+    setTimeout(function(){ el.classList.remove('flash'); }, 1200);
+  }
+  function hdH(){
+    var h = document.getElementById('hd').offsetHeight;
+    document.documentElement.style.setProperty('--hdh', h + 'px');
+  }
+
+  /* answer tap */
+  list.addEventListener('click', function(ev){
+    var btn = ev.target.closest ? ev.target.closest('.opt') : null;
+    if (!btn) return;
+    var bid = btn.dataset.b, info = MAP[bid];
+    if (!info) return;
+    if (state.reveal){ toast('정답 보기 중이에요. 끄고 풀어 보세요!'); return; }
+    if (state.answers[bid] !== undefined) return;
+    state.answers[bid] = +btn.dataset.i;
+    paintBlank(bid);
+    cardStatus(info.card);
+    stats(); save();
+    if (+btn.dataset.i !== info.b.correct){
+      var li = document.getElementById('e_' + bid);
+      if (li){ var ol = li.parentNode; if (!ol.classList.contains('open')){ ol.classList.add('open');
+        var eb = ol.parentNode.querySelector('.exp-btn'); if (eb){ eb.classList.add('on'); eb.textContent = '💡 해설 접기'; } } }
+    }
+  });
+
+  /* tools */
+  document.getElementById('btnShuffle').addEventListener('click', function(){
+    var arr = DATA.map(function(c){ return c.num; });
+    for (var i = arr.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+    state.order = arr; save(); render(); hdH(); setActive(null);
+    window.scrollTo({top:0, behavior:'smooth'});
+    toast('🔀 지문 순서를 섞었어요');
+  });
+
+  document.getElementById('btnWrong').addEventListener('click', function(){
+    var ids = [], firstCard = null;
+    Object.keys(state.answers).forEach(function(id){
+      var info = MAP[id]; if (!info) return;
+      if (state.answers[id] !== info.b.correct){
+        ids.push(id);
+        if (firstCard === null || (state.order.length && state.order.indexOf(info.card.num) < state.order.indexOf(firstCard))) firstCard = info.card.num;
+      }
+    });
+    if (firstCard === null){
+      Object.keys(state.answers).forEach(function(id){ var info = MAP[id]; if (info && !firstCard) firstCard = info.card.num; });
+    }
+    if (!ids.length){ toast('틀린 어법이 없어요 🎉'); return; }
+    ids.forEach(function(id){ delete state.answers[id]; paintBlank(id); });
+    save(); refresh();
+    toast('✗ 틀린 ' + ids.length + '개를 다시 풀 수 있게 했어요');
+    if (firstCard) setTimeout(function(){ jumpTo(firstCard); }, 150);
+  });
+
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.reveal = !state.reveal; save();
+    document.body.classList.toggle('reveal', state.reveal);
+    this.classList.toggle('on', state.reveal);
+    this.textContent = state.reveal ? '🙈 정답 가리기' : '👁 정답 보기';
+    DATA.forEach(function(c){
+      var ol = document.getElementById('ex' + c.num);
+      var eb = ol ? ol.parentNode.querySelector('.exp-btn') : null;
+      if (state.reveal){
+        if (ol && !ol.classList.contains('open')){ ol.classList.add('open'); if (eb){ eb.classList.add('on'); eb.textContent = '💡 해설 접기'; } }
+      } else {
+        if (ol){ ol.classList.remove('open'); }
+        if (eb){ eb.classList.remove('on'); eb.textContent = '💡 해설 보기'; }
+      }
+      syncShown(c);
+    });
+    toast(state.reveal ? '👁 정답과 해설을 모두 펼쳤어요' : '다시 풀 준비 완료!');
+  });
+
+  function doReset(){
+    if (!confirm('모든 어법 답과 순서를 처음 상태로 되돌릴까요?')) return;
+    state.answers = {}; state.order = []; state.reveal = false; save();
+    document.body.classList.remove('reveal');
+    var rv = document.getElementById('btnReveal'); rv.classList.remove('on'); rv.textContent = '👁 정답 보기';
+    render(); hdH(); setActive(null);
+    window.scrollTo({top:0, behavior:'smooth'});
+    toast('↺ 처음 상태로 되돌렸어요');
+  }
+  document.getElementById('btnReset').addEventListener('click', doReset);
+
+  /* init */
+  if (state.reveal){
+    document.body.classList.add('reveal');
+    var rv = document.getElementById('btnReveal'); rv.classList.add('on'); rv.textContent = '🙈 정답 가리기';
+  }
+  render();
+  hdH();
+  window.addEventListener('resize', hdH);
+  window.addEventListener('orientationchange', function(){ setTimeout(hdH, 250); });
+
+  /* active chip follows scroll */
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      var best = null;
+      entries.forEach(function(en){ if (en.isIntersecting) best = en.target.dataset.num; });
+      if (best) setActive(best);
+    }, { rootMargin: '-130px 0px -55% 0px', threshold: 0 });
+    DATA.forEach(function(c){ var el = document.getElementById('c' + c.num); if (el) io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
