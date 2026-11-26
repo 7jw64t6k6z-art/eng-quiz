@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>2026 10월 고1 영어 변형문제</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#1c2230; --sub:#6a7280; --line:#e6e8ec;
+  --accent:#3563e9; --accent-soft:#eef2fe; --accent-line:#c9d7fb;
+  --ok:#0f7a55; --ok-bg:#e7f7f0; --ok-line:#9dd8c2;
+  --no:#c5374b; --no-bg:#fdeef0; --no-line:#f3b6bf;
+  --radius:16px;
+}
+*,*::before,*::after{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0; padding:0;}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Pretendard","Pretendard Variable",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR","Noto Sans CJK KR","Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.6; word-break:keep-all;
+  -webkit-text-size-adjust:100%; text-size-adjust:100%;
+}
+button{font-family:inherit;}
+/* ---------- header ---------- */
+.hd{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line); padding-top:env(safe-area-inset-top);}
+.hd-top{display:flex; align-items:center; gap:8px; padding:9px 14px 5px;}
+.hd-title{font-size:14.5px; font-weight:800; letter-spacing:-.3px; flex:1 1 auto; min-width:0;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.hd-title em{font-style:normal; color:var(--accent); font-size:11.5px; font-weight:800; margin-left:5px;
+  background:var(--accent-soft); padding:2px 6px; border-radius:6px; vertical-align:1px;}
+.hd-actions{display:flex; gap:6px; flex:0 0 auto;}
+.btn{border:1px solid var(--line); background:#fff; color:var(--ink); font-size:12.5px; font-weight:700;
+  padding:6px 11px; border-radius:999px; cursor:pointer; transition:transform .08s, background .15s; white-space:nowrap;}
+.btn:active{transform:scale(.96);}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:#fff;}
+.hd-prog{display:flex; align-items:center; gap:10px; padding:0 14px 7px;}
+.bar{flex:1 1 auto; height:6px; background:#e9ebef; border-radius:999px; overflow:hidden;}
+.bar-fill{height:100%; width:0%; background:linear-gradient(90deg,#5b84f2,#3563e9); border-radius:999px;
+  transition:width .35s cubic-bezier(.4,0,.2,1);}
+.stat{font-size:11.5px; color:var(--sub); white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:600;}
+.stat b{color:var(--ok); font-size:12.5px; font-weight:800;}
+.tabs{display:flex; gap:4px; overflow-x:auto; padding:0 11px 9px; scrollbar-width:none; -ms-overflow-style:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex:0 0 auto; border:1px solid var(--line); background:#fff; color:var(--sub); font-size:11.8px;
+  font-weight:700; padding:6px 8px; border-radius:999px; cursor:pointer; white-space:nowrap; transition:.15s; letter-spacing:-.35px;}
+.tab .cnt{opacity:.55; font-weight:700; font-size:10.5px; margin-left:2px;}
+.tab.on{background:var(--accent-soft); border-color:var(--accent-line); color:var(--accent);}
+.tab.on .cnt{opacity:.8;}
+/* ---------- layout ---------- */
+main{max-width:840px; margin:0 auto; padding:14px 14px 44px;}
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 15px 17px;
+  box-shadow:0 1px 2px rgba(20,30,60,.04);}
+.card-head{display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:9px;}
+.qno{font-weight:800; font-size:15.5px; color:var(--accent); font-variant-numeric:tabular-nums; letter-spacing:-.4px;}
+.badge{font-size:10.5px; font-weight:800; padding:3px 7px; border-radius:6px; background:#f1f3f7; color:var(--sub); letter-spacing:-.2px;}
+.badge.type{background:#f4f0ff; color:#6b4fd8;}
+.badge.pos{margin-left:auto; background:transparent; color:#9aa1ad; font-weight:700; font-variant-numeric:tabular-nums;}
+.instr{font-size:14.8px; font-weight:800; line-height:1.55; margin:0 0 12px; letter-spacing:-.3px;}
+.passage{font-size:15px; line-height:1.88; letter-spacing:.05px; color:#232a3c;}
+.passage p{margin:0 0 9px;}
+.passage p:last-child{margin-bottom:0;}
+.passage i{font-style:italic;}
+.letter{background:#fbfcfe; border:1px solid #eef0f5; border-radius:12px; padding:12px 13px; line-height:1.8;}
+.gloss{font-size:12.5px !important; color:#8a92a1; line-height:1.7 !important; margin-top:8px !important;}
+/* underline points */
+u.pt{text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:3px;
+  text-decoration-color:#b7c4e6; background:#f7f9ff; border-radius:4px; padding:0 2px;
+  transition:background .2s, text-decoration-color .2s;}
+u.pt b{color:var(--accent); font-weight:800; margin-right:2px; font-size:13px;}
+u.pt.pt-ok{background:var(--ok-bg); text-decoration-color:var(--ok);}
+u.pt.pt-no{background:var(--no-bg); text-decoration-color:var(--no);}
+/* blank */
+.blk{display:inline-block; width:94px; height:1.08em; border-bottom:2px solid #a8bce6;
+  vertical-align:-.12em; margin:0 1px; font-size:0; line-height:1; color:transparent; overflow:hidden;}
+/* insertion markers */
+.mk{font-weight:800; color:var(--accent); background:var(--accent-soft); border-radius:5px;
+  padding:0 4px; font-size:13.5px; margin:0 2px;}
+/* insertion box */
+.insbox{border:1.5px solid var(--accent-line); background:#f8faff; border-radius:12px;
+  padding:11px 13px; font-size:14.5px; line-height:1.9; margin:0 0 14px;}
+.inslabel{display:block; font-size:10.5px; font-weight:800; color:var(--accent); letter-spacing:.5px; margin-bottom:5px;}
+.sumbox{border:1.5px dashed #d6dbe6; background:#fafbfd; border-radius:12px; padding:11px 13px; margin-top:12px; font-size:14.5px; line-height:2;}
+.sumbox p{margin:0;}
+/* order blocks */
+.blkbox{border-left:3px solid #dfe4ee; padding:2px 0 2px 11px; margin:0 0 11px; font-size:14.8px; line-height:1.9;}
+.blkbox:last-child{margin-bottom:0;}
+.blabel{font-weight:800; color:#6b4fd8; margin-right:3px;}
+/* choices */
+.choices{display:flex; flex-direction:column; gap:8px; margin-top:16px;}
+.ch{display:flex; gap:9px; align-items:flex-start; width:100%; text-align:left; background:#fff;
+  border:1.5px solid var(--line); border-radius:12px; padding:11px 12px; font-size:14.5px; line-height:1.6;
+  color:var(--ink); cursor:pointer; transition:border-color .15s, background .15s, transform .08s; font-weight:500;}
+.ch:active{transform:scale(.995);}
+.ch .num{flex:0 0 auto; font-weight:800; color:#98a0ae; font-size:14px; width:17px; font-variant-numeric:tabular-nums;}
+.ch:not([disabled]):hover{border-color:#cfd8e6; background:#fcfdff;}
+.ch.ok{border-color:var(--ok); background:var(--ok-bg);}
+.ch.ok .num{color:var(--ok);}
+.ch.no{border-color:var(--no); background:var(--no-bg);}
+.ch.no .num{color:var(--no);}
+.ch[disabled]{cursor:default;}
+.choices.compact{flex-direction:row; gap:8px;}
+.choices.compact .ch{justify-content:center; padding:13px 0; font-size:17px; font-weight:800; flex:1 1 0; min-width:0;}
+.choices.compact .ch .num{display:none;}
+/* feedback */
+.fb{margin-top:14px; border-radius:13px; padding:12px 13px; border:1px solid var(--line); background:#fafbfd;
+  animation:pop .24s ease-out;}
+@keyframes pop{from{opacity:0; transform:translateY(-5px);} to{opacity:1; transform:none;}}
+.fb.ok{border-color:var(--ok-line); background:var(--ok-bg);}
+.fb.no{border-color:var(--no-line); background:var(--no-bg);}
+.fb-hd{display:flex; align-items:center; gap:7px; font-weight:800; font-size:14px;}
+.fb.ok .fb-hd{color:var(--ok);}
+.fb.no .fb-hd{color:var(--no);}
+.fb-hd .sp{margin-left:auto; font-size:11.5px; font-weight:700; color:var(--sub); border:1px solid #d8dce5;
+  background:#fff; border-radius:999px; padding:3px 9px; cursor:pointer;}
+.exp{margin:11px 0 0; padding:0; list-style:none;}
+.exp li{position:relative; padding-left:22px; margin-bottom:7px; font-size:13.6px; line-height:1.72; color:#3b4253;}
+.exp li:last-child{margin-bottom:0;}
+.exp li .m{position:absolute; left:0; top:0; font-weight:800; color:#98a0ae; font-size:13px;}
+.exp li.correct{color:var(--ok); font-weight:700;}
+.exp li.correct .m{color:var(--ok);}
+.sol{margin-top:11px; padding:11px 12px; background:#fff; border-radius:10px; border:1px dashed #d9dfea;
+  font-size:13.5px; line-height:1.78; color:#2f374a;}
+.sol b{color:var(--accent);}
+.sum{margin-top:8px; font-size:13px; color:#4a5265; background:#f4f6fa; border-radius:10px; padding:10px 12px; line-height:1.7;}
+.sum b{color:#334155;}
+/* nav */
+.navrow{display:flex; align-items:center; gap:8px; margin-top:12px;}
+.navrow .btn{padding:10px 15px; font-size:13.5px; border-radius:12px;}
+.navrow .btn:disabled{opacity:.4; cursor:default;}
+.jump{flex:1 1 auto; min-width:0; border:1px solid var(--line); background:#fff; border-radius:12px;
+  padding:10px 12px; font-size:12.5px; color:var(--sub); font-weight:700; width:100%;}
+.sound-hint{display:none;}
+/* minimap */
+.mmwrap{margin-top:16px;}
+.mmtitle{font-size:11.5px; font-weight:800; color:#98a0ae; letter-spacing:.3px; margin:0 0 7px 2px;}
+.minimap{display:grid; grid-template-columns:repeat(auto-fill,minmax(33px,1fr)); gap:6px;}
+.mm{aspect-ratio:1/1; border-radius:9px; border:1px solid var(--line); background:#fff; font-size:11.5px;
+  font-weight:700; color:#98a0ae; display:flex; align-items:center; justify-content:center; cursor:pointer;
+  padding:0; font-variant-numeric:tabular-nums; transition:.15s;}
+.mm.ok{background:var(--ok-bg); border-color:var(--ok-line); color:var(--ok);}
+.mm.no{background:var(--no-bg); border-color:var(--no-line); color:var(--no);}
+.mm.cur{outline:2.5px solid var(--accent); outline-offset:1px; color:var(--accent); font-weight:800;}
+/* empty */
+.empty{text-align:center; padding:44px 18px;}
+.empty .big{font-size:34px; margin-bottom:8px;}
+.empty p{color:var(--sub); font-size:14px; margin:0 0 14px;}
+/* modal */
+.modal{position:fixed; inset:0; background:rgba(18,24,38,.45); display:flex; align-items:flex-end;
+  justify-content:center; z-index:100; opacity:0; pointer-events:none; transition:opacity .2s;}
+.modal.show{opacity:1; pointer-events:auto;}
+.sheet{background:#fff; width:100%; max-width:720px; max-height:88vh; overflow-y:auto;
+  border-radius:22px 22px 0 0; transform:translateY(20px); transition:transform .26s cubic-bezier(.4,0,.2,1);
+  padding-bottom:calc(18px + env(safe-area-inset-bottom)); -webkit-overflow-scrolling:touch;}
+.modal.show .sheet{transform:none;}
+@media(min-width:760px){ .modal{align-items:center; padding:24px;} .sheet{border-radius:20px; max-height:82vh;} }
+.sheet-hd{position:sticky; top:0; background:#fff; display:flex; align-items:center; gap:8px;
+  padding:15px 18px 12px; border-bottom:1px solid var(--line); z-index:2;}
+.sheet-hd h2{margin:0; font-size:16.5px; font-weight:800; letter-spacing:-.3px; flex:1;}
+.sheet-body{padding:16px 18px 6px;}
+.rgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:18px;}
+.rgrid .cell{background:#f7f8fb; border-radius:12px; padding:11px 8px; text-align:center;}
+.rgrid .cell .v{font-size:20px; font-weight:800; letter-spacing:-.5px; font-variant-numeric:tabular-nums;}
+.rgrid .cell .l{font-size:10.5px; color:var(--sub); font-weight:700; margin-top:2px;}
+.rgrid .cell.acc .v{color:var(--accent);}
+.rgrid .cell.okk .v{color:var(--ok);}
+.sec-t{font-size:12px; font-weight:800; color:#8b93a1; letter-spacing:.4px; margin:18px 0 9px;}
+.rrow{margin-bottom:10px;}
+.rrow .top{display:flex; align-items:baseline; gap:6px; font-size:13px; font-weight:700; margin-bottom:4px;}
+.rrow .top .pct{margin-left:auto; color:var(--sub); font-weight:800; font-variant-numeric:tabular-nums; font-size:12.5px;}
+.rrow .top .d{color:#a3aab6; font-weight:600; font-size:11.5px;}
+.mini-bar{height:7px; background:#eef0f4; border-radius:999px; overflow:hidden;}
+.mini-bar span{display:block; height:100%; border-radius:999px; background:var(--accent); transition:width .4s;}
+.mini-bar span.low{background:#e0993a;}
+.mini-bar span.vlow{background:var(--no);}
+.tipbox{background:#fff8ec; border:1px solid #f2ddb5; border-radius:12px; padding:12px 13px; font-size:13.2px; line-height:1.75; color:#6b5324; margin-top:4px;}
+.tipbox b{color:#8a5a12;}
+.acts{display:flex; flex-direction:column; gap:8px; margin:18px 0 6px;}
+.acts .btn{padding:13px; font-size:14px; border-radius:13px; font-weight:800;}
+.acts .btn.primary{padding:13px;}
+.foot{text-align:center; font-size:11.5px; color:#a3aab6; padding:18px 10px 0; line-height:1.7;}
+@media(min-width:900px){
+  .hd-top,.hd-prog,.tabs{max-width:840px; margin-left:auto; margin-right:auto;}
+}
+@media (max-width:400px){
+  .hd-title{font-size:13px;}
+  .hd-title em{font-size:10.5px; padding:2px 5px;}
+  .btn{padding:6px 9px; font-size:12px;}
+  .instr{font-size:14px;}
+  .passage{font-size:14.6px;}
+}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="hd-top">
+    <div class="hd-title">2026 10월 고1 영어<em id="totalTag">49문항</em></div>
+    <div class="hd-actions">
+      <button class="btn" id="btnResult">결과 요약</button>
+      <button class="btn" id="btnReset">다시 풀기</button>
+    </div>
+  </div>
+  <div class="hd-prog">
+    <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+    <div class="stat"><b id="statCorrect">0</b> 맞힘 · <span id="statDone">0</span> 풀이 · <span id="statRate">-</span></div>
+  </div>
+  <nav class="tabs" id="tabs"></nav>
+</header>
+
+<main>
+  <section id="cardHost"></section>
+  <div class="navrow">
+    <button class="btn" id="btnPrev">← 이전</button>
+    <select class="jump" id="jump" aria-label="문항 이동"></select>
+    <button class="btn" id="btnNext">다음 →</button>
+  </div>
+  <div class="mmwrap" id="mmwrap">
+    <p class="mmtitle">문항 바로가기</p>
+    <div class="minimap" id="minimap"></div>
+  </div>
+  <p class="foot">지문 출처 · 2026학년도 10월 고1 전국연합학력평가 영어 영역 (18~24번, 29~42번)<br>변형문제 49문항 · 오프라인에서도 바로 풀 수 있습니다.</p>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="결과 요약">
+  <div class="sheet">
+    <div class="sheet-hd">
+      <h2>결과 요약</h2>
+      <button class="btn" id="btnClose">닫기</button>
+    </div>
+    <div class="sheet-body" id="resultBody"></div>
+  </div>
+</div>
+
+<script id="qdata" type="application/json">[{"id":1,"src":18,"rng":"18-24","type":"목적","instr":"다음 글의 목적으로 가장 적절한 것은?","passage":"<div class=\"letter\">\n<p>Dear Ms. Palmer,</p>\n<p>My name is Karen Whitfield, a <b class=\"hl\">marketing assistant</b> in the marketing department. As part of my efforts to contribute more to the department, I would like to receive additional training to further develop my skills. Over the last quarter, I noticed our department needs to better attract potential customers for our products online. For this reason, I'm requesting that the company cover part of my training cost. I have recently searched for training courses and found Smart Growth Training's <b class=\"hl\">two-week</b> course that focuses on digital marketing strategies. It costs <b class=\"hl\">$1,600</b>, and I strongly believe it would be helpful for my current work. I hope you will consider my request positively.</p>\n<p>Sincerely,<br>Karen Whitfield</p>\n</div>","choices":["업무 관련 연수 비용 지원을 요청하려고","온라인 마케팅 비용 증액을 요구하려고","마케팅 부서의 업무 성과를 보고하려고","마케팅 관련 연수 개설을 제안하려고","상품 개발비 지원을 문의하려고"],"answer":0,"exp":["<b>정답.</b> \"I'm requesting that the company cover part of my training cost.\"에서 회사가 자신의 <b>연수 비용 일부를 부담</b>해 주기를 요청하고 있다.","글에는 마케팅 '비용 증액' 요구가 없다. 온라인에서 잠재 고객을 더 잘 끌어들여야 한다는 문제 인식만 있을 뿐이다.","'성과 보고'가 아니라, 자신의 역량을 더 키우기 위한 지원을 구하는 글이다.","연수를 '새로 개설'해 달라는 제안이 아니라, 이미 있는 Smart Growth Training의 2주 과정을 들으려니 비용을 지원해 달라는 요청이다.","상품 개발비가 아니라 '연수(training)' 비용에 관한 글이다."],"sol":"정답 ①. Karen은 디지털 마케팅 역량을 키우기 위해 찾아 둔 2주 과정($1,600)의 비용 일부를 회사가 부담해 주기를 Ms. Palmer에게 요청하고 있다. 목적을 묻는 문제는 첫 문장(자기소개)과 요청 문장(I'm requesting ~ / I hope you will ~)이 결정적이다.","sum":"[한줄 요약] 마케팅 보조 직원 Karen이 디지털 마케팅 연수 비용 일부를 회사가 부담해 달라고 요청하는 이메일."},{"id":2,"src":18,"rng":"18-24","type":"내용일치","instr":"다음 글의 내용과 일치하는 것은?","passage":"<div class=\"letter\">\n<p>Dear Ms. Palmer,</p>\n<p>My name is Karen Whitfield, a <b class=\"hl\">marketing assistant</b> in the marketing department. As part of my efforts to contribute more to the department, I would like to receive additional training to further develop my skills. Over the last quarter, I noticed our department needs to better attract potential customers for our products online. For this reason, I'm requesting that the company cover part of my training cost. I have recently searched for training courses and found Smart Growth Training's <b class=\"hl\">two-week</b> course that focuses on digital marketing strategies. It costs <b class=\"hl\">$1,600</b>, and I strongly believe it would be helpful for my current work. I hope you will consider my request positively.</p>\n<p>Sincerely,<br>Karen Whitfield</p>\n</div>","choices":["Karen은 마케팅 부서의 관리자(manager)이다.","Karen은 연수 비용의 일부를 회사가 부담해 주기를 바란다.","Karen이 찾은 연수 과정은 4주 과정이다.","Karen이 찾은 연수 과정의 비용은 $600이다.","Karen은 회사 내부 연수 프로그램을 추천받아 알게 되었다."],"answer":1,"exp":["'a marketing assistant'(마케팅 보조 직원)이므로 관리자(manager)가 아니다. 직책을 바꿔 놓은 대표적 오답이다.","<b>정답.</b> \"I'm requesting that the company cover part of my training cost.\" = 연수 비용의 일부 부담 요청.","'two-week course'이므로 2주 과정이다.","'It costs $1,600'이므로 $1,600이다.","\"I have recently searched for training courses and found ~\"에서 스스로 검색해 찾았음을 알 수 있다."],"sol":"정답 ②. 숫자·직책·기간처럼 세부 정보를 바꿔 놓는 것이 내용일치 문제의 단골 오답 유형이다. assistant↔manager, two-week↔four-week, $1,600↔$600을 구분해 읽자.","sum":"[한줄 요약] 마케팅 보조 직원 Karen이 '$1,600짜리 2주 디지털 마케팅 연수'의 비용 일부를 회사에 지원해 달라고 요청한다."},{"id":3,"src":19,"rng":"18-24","type":"심경","instr":"다음 글에 드러난 'I'의 심경 변화로 가장 적절한 것은?","passage":"<p>It was the last day of school before summer vacation. After months of quizzes and assignments, I couldn't wait to leave everything behind. <b class=\"hl\">Could anything be sweeter?</b> I practically danced while cleaning out my locker, and nothing could ruin my mood. As I zipped up my backpack, ready to leave, my science teacher, Mr. Manta, called me aside. \"Rafe,\" he said, \"you haven't turned in your final lab report, despite all my warnings this past month.\" <b class=\"hl\">The words hit me like cold water.</b> He was right, but I totally forgot about it. \"To make up for it, you must attend summer school,\" he added. Instead of lazy mornings and endless free time, I'd be spending my vacation at a lab table — the last thing I wanted to do with my precious summer.</p>","choices":["excited → disappointed","satisfied → jealous","nervous → pleased","frustrated → hopeful","indifferent → worried"],"answer":0,"exp":["<b>정답.</b> 방학을 앞두고 \"Could anything be sweeter?\", \"practically danced\"에서 들뜬 마음(excited)이, 실험 보고서 미제출로 여름학교에 가야 한다는 말에 \"hit me like cold water\"라며 낙담(disappointed)하는 모습이 이어진다.","만족 → 질투의 흐름이 아니다. 질투의 대상이나 근거가 글에 없다.","처음부터 긴장한 것이 아니라 신이 나 있었고, 결말도 기쁘지 않다.","좌절 → 희망이 아니라 그 반대(기대 → 낙담)의 흐름이다.","방학을 몹시 기대하고 있었으므로 무관심(indifferent)과는 거리가 멀다."],"sol":"정답 ①. 심경 문제는 ① 감정 어휘가 직접 드러난 표현(be sweeter, danced / hit me like cold water, the last thing I wanted)과 ② 사건의 방향(기대 → 통보 → 좌절)을 함께 잡아야 한다.","sum":"[한줄 요약] 방학 첫날 신이 났던 '나'가 최종 실험 보고서를 내지 않아 여름학교에 가야 한다는 통보를 받고 실망한다."},{"id":4,"src":19,"rng":"18-24","type":"어법","instr":"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?","passage":"<p>It was the last day of school before summer vacation. After months of quizzes and assignments, I couldn't wait <u class=\"pt\"><b>①</b> to leave</u> everything behind. Could anything be sweeter? I practically danced while cleaning out my locker, and nothing could ruin my mood. As <u class=\"pt\"><b>②</b> I zipping up</u> my backpack, ready to leave, my science teacher, Mr. Manta, called me aside. \"Rafe,\" he said, \"you haven't turned in your final lab report, despite all my <u class=\"pt\"><b>③</b> warnings</u> this past month.\" The words hit me like cold water. He was right, but I totally <u class=\"pt\"><b>④</b> forgot about</u> it. \"To make up for it, you must attend summer school,\" he added. Instead of lazy mornings and endless free time, I'd be <u class=\"pt\"><b>⑤</b> spending</u> my vacation at a lab table — the last thing I wanted to do with my precious summer.</p>","choices":["①","②","③","④","⑤"],"answer":1,"exp":["couldn't wait <b>to leave</b> — 'wait to do(~하기를 기다리다)' 구문으로 옳다.","<b>정답.</b> 「As + 주어 + 동사」의 절이 와야 하는 자리에 동사 없이 -ing만 쓰였다. <b>As I zipped up</b>(또는 분사구문 Zipping up)으로 고쳐야 한다.","all my <b>warnings</b> — 복수 가산명사로 옳다.","<b>forgot about</b> it — forget about + 목적어 형태로 옳다.","I'd (=I would) <b>be spending</b> — 과거 시점에서 본 미래진행으로 옳다."],"sol":"정답 ②. 접속사 as 뒤에는 '주어 + 정동사'가 와야 한다. 동사 자리에 준동사(zipping)가 들어가 절이 성립하지 않는 것이 가장 흔한 어법 오류 유형이다.","sum":"[한줄 요약] 들뜬 방학 첫날, 실험 보고서 미제출로 여름학교행이 통보되어 좌절하는 이야기. as절에는 반드시 정동사가 온다."},{"id":5,"src":20,"rng":"18-24","type":"주장","instr":"다음 글에서 필자가 주장하는 바로 가장 적절한 것은?","passage":"<p>We might not think of ourselves as global citizens yet, but it's both necessary and possible to do so. Some people are skeptical about the idea of global citizenship, but for most of human history, people didn't think of themselves as citizens of nation-states. After all, for most of human history, nation-states didn't exist. The rise of nation-states over the last few centuries has led people to add state citizenship to other identities, such as family, people group, or religion. <b class=\"hl\">Given the connections between people around the world and the common challenges we face, we need to layer global citizenship on to these other identities.</b> This doesn't mean that global citizenship replaces these other identities. There's not a single story about our identities. Instead, it's precisely because we have obligations to our families, those in our community, and those around the world.</p>","choices":["국제 문제 해결을 위해 국가 정체성을 강화해야 한다.","국제 사회의 발전을 위해 세계 시민의 의무를 우선시해야 한다.","세계 시민 정체성을 확립하려면 국가 간 협력을 확대해야 한다.","세계 시민 교육을 통해 다른 문화를 존중하는 태도를 길러야 한다.","세계인의 연결과 공통 과제를 고려해 세계 시민 정체성을 더해야 한다."],"answer":4,"exp":["국가 정체성을 '강화'하라는 것이 아니라, 국가 정체성 위에 세계 시민 정체성을 '추가'하자는 것이다.","'우선시'(다른 정체성을 누르고)가 아니라 '대체하지 않고 함께 쌓자'는 것이 글의 핵심이다. \"This doesn't mean that global citizenship replaces these other identities.\"","국가 간 협력 확대는 언급되지 않는다. 논점은 개인의 정체성 구성 방식이다.","세계 시민 교육이나 문화 존중 태도는 이 글에 나오지 않는다.","<b>정답.</b> \"Given the connections between people around the world and the common challenges we face, we need to layer global citizenship on to these other identities.\""],"sol":"정답 ⑤. 주장 문제는 ① 'Given/Therefore/we need to'가 붙은 문장, ② 'This doesn't mean ~ / Instead ~'로 오해를 바로잡는 문장을 찾으면 해결된다. 이 글은 '세계 시민 정체성을 기존 정체성 위에 겹쳐 놓아야 한다'가 주장이다.","sum":"[한줄 요약] 세계 시민 정체성은 가족·공동체·국가 정체성을 대체하는 것이 아니라, 세계적 연결과 공통 과제 때문에 그 위에 한 겹 더해져야 한다."},{"id":6,"src":20,"rng":"18-24","type":"빈칸","instr":"다음 빈칸에 들어갈 말로 가장 적절한 것은?","passage":"<p>We might not think of ourselves as global citizens yet, but it's both necessary and possible to do so. Some people are skeptical about the idea of global citizenship, but for most of human history, people didn't think of themselves as citizens of nation-states. After all, for most of human history, nation-states didn't exist. The rise of nation-states over the last few centuries has led people to add state citizenship to other identities, such as family, people group, or religion. Given the connections between people around the world and the common challenges we face, we need to <span class=\"blk\">________________</span> global citizenship on to these other identities. This doesn't mean that global citizenship replaces these other identities. There's not a single story about our identities. Instead, it's precisely because we have obligations to our families, those in our community, and those around the world.</p>","choices":["layer","remove","compare","devote","reduce"],"answer":0,"exp":["<b>정답.</b> layer A on(to) B = 'A를 B 위에 겹쳐 쌓다'. 앞 문장의 'add state citizenship to other identities'와 같은 취지로, 세계 시민 정체성을 기존 정체성 위에 한 겹 더 포개라는 뜻이다.","remove(제거하다)는 뒤의 'on to these other identities'와 어울리지 않고, '더한다'는 글의 방향과 정반대다.","compare(비교하다)는 A with/to B 형태로 쓰며, 'global citizenship on to ~'와 연결되지 않는다.","devote(바치다)는 devote A to B 형태이고, '정체성을 겹쳐 놓는다'는 의미를 낼 수 없다.","reduce(줄이다)는 글의 논지(정체성을 더한다)와 반대다."],"sol":"정답 ①. 빈칸 앞뒤의 'add A to B' → 'layer A on to B'라는 동의 표현 반복을 잡는 것이 핵심이다. 빈칸 뒤의 전치사 'on to'가 결정적 단서다.","sum":"[한줄 요약] 국가 정체성이 다른 정체성 위에 더해졌듯, 세계 시민 정체성도 기존 정체성 위에 겹쳐 쌓아야 한다."},{"id":7,"src":20,"rng":"18-24","type":"어법","instr":"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?","passage":"<p>We might not think of ourselves as global citizens yet, but it's both necessary and possible <u class=\"pt\"><b>①</b> to do</u> so. Some people are skeptical about the idea of global citizenship, but for most of human history, people didn't think of themselves as <u class=\"pt\"><b>②</b> citizens</u> of nation-states. After all, for most of human history, nation-states didn't exist. The rise of nation-states over the last few centuries <u class=\"pt\"><b>③</b> has led</u> people to add state citizenship to other identities, such as family, people group, or religion. Given the connections between people around the world and the common challenges <u class=\"pt\"><b>④</b> we face</u>, we need to layer global citizenship on to these other identities. This doesn't mean that global citizenship <u class=\"pt\"><b>⑤</b> replace</u> these other identities. There's not a single story about our identities.</p>","choices":["①","②","③","④","⑤"],"answer":4,"exp":["to do so는 앞의 'think of ourselves as global citizens'를 받는 to부정사로 옳다.","주격 보어 자리의 복수 명사 citizens으로 옳다.","'The rise of nation-states'가 단수 주어이므로 has led가 옳다.","목적격 관계대명사가 생략된 'the challenges (which) we face'로 옳다.","<b>정답.</b> that절의 주어 global citizenship이 3인칭 단수이므로 <b>replaces</b>가 되어야 한다. \"doesn't mean that ...\" 뒤라도 that절 안의 수일치는 그대로 지켜야 한다."],"sol":"정답 ⑤. that절·간접의문문 안으로 들어가도 주어-동사 수일치는 유지된다. 주어(global citizenship)와 동사(replace) 사이에 다른 명사(these other identities)가 있어 함정을 만든 유형이다.","sum":"[한줄 요약] 세계 시민 정체성은 다른 정체성을 '대체하는' 것이 아니라 그 위에 더해지는 것이다. that절 안에서도 수일치를 확인하자."},{"id":8,"src":21,"rng":"18-24","type":"함의","instr":"밑줄 친 rearranging deck chairs on the Titanic이 다음 글에서 의미하는 바로 가장 적절한 것은?","passage":"<p>Among unsatisfied professionals, there's a repeating theme — the belief that someday (a mysterious day in the future) things will miraculously change and they'll stumble into the perfect job or career. At the same time, they (typically) do little to meaningfully alter their current situation. They don't like their job, so what do they do? They head to job boards and search for roles with a similar job title, hoping that the universe will sprinkle a bit of magic on their career if they just hit the refresh button in a different department or company. Efforts like this make professionals feel like they are doing something, when really they're just setting themselves up to take a new role and quickly become just as disenchanted as they were before. <b class=\"hl\">It's like rearranging deck chairs on the Titanic.</b> You've got to completely switch up your approach. If you keep playing the same game, you'll win the same prizes.</p>\n<p class=\"gloss\">* stumble into: ~을 우연히 마주치다 &nbsp; ** disenchanted: 환상이 깨진</p>","choices":["making useless actions that fail to improve an unsatisfactory career","pushing oneself to stay competent in a changing job market","keeping the current satisfactory office environment as it is","following others instead of pursuing the career they want","maintaining career stability despite workplace challenges"],"answer":0,"exp":["<b>정답.</b> 타이타닉의 갑판 의자를 다시 배열하는 것은 배가 가라앉는 것을 막지 못하는 무의미한 행동이다. 곧 '불만족스러운 커리어를 개선하지 못하는 쓸모없는 행동'을 뜻한다.","직무 능력을 유지하려는 노력이 아니라, 상황을 바꾸지 못하는 행동을 비판하는 비유다.","만족스러운 환경을 유지한다는 것과 반대다. 글의 주인공들은 현재 직장에 불만이 있다.","남을 따라간다는 내용이 아니라, 같은 방식(비슷한 직무 검색)을 반복한다는 것이다.","경력 안정성 유지가 아니라, 오히려 'switch up your approach'(접근법을 완전히 바꾸라)고 촉구하는 맥락이다."],"sol":"정답 ①. 함축 의미 문제는 ① 비유가 등장하기 직전·직후 문장(여기서는 'setting themselves up to take a new role and quickly become just as disenchanted')과 ② 비유 자체의 성격(타이타닉 = 이미 가라앉는 배)을 결합한다.","sum":"[한줄 요약] 불만족한 직장인이 비슷한 직무로 옮기는 것만 반복하는 것은 타이타닉의 갑판 의자를 다시 배열하는 것과 같은 무의미한 행동이므로, 접근 방식 자체를 바꿔야 한다."},{"id":9,"src":21,"rng":"18-24","type":"제목","instr":"다음 글의 제목으로 가장 적절한 것은?","passage":"<p>Among unsatisfied professionals, there's a repeating theme — the belief that someday (a mysterious day in the future) things will miraculously change and they'll stumble into the perfect job or career. At the same time, they (typically) do little to meaningfully alter their current situation. They don't like their job, so what do they do? They head to job boards and search for roles with a similar job title, hoping that the universe will sprinkle a bit of magic on their career if they just hit the refresh button in a different department or company. Efforts like this make professionals feel like they are doing something, when really they're just setting themselves up to take a new role and quickly become just as disenchanted as they were before. <b class=\"hl\">It's like rearranging deck chairs on the Titanic.</b> You've got to completely switch up your approach. If you keep playing the same game, you'll win the same prizes.</p>\n<p class=\"gloss\">* stumble into: ~을 우연히 마주치다 &nbsp; ** disenchanted: 환상이 깨진</p>","choices":["Why Professionals Keep Changing Jobs","Rearranging Deck Chairs: Why Small Changes Don't Fix a Career","The Power of Positive Thinking in Career Planning","Job Boards: A Gateway to the Perfect Career","How to Get Promoted in a Competitive Workplace"],"answer":1,"exp":["직업을 계속 바꾸는 '이유'만 설명하고 글의 결론(접근 방식의 전환)을 담지 못한다.","<b>정답.</b> 글의 핵심 비유를 그대로 살려 '작은 변화로는 커리어 문제가 해결되지 않는다'는 요지를 담았다.","긍정적 사고의 힘은 이 글의 논지와 무관하다. 오히려 '환상'을 경계한다.","채용 사이트는 문제를 지적하는 소재일 뿐이며, 긍정적으로 평가되지 않는다.","승진 방법은 글에 전혀 나오지 않는다."],"sol":"정답 ②. 제목은 ① 글의 주제어(career, small changes)와 ② 필자의 태도(비판)를 함께 담아야 한다. 이 글의 결정적 표현은 'You've got to completely switch up your approach.'이다.","sum":"[한줄 요약] 같은 직무·같은 방식만 반복하는 것으로는 커리어 문제가 해결되지 않는다. 접근법을 바꿔야 한다."},{"id":10,"src":21,"rng":"18-24","type":"어휘","instr":"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?","passage":"<p>Among unsatisfied professionals, there's a repeating theme — the belief that someday (a mysterious day in the future) things will <u class=\"pt\"><b>①</b> miraculously</u> change and they'll stumble into the perfect job or career. At the same time, they <u class=\"pt\"><b>②</b> typically</u> do little to meaningfully <u class=\"pt\"><b>③</b> alter</u> their current situation. They don't like their job, so what do they do? They head to job boards and search for roles with a similar job title, hoping that the universe will <u class=\"pt\"><b>④</b> sprinkle</u> a bit of magic on their career if they just hit the refresh button in a different department or company. Efforts like this make professionals feel like they are doing something, when really they're just setting themselves up to take a new role and quickly become just as <u class=\"pt\"><b>⑤</b> enchanted</u> as they were before. It's like rearranging deck chairs on the Titanic.</p>\n<p class=\"gloss\">* stumble into: ~을 우연히 마주치다</p>","choices":["①","②","③","④","⑤"],"answer":4,"exp":["miraculously(기적처럼) — 언젠가 기적처럼 상황이 바뀌리라는 믿음이므로 옳다.","typically(전형적으로) — 대개 그런 사람들이 실제로는 별로 하지 않는다는 뜻으로 옳다.","alter(바꾸다) — 'meaningfully alter their current situation'은 자연스럽다.","sprinkle(뿌리다) — 우주가 마법을 '뿌려' 주기를 바란다는 비유로 옳다.","<b>정답.</b> 앞 문장에서 이들은 직장에 불만이 있고, 새 직장에 가도 곧 '환상이 깨진다'고 했다. 따라서 disenchanted가 와야 하며 enchanted(매료된)는 문맥과 정반대다."],"sol":"정답 ⑤. 어휘 문제는 ① 반의어로 바꾼 경우 ② 문맥의 태도(긍정/부정)와 어긋나는 경우를 노린다. 여기서는 disenchanted ↔ enchanted의 반의 관계가 핵심이다.","sum":"[한줄 요약] 불만족한 직장인은 새 직장에서도 곧 '환상이 깨진다'. 같은 방식을 반복하면 같은 결과만 얻는다."},{"id":11,"src":22,"rng":"18-24","type":"요지","instr":"다음 글의 요지로 가장 적절한 것은?","passage":"<p>Sociologists argue that our perception and usage of time are not just basic properties of nature, like a clock ticking away in the background, nor are they simply psychological phenomena of individual experience. Instead, <b class=\"hl\">how we perceive and understand time is to a large degree shaped by tradition and cultural norms</b>. Eviatar Zerubavel's work, <i>The Seven Day Circle: The History and Meaning of the Week</i>, demonstrates how the week, a fundamental unit of time, is a social invention that varies across cultures, influencing how people structure their activities and rhythms of life. Why do we consider a nine-to-five job routine? Why don't many of us work on the weekends? Why do we usually pay our bills at the end of the month? Why is the retirement age sixty-five? These numbers and patterns aren't really dictated by nature or any essential human characteristic, but are rather <b class=\"hl\">social creations that we internalize and come to accept as \"normal.\"</b></p>","choices":["시간은 희소한 자원이며 기회비용을 갖는다.","시간의 절대성은 자연 과학의 전제 조건이다.","시간의 효율적 활용은 삶에 균형을 가져다준다.","시간의 흐름은 심리 상태에 따라 다르게 인식된다.","시간을 인식하고 사용하는 방식은 사회적인 산물이다."],"answer":4,"exp":["희소성이나 기회비용은 이 글에서 다루지 않는다.","시간을 '자연의 기본 속성'으로만 보는 관점을 오히려 부정한다.","효율적 활용과 균형은 논지가 아니다.","심리적 현상만으로 보는 관점도 'nor are they simply psychological phenomena'라며 부정한다.","<b>정답.</b> \"how we perceive and understand time is to a large degree shaped by tradition and cultural norms\" / \"social creations that we internalize and come to accept as 'normal.'\""],"sol":"정답 ⑤. 요지는 'Instead' 뒤에 온다. 글은 시간을 ① 자연의 속성도, ② 개인의 심리 현상도 아닌 ③ 사회·문화적 산물로 규정한다.","sum":"[한줄 요약] 우리가 시간을 인식하고 사용하는 방식(주 7일, 9-to-5, 월말 청구, 65세 정년)은 자연이 정한 것이 아니라 사회가 만든 관습이다."},{"id":12,"src":22,"rng":"18-24","type":"어법","instr":"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?","passage":"<p>Sociologists argue that our perception and usage of time <u class=\"pt\"><b>①</b> are</u> not just basic properties of nature, like a clock ticking away in the background, <u class=\"pt\"><b>②</b> nor are they</u> simply psychological phenomena of individual experience. Instead, how we perceive and understand time <u class=\"pt\"><b>③</b> is</u> to a large degree shaped by tradition and cultural norms. Eviatar Zerubavel's work, <i>The Seven Day Circle</i>, demonstrates how the week, a fundamental unit of time, is a social invention that <u class=\"pt\"><b>④</b> vary</u> across cultures, influencing how people structure their activities and rhythms of life. These numbers and patterns aren't really dictated by nature or any essential human characteristic, but are rather social creations that we internalize and <u class=\"pt\"><b>⑤</b> come</u> to accept as \"normal.\"</p>","choices":["①","②","③","④","⑤"],"answer":3,"exp":["주어 'our perception and usage of time'가 복수이므로 are가 옳다.","부정어 nor가 문두에 와서 'nor + 동사 + 주어'로 도치된 형태로 옳다.","'how we perceive and understand time'은 하나의 절(단수 취급)이므로 is가 옳다.","<b>정답.</b> 관계대명사 that의 선행사가 'a social invention'(단수)이므로 <b>varies</b>가 되어야 한다. 바로 앞의 'cultures'에 끌리면 틀린다.","주어 we에 이어 동사 internalize와 come이 병렬로 연결되어 옳다."],"sol":"정답 ④. 관계대명사절의 수일치는 '가까운 명사'가 아니라 '선행사'를 기준으로 판단한다. 선행사 = a social invention(단수) → varies.","sum":"[한줄 요약] 주 7일·9-to-5 같은 시간 단위와 생활 패턴은 자연이 아니라 문화가 만든 사회적 발명품이다."},{"id":13,"src":23,"rng":"18-24","type":"주제","instr":"다음 글의 주제로 가장 적절한 것은?","passage":"<p>In recent years, the number of illegal actions in particular at the corporate level has grown, or at least the number of cases that came to light, increased. Such misconduct has often only been exposed because brave informants have risked a great deal in order to put an end to it. Hence, it is no surprise that whistleblower protection has come into focus. If violations of law and order go undetected and unpunished for years because employees of a company fear to report illegal activities for fear of reprisals or consequences, it can have several negative effects. It can harm the company itself, but also third-parties, the economy in general, the general public, and even the rule of law could be affected. <b class=\"hl\">Protecting those who would assist in reducing unlawful or even criminal behaviour has two main functions: Protecting the individual's actions as well as protecting the public good.</b> A well-balanced whistleblower protection may have positive effects on both of these.</p>\n<p class=\"gloss\">* whistleblower: (기업 비리 등의) 내부 고발자 &nbsp; ** reprisal: 보복</p>","choices":["difficulties in protecting whistleblowers' rights","importance of punishment for unlawful corporate activities","causes of individuals' hesitation to become a whistleblower","effects of raising public awareness on reducing corporate corruption","need of whistleblower protection to guard their actions and the public good"],"answer":4,"exp":["보호의 '어려움'이 아니라 '필요성'을 말한다.","처벌의 중요성이 아니라 보호의 필요성이 초점이다.","고발을 망설이는 원인은 근거로만 스쳐 지나간다(주제 아님).","인식 제고의 효과는 이 글의 초점이 아니다.","<b>정답.</b> 내부 고발자 보호가 필요한 이유와 그 두 가지 기능(개인의 행동 보호 + 공공의 이익 보호)을 다룬다."],"sol":"정답 ⑤. 주제는 '소재'가 아니라 '필자가 그 소재로 말하려는 것'이다. 결론부의 'two main functions ... Protecting the individual's actions as well as protecting the public good'이 주제 문장이다.","sum":"[한줄 요약] 내부 고발자 보호는 고발자 개인의 행동과 공공의 이익을 함께 지키기 위해 필요하다."},{"id":14,"src":23,"rng":"18-24","type":"빈칸","instr":"다음 빈칸에 들어갈 말로 가장 적절한 것은?","passage":"<p>In recent years, the number of illegal actions in particular at the corporate level has grown, or at least the number of cases that came to light, increased. Such misconduct has often only been exposed because brave informants have risked a great deal in order to put an end to it. Hence, it is no surprise that whistleblower protection has come into focus. If violations of law and order go undetected and unpunished for years because employees of a company fear to report illegal activities for fear of reprisals or consequences, it can have several negative effects. It can harm the company itself, but also third-parties, the economy in general, the general public, and even the rule of law could be affected. Protecting those who would assist in reducing unlawful or even criminal behaviour has two main functions: Protecting the individual's actions as well as protecting the <span class=\"blk\">________________</span>. A well-balanced whistleblower protection may have positive effects on both of these.</p>\n<p class=\"gloss\">* whistleblower: (기업 비리 등의) 내부 고발자 &nbsp; ** reprisal: 보복</p>","choices":["public good","company profits","legal procedures","individual privacy","media freedom"],"answer":0,"exp":["<b>정답.</b> 바로 앞에서 피해 대상으로 '제3자, 경제 전체, 일반 대중, 법치'를 열거했고, 'two main functions'의 두 번째 축이 '공공의 이익'이다. 뒤 문장의 'both of these'도 개인의 행동 + 공공의 이익을 가리킨다.","기업 이익은 오히려 비위 행위로 '피해를 보는' 쪽으로 언급된다.","'legal procedures'는 글에 나오지 않는 표현이다.","개인의 사생활 보호는 이 글의 논점이 아니다.","언론의 자유는 언급되지 않는다."],"sol":"정답 ①. 빈칸이 'A as well as B' 구조의 B 자리이고, 뒤에 'both of these'가 있으므로 앞 문장의 열거(제3자·경제·대중·법치)를 묶는 말이 와야 한다 → the public good.","sum":"[한줄 요약] 내부 고발자 보호는 고발자 개인의 행동과 공공의 이익, 두 가지를 함께 지키는 기능을 한다."},{"id":15,"src":23,"rng":"18-24","type":"어법","instr":"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?","passage":"<p>In recent years, the number of illegal actions in particular at the corporate level <u class=\"pt\"><b>①</b> has grown</u>, or at least the number of cases that came to light, increased. Such misconduct has often only been exposed because brave informants <u class=\"pt\"><b>②</b> risking</u> a great deal in order to put an end to it. Hence, it is no surprise that whistleblower protection has come into focus. If violations of law and order go undetected and unpunished for years because employees of a company <u class=\"pt\"><b>③</b> fear</u> to report illegal activities for fear of reprisals or consequences, it can have several negative effects. Protecting those <u class=\"pt\"><b>④</b> who</u> would assist in reducing unlawful or even criminal behaviour has two main functions. A well-balanced whistleblower protection <u class=\"pt\"><b>⑤</b> may have</u> positive effects on both of these.</p>\n<p class=\"gloss\">* whistleblower: 내부 고발자 &nbsp; ** reprisal: 보복</p>","choices":["①","②","③","④","⑤"],"answer":1,"exp":["'the number of + 복수명사'는 단수 취급하므로 has grown이 옳다.","<b>정답.</b> because절에 정동사가 없어 문장이 성립하지 않는다. <b>have risked</b>(현재완료)로 고쳐야 한다.","fear to report(~하기를 두려워하다)는 옳은 구문이다.","선행사 those(사람)를 받는 주격 관계대명사 who로 옳다.","조동사 may + 동사원형 have로 옳다."],"sol":"정답 ②. 절을 이끄는 접속사(because) 뒤에는 반드시 '주어 + 정동사'가 필요하다. 준동사(risking)만 있으면 절이 아니라 구가 되어 비문이 된다.","sum":"[한줄 요약] 보복이 두려워 고발하지 못하면 기업·제3자·경제·법치가 모두 피해를 입으므로 내부 고발자 보호가 필요하다."},{"id":16,"src":24,"rng":"18-24","type":"제목","instr":"다음 글의 제목으로 가장 적절한 것은?","passage":"<p>Unfortunately, sometimes the idea of a goal is disconnected from the daily reality of what it will take to achieve it. We fall in love with the idea of a goal, pushing out of mind how different our day-to-day will need to be for us to make it happen. In fact, research even suggests that <b class=\"hl\">positive fantasies about our future can lead us to put less effort into our goals</b> because our fantasies provide us with a false and premature sense of accomplishment. We romanticize a goal — falling in love with the idea of a change. In the process, we gloss over the intricacies and challenges of integrating a complex new behavior into our life. As one study nicely summed it up, fantasizing about a positive future \"seduces a person to mentally enjoy the desired future in the here and now\" — and because we don't reflect on why our fantasy is not yet our future, \"a necessity to act is not induced.\"</p>\n<p class=\"gloss\">* gloss over: ~에 대해 얼버무리고 넘어가다 &nbsp; ** intricacy: 복잡함 &nbsp; *** seduce: 현혹시키다</p>","choices":["Love Yourself to Better Your Future!","When an Ambitious Goal Brings Stress","How Can We Plan Good Daily Routines?","Fantasizing About the Future: A Barrier to Action","Too Many Goals, Too Little Time: A Recipe for Failure"],"answer":3,"exp":["자기애(self-love)는 글의 소재가 아니다.","목표가 스트레스를 준다는 내용이 아니라, 환상이 행동을 막는다는 내용이다.","'일상 루틴 계획'이 아니라 '일상의 현실을 외면하는 환상'을 비판한다.","<b>정답.</b> 미래에 대한 긍정적 환상이 성취감을 미리 느끼게 해 오히려 행동을 막는다는 요지를 그대로 담았다.","목표가 많다는 내용은 글에 없다."],"sol":"정답 ④. 제목은 '소재(환상) + 필자의 핵심 주장(행동의 장벽)'을 조합한다. 결정적 문장은 \"a necessity to act is not induced\"이다.","sum":"[한줄 요약] 목표를 낭만적으로 환상할수록 성취감을 미리 느껴 오히려 실천할 필요를 느끼지 못하게 된다."},{"id":17,"src":24,"rng":"18-24","type":"어휘","instr":"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?","passage":"<p>Unfortunately, sometimes the idea of a goal is <u class=\"pt\"><b>①</b> disconnected</u> from the daily reality of what it will take to achieve it. We fall in love with the idea of a goal, pushing out of mind how different our day-to-day will need to be for us to make it happen. In fact, research even suggests that positive fantasies about our future can lead us to put less effort into our goals because our fantasies provide us with a false and <u class=\"pt\"><b>②</b> premature</u> sense of accomplishment. We romanticize a goal — falling in love with the idea of a change. In the process, we <u class=\"pt\"><b>③</b> focus on</u> the intricacies and challenges of integrating a <u class=\"pt\"><b>④</b> complex</u> new behavior into our life. As one study nicely summed it up, fantasizing about a positive future \"seduces a person to mentally enjoy the desired future in the here and now\" — and because we don't reflect on why our fantasy is not yet our future, \"a necessity to act is not <u class=\"pt\"><b>⑤</b> induced</u>.\"</p>\n<p class=\"gloss\">* intricacy: 복잡함 &nbsp; ** seduce: 현혹시키다</p>","choices":["①","②","③","④","⑤"],"answer":2,"exp":["disconnected — 목표의 관념이 일상의 현실과 '분리되어' 있다는 뜻으로 옳다.","premature(성급한) — 실제로 이루기 전에 미리 느끼는 성취감이므로 옳다.","<b>정답.</b> 원문은 <b>gloss over</b>(~을 얼버무리고 넘어가다)다. 복잡함과 난관을 '대충 넘긴다'는 뜻이어야 하는데 focus on(집중하다)은 정반대 의미다.","complex(복잡한) — '복잡한 새 행동'이라는 뜻으로 옳다.","induced(유발된) — 행동할 필요성이 '유발되지 않는다'는 뜻으로 옳다."],"sol":"정답 ③. 어휘 문항은 앞뒤 문장의 논리 방향(여기서는 '현실을 외면한다')과 어긋나는 단어를 찾는 문제다. gloss over ↔ focus on은 반대 방향이다.","sum":"[한줄 요약] 목표를 환상할수록 그 목표가 요구하는 일상의 변화와 난관을 대충 넘기게 되어 행동으로 이어지지 않는다."},{"id":18,"src":24,"rng":"18-24","type":"내용일치","instr":"다음 글의 내용과 일치하지 않는 것은?","passage":"<p>Unfortunately, sometimes the idea of a goal is disconnected from the daily reality of what it will take to achieve it. We fall in love with the idea of a goal, pushing out of mind how different our day-to-day will need to be for us to make it happen. In fact, research even suggests that <b class=\"hl\">positive fantasies about our future can lead us to put less effort into our goals</b> because our fantasies provide us with a false and premature sense of accomplishment. We romanticize a goal — falling in love with the idea of a change. In the process, we gloss over the intricacies and challenges of integrating a complex new behavior into our life. As one study nicely summed it up, fantasizing about a positive future \"seduces a person to mentally enjoy the desired future in the here and now\" — and because we don't reflect on why our fantasy is not yet our future, \"a necessity to act is not induced.\"</p>\n<p class=\"gloss\">* gloss over: ~에 대해 얼버무리고 넘어가다 &nbsp; ** intricacy: 복잡함 &nbsp; *** seduce: 현혹시키다</p>","choices":["목표에 대한 관념이 그것을 이루는 일상의 현실과 분리될 수 있다고 말한다.","미래에 대한 긍정적 환상은 목표에 쏟는 노력을 줄게 할 수 있다.","환상은 무언가를 이미 이룬 듯한 느낌을 준다.","자신의 환상이 아직 미래가 되지 못한 이유를 성찰하지 않는 점을 지적한다.","목표를 낭만적으로 여기는 것이 그 목표의 난관을 이해하는 데 도움을 준다고 말한다."],"answer":4,"exp":["\"sometimes the idea of a goal is disconnected from the daily reality\" — 일치한다.","\"positive fantasies ... can lead us to put less effort into our goals\" — 일치한다.","\"a false and premature sense of accomplishment\" — 일치한다.","\"we don't reflect on why our fantasy is not yet our future\" — 일치한다.","<b>정답(불일치).</b> 글은 'we gloss over the intricacies and challenges'라며, 낭만화가 오히려 난관을 대충 넘기게 만든다고 말한다."],"sol":"정답 ⑤. 내용일치 문제는 원문 표현을 살짝 뒤집어(도움 → 방해) 만든 선지를 노린다. 'romanticize' 뒤에는 항상 부정적 결과가 이어진다는 점을 기억하자.","sum":"[한줄 요약] 목표를 낭만화하면 난관을 얼버무리게 되고, 결국 실천의 필요성조차 느끼지 못한다."},{"id":19,"src":29,"rng":"29-34","type":"어법","instr":"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은? [3점]","passage":"<p>Since hydra and the immortal jellyfish don't exhibit obvious signs of aging, they are often called biologically immortal. This doesn't mean they don't die. Nor does it even <u class=\"pt\"><b>①</b> mean</u> that they cannot die of biological causes. But, unlike most every animal, their likelihood of dying does not increase with age. Species such as hydra and the immortal jellyfish excite gerontologists because they may provide clues about how to defeat the aging process. But their property of being able to regenerate entire body parts, or even a whole organism, <u class=\"pt\"><b>②</b> making</u> them more similar to trees than to us. Although we may learn some fascinating things about their lack of apparent aging, it is not at all clear how <u class=\"pt\"><b>③</b> relevant</u> those findings will be to human aging. Sometimes biology is universal, especially if it relates to fundamental mechanisms. But in other cases, even discoveries in rats or mice, <u class=\"pt\"><b>④</b> which</u> are mammals and biologically much closer to us, are difficult to translate into humans. It may be a very long time before any findings gained from hydra or jellyfish <u class=\"pt\"><b>⑤</b> are</u> useful to us.</p>\n<p class=\"gloss\">* gerontologist: 노화학자</p>","choices":["①","②","③","④","⑤"],"answer":1,"exp":["\"Nor does it even mean that ~\" — 부정어 Nor가 문두에 와서 조동사 does가 도치된 형태로 옳다.","<b>정답.</b> 주어는 'their property of being able to regenerate entire body parts, or even a whole organism'이고, 이 문장 전체를 이끌 정동사가 필요하다. 따라서 <b>makes</b>가 되어야 한다. making은 준동사라 문장에 정동사가 없어져 비문이 된다.","\"how relevant those findings will be\" — 간접의문문 어순(의문사 + 주어 + 동사)으로 옳다.","선행사 discoveries(복수) + which are로 옳다.","주어 any findings(복수) + are로 옳다."],"sol":"정답 ②. 주어가 아무리 길어도 문장 전체의 정동사는 하나다. 'their property ... makes ~' 구조를 파악하면 making이 동사 자리에 올 수 없음을 알 수 있다.","sum":"[한줄 요약] 히드라는 노화의 흔적이 없고 몸을 재생할 수 있지만, 그 연구 결과가 인간 노화에 얼마나 쓸모 있을지는 아직 알 수 없다."},{"id":20,"src":29,"rng":"29-34","type":"어휘","instr":"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?","passage":"<p>Since hydra and the immortal jellyfish don't exhibit obvious signs of aging, they are often called <u class=\"pt\"><b>①</b> biologically immortal</u>. This doesn't mean they don't die. Nor does it even mean that they cannot die of biological causes. But, unlike most every animal, their likelihood of dying does not <u class=\"pt\"><b>②</b> increase</u> with age. Species such as hydra and the immortal jellyfish <u class=\"pt\"><b>③</b> excite</u> gerontologists because they may provide clues about how to defeat the aging process. But their property of being able to <u class=\"pt\"><b>④</b> damage</u> entire body parts, or even a whole organism, makes them more similar to trees than to us. Although we may learn some fascinating things about their <u class=\"pt\"><b>⑤</b> lack</u> of apparent aging, it is not at all clear how relevant those findings will be to human aging. Sometimes biology is universal, especially if it relates to fundamental mechanisms. But in other cases, even discoveries in rats or mice, which are mammals and biologically much closer to us, are difficult to translate into humans. It may be a very long time before any findings gained from hydra or jellyfish are useful to us.</p>\n<p class=\"gloss\">* gerontologist: 노화학자</p>","choices":["①","②","③","④","⑤"],"answer":3,"exp":["biologically immortal(생물학적으로 불사인) — 노화의 뚜렷한 징후가 없어 붙은 별칭으로 옳다.","their likelihood of dying does not increase with age — 나이가 들어도 죽을 확률이 높아지지 않는다는 뜻으로 옳다.","excite gerontologists — 노화학자들을 자극·흥분시킨다는 뜻으로 옳다.","<b>정답.</b> 원문은 <b>regenerate</b>(재생하다)다. 나무처럼 몸의 일부나 개체 전체를 다시 만들어 내는 능력을 말하므로 damage(손상시키다)는 문맥과 반대다.","their lack of apparent aging — 겉으로 드러나는 노화가 '없음'을 가리키므로 옳다."],"sol":"정답 ④. 이 지문의 핵심 소재는 '재생(regeneration)'이다. 'more similar to trees than to us'라는 비유가 재생 능력을 가리키므로 damage는 성립하지 않는다.","sum":"[한줄 요약] 히드라와 불멸 해파리는 몸을 재생하며 노화의 흔적도 보이지 않지만, 그 발견이 인간 노화에 적용될지는 불확실하다."},{"id":21,"src":29,"rng":"29-34","type":"내용일치","instr":"다음 글의 내용과 일치하는 것은?","passage":"<p>Since hydra and the immortal jellyfish don't exhibit obvious signs of aging, they are often called biologically immortal. This doesn't mean they don't die. Nor does it even mean that they cannot die of biological causes. But, unlike most every animal, their likelihood of dying does not increase with age. Species such as hydra and the immortal jellyfish excite gerontologists because they may provide clues about how to defeat the aging process. But their property of being able to regenerate entire body parts, or even a whole organism, makes them more similar to trees than to us. Although we may learn some fascinating things about their lack of apparent aging, it is not at all clear how relevant those findings will be to human aging. Sometimes biology is universal, especially if it relates to fundamental mechanisms. But in other cases, even discoveries in rats or mice, which are mammals and biologically much closer to us, are difficult to translate into humans. It may be a very long time before any findings gained from hydra or jellyfish are useful to us.</p>\n<p class=\"gloss\">* gerontologist: 노화학자</p>","choices":["히드라와 불멸 해파리는 결코 죽지 않는다.","대부분의 동물은 나이가 들수록 죽을 확률이 높아진다.","노화학자들은 히드라가 실험실에서 기르기 쉽기 때문에 연구한다.","해파리 연구 결과는 곧 인간 노화에 반드시 적용될 것이다.","쥐는 해파리보다 인간과 생물학적으로 더 멀다."],"answer":1,"exp":["\"This doesn't mean they don't die.\"라며 '불사'라는 말이 죽지 않는다는 뜻은 아니라고 밝히고 있다.","<b>정답.</b> \"unlike most every animal, their likelihood of dying does not increase with age\" → 대부분의 동물은 나이가 들수록 죽을 확률이 높아진다.","연구 이유는 '노화 과정을 극복할 단서'를 줄 수 있기 때문이다.","\"It may be a very long time before any findings ... are useful to us.\"라고 했으므로 '곧 반드시'는 틀리다.","쥐는 'biologically much closer to us'(생물학적으로 훨씬 더 가까운) 동물이다."],"sol":"정답 ②. 'unlike A, B' 구문은 A와 B를 반대로 읽는 함정을 만들기 쉽다. 대부분의 동물은 나이가 들수록 죽을 확률이 커지지만, 이들은 그렇지 않다는 뜻이다.","sum":"[한줄 요약] 히드라·불멸 해파리는 나이가 들어도 죽을 확률이 높아지지 않을 뿐, 죽지 않는 것은 아니다."},{"id":22,"src":30,"rng":"29-34","type":"어휘","instr":"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은? [3점]","passage":"<p>Subsidies, taxes, and regulations can all lead to power plants that pollute less by switching away from coal. In all cases, profits can be <u class=\"pt\"><b>①</b> higher</u> from making the transition, even taking the related costs into account. The power plants prefer subsidies over regulations or taxes. The reason is <u class=\"pt\"><b>②</b> obvious</u>. They prefer to receive money from the government rather than pay the costs themselves. But the \"expansion\" of their opportunity set through subsidies has to be matched by the contraction of the opportunity set of others. The electricity companies' \"freedom\" is <u class=\"pt\"><b>③</b> decreased</u> at the expense of the ordinary individual, who must suffer from increased taxation to pay for the subsidy. Moreover, from the perspective of pure efficiency, the subsidy <u class=\"pt\"><b>④</b> distorts</u> the economy because the electricity company is not facing the full costs of what it does, even if it is successful in limiting emissions. Indeed, electricity prices may end up <u class=\"pt\"><b>⑤</b> lower</u> than they should be and electricity consumption higher, which will worsen global warming, even though the emissions per unit of electricity have been reduced.</p>\n<p class=\"gloss\">* subsidy: 보조금</p>","choices":["①","②","③","④","⑤"],"answer":2,"exp":["profits can be higher — 전환으로 이윤이 더 높아질 수 있다는 뜻으로 옳다.","The reason is obvious — 이유는 분명하다(정부 돈을 받는 게 낫다)로 옳다.","<b>정답.</b> 보조금으로 전력회사의 기회 집합이 '확대(expansion)'되었으므로 그들의 자유는 오히려 <b>증가</b>한다. decreased → increased.","the subsidy distorts the economy — 보조금이 경제를 왜곡한다는 뜻으로 옳다.","electricity prices may end up lower than they should be — 전기 가격이 마땅한 수준보다 낮아질 수 있다는 뜻으로 옳다."],"sol":"정답 ③. 앞 문장의 'expansion(확대)'과 'contraction(축소)'의 대구를 보면, 전력회사의 자유는 늘어나고 일반 개인의 자유는 줄어드는 구조임을 알 수 있다.","sum":"[한줄 요약] 보조금은 전력회사의 자유를 늘리는 대신 일반 개인의 부담을 늘리고 경제를 왜곡해 전기 소비를 오히려 늘릴 수 있다."},{"id":23,"src":30,"rng":"29-34","type":"빈칸","instr":"다음 빈칸에 들어갈 말로 가장 적절한 것은?","passage":"<p>Subsidies, taxes, and regulations can all lead to power plants that pollute less by switching away from coal. In all cases, profits can be higher from making the transition, even taking the related costs into account. The power plants prefer subsidies over regulations or taxes. The reason is obvious. They prefer to receive money from the government rather than pay the costs themselves. But the \"expansion\" of their opportunity set through subsidies has to be matched by the <span class=\"blk\">________________</span> of the opportunity set of others. The electricity companies' \"freedom\" is increased at the expense of the ordinary individual, who must suffer from increased taxation to pay for the subsidy. Moreover, from the perspective of pure efficiency, the subsidy distorts the economy because the electricity company is not facing the full costs of what it does, even if it is successful in limiting emissions. Indeed, electricity prices may end up lower than they should be and electricity consumption higher, which will worsen global warming, even though the emissions per unit of electricity have been reduced.</p>\n<p class=\"gloss\">* subsidy: 보조금</p>","choices":["contraction","expansion","protection","division","extension"],"answer":0,"exp":["<b>정답.</b> 앞의 'expansion(확대)'과 정확히 대구를 이루는 'contraction(축소)'이 와야 한다. 보조금으로 한쪽의 기회가 늘면 다른 쪽의 기회는 그만큼 줄어든다는 뜻이다.","expansion은 바로 앞과 같은 말이라 'matched by'(~와 짝을 이룬다)의 대구 관계가 성립하지 않는다.","protection(보호)은 'opportunity set of others'와 의미상 연결되지 않는다.","division(분할)은 기회 집합이 '줄어든다'는 방향을 나타내지 못한다.","extension(확장)은 expansion과 같은 의미라 대구가 되지 않는다."],"sol":"정답 ①. 'A has to be matched by B' 구문에서는 A와 반대 개념의 B가 온다. 바로 뒤 문장의 'at the expense of the ordinary individual'도 축소를 뒷받침한다.","sum":"[한줄 요약] 보조금으로 전력회사의 기회가 확대되면 그만큼 일반 개인의 기회는 축소된다."},{"id":24,"src":30,"rng":"29-34","type":"내용일치","instr":"다음 글의 내용과 일치하지 않는 것은?","passage":"<p>Subsidies, taxes, and regulations can all lead to power plants that pollute less by switching away from coal. In all cases, profits can be higher from making the transition, even taking the related costs into account. The power plants prefer subsidies over regulations or taxes. The reason is obvious. They prefer to receive money from the government rather than pay the costs themselves. But the \"expansion\" of their opportunity set through subsidies has to be matched by the contraction of the opportunity set of others. The electricity companies' \"freedom\" is increased at the expense of the ordinary individual, who must suffer from increased taxation to pay for the subsidy. Moreover, from the perspective of pure efficiency, the subsidy distorts the economy because the electricity company is not facing the full costs of what it does, even if it is successful in limiting emissions. Indeed, electricity prices may end up lower than they should be and electricity consumption higher, which will worsen global warming, even though the emissions per unit of electricity have been reduced.</p>\n<p class=\"gloss\">* subsidy: 보조금</p>","choices":["발전소들은 규제나 세금보다 보조금을 선호한다.","보조금은 전력회사의 이윤을 높일 수 있다.","보조금 때문에 일반 개인은 세금 부담이 커진다.","보조금은 전기 소비를 늘릴 수 있다.","보조금은 단위당 배출량과 전체 전기 사용량을 모두 줄인다."],"answer":4,"exp":["\"The power plants prefer subsidies over regulations or taxes.\" — 일치한다.","\"profits can be higher from making the transition\" — 일치한다.","\"who must suffer from increased taxation to pay for the subsidy\" — 일치한다.","\"electricity consumption higher\" — 일치한다.","<b>정답(불일치).</b> 단위당 배출량은 줄어도 전기 소비는 늘어 지구 온난화를 악화시킬 수 있다고 했다. '모두 줄인다'는 틀리다."],"sol":"정답 ⑤. 'even though' 뒤의 양보 절(단위당 배출량은 감소)과 앞의 결과(소비 증가 → 온난화 악화)를 구분해야 한다.","sum":"[한줄 요약] 보조금은 배출을 줄이는 데 성공해도 소비를 늘려 결과적으로 온난화를 악화시킬 수 있다."},{"id":25,"src":31,"rng":"29-34","type":"빈칸","instr":"다음 빈칸에 들어갈 말로 가장 적절한 것은?","passage":"<p>Few people may view the Star Trek universe through an economic lens, but doing so provides a window into a world that might soon be upon us. All of classical economics is based on the notion that there isn't usually enough of anything to give everyone everything they want or need. Because of that, we use markets and pricing to allocate those goods, services, and resources to where they might result in the highest benefit. In Star Trek, however, there isn't much <span class=\"blk\">________________</span>. Technology has allowed that society to reproduce any food they want, transport themselves thousands of miles in the blink of an eye, communicate over light-years, and travel among the stars. All of humanity in that world has been fully educated so that they can participate in this prosperity. Everyone is an explorer, researcher, engineer, artist, doctor, or counselor. Generative AI has the potential to allow many dimensions of our own society to be similarly highly abundant.</p>","choices":["bias","scarcity","pollution","diversity","efficiency"],"answer":1,"exp":["bias(편향) — 시장·가격으로 자원을 배분하는 이유와 연결되지 않는다.","<b>정답.</b> 고전경제학의 전제는 '모든 사람이 원하는 것을 다 줄 만큼 충분한 것이 없다'는 것, 곧 희소성(scarcity)이다. 스타트렉 세계에는 기술 덕분에 희소성이 거의 없다.","pollution(오염) — 이 문단에서 다루지 않는다.","diversity(다양성) — '부족함'의 반대 개념이 아니다.","efficiency(효율성) — 시장이 필요한 이유(희소성)와 직접 연결되지 않는다."],"sol":"정답 ②. 빈칸 앞의 'enough of anything to give everyone everything they want or need'가 곧 scarcity의 정의다. In Star Trek, however가 '우리 세계와 반대'임을 알려 준다.","sum":"[한줄 요약] 고전경제학은 희소성을 전제로 하지만, 스타트렉 세계는 기술로 풍요를 이뤄 희소성이 거의 없다."},{"id":26,"src":31,"rng":"29-34","type":"어법","instr":"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?","passage":"<p>Few people may view the Star Trek universe through an economic lens, but <u class=\"pt\"><b>①</b> doing so</u> provides a window into a world that might soon be upon us. All of classical economics is based on the notion <u class=\"pt\"><b>②</b> that</u> there isn't usually enough of anything to give everyone everything they want or need. Because of that, we use markets and pricing to allocate those goods, services, and resources <u class=\"pt\"><b>③</b> to where</u> they might result in the highest benefit. In Star Trek, however, there isn't much scarcity. Technology has allowed that society <u class=\"pt\"><b>④</b> reproducing</u> any food they want, transport themselves thousands of miles in the blink of an eye, communicate over light-years, and travel among the stars. Generative AI has the potential to <u class=\"pt\"><b>⑤</b> allow</u> many dimensions of our own society to be similarly highly abundant.</p>","choices":["①","②","③","④","⑤"],"answer":3,"exp":["doing so는 앞의 'view the Star Trek universe through an economic lens'를 받는 동명사구로 옳다.","the notion과 동격을 이루는 접속사 that으로 옳다.","'to where ~'는 '~하는 곳으로'라는 뜻의 전치사 to + 관계부사 where로 옳다.","<b>정답.</b> allow는 'allow + 목적어 + to부정사'로 쓰므로 <b>to reproduce</b>가 되어야 한다. 뒤의 transport, communicate, travel과도 to부정사로 병렬을 이룬다.","the potential to allow — '~할 잠재력'을 나타내는 to부정사로 옳다."],"sol":"정답 ④. allow / enable / force / cause 같은 동사는 목적격보어로 to부정사를 취한다. 뒤에 이어지는 동사원형들과의 병렬 구조도 함께 확인하자.","sum":"[한줄 요약] 스타트렉 세계는 기술로 희소성을 없앴고, 생성형 AI도 우리 사회를 그처럼 풍요롭게 할 잠재력이 있다."},{"id":27,"src":32,"rng":"29-34","type":"빈칸","instr":"다음 빈칸에 들어갈 말로 가장 적절한 것은?","passage":"<p>People, whether customers or otherwise, want to feel heard. When someone calls customer service, asks to speak to a manager, or comes into your office with something on their mind, they want to feel like someone is listening to their concerns and going to address them. But for someone to feel heard, three things have to happen. First, they have to feel like the other person paid attention to what they said. Second, they have to feel like the other person understood what they said. And third, the other person has to <span class=\"blk\">________________</span>. This last part is key. Imagine talking to someone who provided no response. They might have attended to everything we said. They might even have understood it completely. But without some sort of outward signal that indicates they listened, it's impossible to know whether or not they actually did.</p>","choices":["avoid showing their feelings","demonstrate that they listened","figure out their hidden intention","collect enough information before deciding","consider whether their concern makes sense"],"answer":1,"exp":["감정을 숨기는 것은 '경청받는 느낌'과 무관하다.","<b>정답.</b> 뒤 문단에서 \"without some sort of outward signal that indicates they listened, it's impossible to know whether or not they actually did\"라고 했으므로, 세 번째 조건은 '들었다는 것을 밖으로 보여 주기'다.","상대의 숨은 의도를 파악하는 것은 언급되지 않는다.","결정 전 정보 수집은 이 글의 논점이 아니다.","상대의 걱정이 타당한지 따지는 것은 오히려 '경청'과 반대된다."],"sol":"정답 ②. 세 조건(주의 기울임 → 이해 → 들었다는 신호) 중 마지막은 '외적 신호'이다. 빈칸 뒤의 'This last part is key'가 이 조건이 핵심임을 강조한다.","sum":"[한줄 요약] 누군가가 '경청받았다'고 느끼려면 상대가 주의를 기울이고, 이해했으며, 들었다는 것을 밖으로 보여 줘야 한다."},{"id":28,"src":32,"rng":"29-34","type":"어법","instr":"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?","passage":"<p>People, whether customers or otherwise, <u class=\"pt\"><b>①</b> want to feel</u> heard. When someone calls customer service, asks to speak to a manager, or <u class=\"pt\"><b>②</b> coming</u> into your office with something on their mind, they want to feel like someone is listening to their concerns and going to address them. But for someone <u class=\"pt\"><b>③</b> to feel</u> heard, three things have to happen. First, they have to feel like the other person <u class=\"pt\"><b>④</b> paid</u> attention to what they said. Second, they have to feel like the other person understood what they said. And third, the other person has to demonstrate that they listened. This last part is key. Imagine talking to someone <u class=\"pt\"><b>⑤</b> who</u> provided no response. They might have attended to everything we said. They might even have understood it completely. But without some sort of outward signal that indicates they listened, it's impossible to know whether or not they actually did.</p>","choices":["①","②","③","④","⑤"],"answer":1,"exp":["want to feel heard — 'feel + 과거분사' 보어 구조로 옳다.","<b>정답.</b> calls, asks와 병렬을 이루는 정동사가 필요하므로 <b>comes</b>가 되어야 한다. coming은 준동사라 주어 someone의 동사가 될 수 없다.","for someone to feel heard — to부정사의 의미상 주어(for + 목적격)로 옳다.","paid attention to — 'pay attention to'의 과거형으로, 현재완료 feel like절 안의 시제로  옳다.","선행사 someone(사람)을 받는 주격 관계대명사 who로 옳다."],"sol":"정답 ②. 'A, B, or C' 병렬 구조에서는 세 항목의 품사·형태가 같아야 한다. calls(동사) - asks(동사) - coming(준동사)은 병렬이 깨진다.","sum":"[한줄 요약] 경청받는 느낌의 세 조건 = 주의 기울임, 이해, 그리고 들었다는 외적 신호."},{"id":29,"src":32,"rng":"29-34","type":"주제","instr":"다음 글의 주제로 가장 적절한 것은?","passage":"<p>People, whether customers or otherwise, want to feel heard. When someone calls customer service, asks to speak to a manager, or comes into your office with something on their mind, they want to feel like someone is listening to their concerns and going to address them. But for someone to feel heard, three things have to happen. First, they have to feel like the other person paid attention to what they said. Second, they have to feel like the other person understood what they said. And third, the other person has to demonstrate that they listened. This last part is key. Imagine talking to someone who provided no response. They might have attended to everything we said. They might even have understood it completely. But without some sort of outward signal that indicates they listened, it's impossible to know whether or not they actually did.</p>","choices":["three conditions for making people feel heard","how to handle complaints at customer service centers","why customers prefer speaking to a manager","the importance of listening skills in job interviews","the difference between hearing and understanding"],"answer":0,"exp":["<b>정답.</b> '누군가가 경청받는다고 느끼려면 세 가지가 필요하다'는 것이 글의 중심 내용이다.","고객센터 응대법은 첫 문장의 예시로만 등장한다.","관리자와 통화하려는 이유는 다루지 않는다.","면접 상황은 언급되지 않는다.","'듣기와 이해의 차이'는 세 조건 중 두 가지일 뿐, 전체 주제를 담지 못한다."],"sol":"정답 ①. 주제는 '글 전체를 아우르는 한 문장'이다. 'three things have to happen'이라는 열거 구조가 그대로 주제가 된다.","sum":"[한줄 요약] 상대가 경청받았다고 느끼게 하려면 주의 기울임·이해·외적 신호의 세 조건이 모두 필요하다."},{"id":30,"src":33,"rng":"29-34","type":"빈칸","instr":"다음 빈칸에 들어갈 말로 가장 적절한 것은? [3점]","passage":"<p>The very fact that all of our experiences \"take place\" in a physical space makes the space inseparable from what defines it, from the event that took place in it. The tree and the ground beneath are inseparable from what took place there. This intertwining of space, place, and experience <span class=\"blk\">________________</span>. If place and space are central to the very heart of experience, we must accept the possibility that the spatial framework is the medium of all experiences — actions, thoughts, memories, and feelings of every place — not merely a background or context exterior to experience (as commonly supposed). Belgian literary critic Georges Poulet made the point elegantly, writing of the space created in Marcel Proust's great novel <i>In Search of Lost Time</i>: \"Beings surround themselves with the places where they find themselves, the way one wraps oneself up in a garment that is at one and the same time a disguise and a characterization. Without places, beings would be only abstractions.\"</p>\n<p class=\"gloss\">* intertwine: 뒤얽히다 &nbsp; ** garment: 의복</p>","choices":["limits our ability to recall past events","explains how actions influence thoughts","shows how time settings work in literature","makes it difficult for us to define our feelings","challenges the idea of place as passive backdrop"],"answer":4,"exp":["과거 회상 능력을 제한한다는 내용은 글에 없다.","행동이 사고에 영향을 준다는 설명이 아니다.","문학에서 '시간' 배경이 작동하는 방식이 아니라 '장소'에 관한 글이다.","감정을 정의하기 어렵게 만든다는 내용은 없다.","<b>정답.</b> 이어지는 문장에서 공간은 '경험의 배경이나 외부 맥락'이 아니라 '모든 경험의 매개'임을 받아들여야 한다고 하므로, 이 뒤얽힘은 '장소 = 수동적 배경'이라는 통념에 도전한다."],"sol":"정답 ⑤. 빈칸이 있는 문장은 결론적 주장이고, 바로 뒤에서 'not merely a background or context exterior to experience (as commonly supposed)'라며 통념을 부정한다. 이 부정이 곧 'challenges the idea of ~'이다.","sum":"[한줄 요약] 공간·장소·경험은 분리될 수 없으며, 장소는 경험의 수동적 배경이 아니라 경험 그 자체의 매개다."},{"id":31,"src":33,"rng":"29-34","type":"어법","instr":"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?","passage":"<p>The very fact that all of our experiences \"take place\" in a physical space <u class=\"pt\"><b>①</b> make</u> the space inseparable from what defines it, from the event that took place in it. The tree and the ground beneath <u class=\"pt\"><b>②</b> are</u> inseparable from what took place there. This intertwining of space, place, and experience challenges the idea of place as passive backdrop. If place and space are central to the very heart of experience, we must accept the possibility <u class=\"pt\"><b>③</b> that</u> the spatial framework is the medium of all experiences — actions, thoughts, memories, and feelings of every place — not merely a background or context <u class=\"pt\"><b>④</b> exterior</u> to experience (as commonly supposed). Belgian literary critic Georges Poulet made the point elegantly, writing of the space created in Marcel Proust's great novel <i>In Search of Lost Time</i>: \"Beings surround themselves with the places <u class=\"pt\"><b>⑤</b> where</u> they find themselves, the way one wraps oneself up in a garment that is at one and the same time a disguise and a characterization. Without places, beings would be only abstractions.\"</p>\n<p class=\"gloss\">* intertwine: 뒤얽히다</p>","choices":["①","②","③","④","⑤"],"answer":0,"exp":["<b>정답.</b> 주어가 'The very fact that all of our experiences \"take place\" in a physical space'라는 단수 명사구이므로 <b>makes</b>가 되어야 한다. 바로 뒤의 experiences(복수)에 끌리면 틀린다.","주어 'The tree and the ground beneath'가 복수이므로 are가 옳다.","the possibility와 동격을 이루는 접속사 that으로 옳다.","exterior to ~(~에 대해 외부의) — 형용사 + 전치사 조합으로 옳다.","장소를 나타내는 선행사 the places + 관계부사 where로 옳다."],"sol":"정답 ①. 주어의 핵심 명사는 'The very fact'(단수)이고 that절은 이를 수식하는 동격절이다. 주어부가 길 때는 핵심 명사를 찾아 수일치를 판단한다.","sum":"[한줄 요약] 모든 경험은 물리적 공간에서 일어나므로 장소는 경험과 분리될 수 없고, 경험의 배경이 아니라 매개다."},{"id":32,"src":34,"rng":"29-34","type":"빈칸","instr":"다음 빈칸에 들어갈 말로 가장 적절한 것은? [3점]","passage":"<p>No matter how you choose to delineate your evolutionary system of interest — let's say it's cell phones — there will be some things that your model just needs to take as a given, such as the fact that new ideas emerge at particular times. Indeed, all models must make simplifying assumptions of this nature. When Wallace and Darwin presented their verbal model of biological evolution, there was little knowledge of how variation generation and inheritance worked. They just took as a given that these things happened somehow. Even at the finest level of detail, we need simplifying assumptions. Physicists, for example, must take as a given the mass and charge of fundamental particles. In a model of atomic bonds, physicists don't attempt to explain why electrons have their particular mass and charge, they just accept the measured values and move on. The key point is that we can build useful models at one level of analysis <span class=\"blk\">________________</span>.</p>\n<p class=\"gloss\">* delineate: ~의 경계를 정하다</p>","choices":["with enough financial support for quality studies","even in the absence of acceptance by other scientists","by tracing how science has developed throughout history","through a detailed examination of higher-level phenomena","without a complete accounting of what's happening at all other levels"],"answer":4,"exp":["연구비 지원은 이 글의 논점이 아니다.","다른 과학자들의 인정 여부는 다루지 않는다.","과학 발전의 역사를 추적하는 것이 결론이 아니다.","상위 층위 현상을 세밀히 검토'함으로써'는 오히려 글의 주장과 방향이 다르다. 글은 어떤 층위에서든 '가정'이 필요하다고 말한다.","<b>정답.</b> 모델은 반드시 '단순화하는 가정'을 해야 하며, 물리학자들도 기본 입자의 질량·전하가 왜 그런지 설명하지 않고 측정값을 그대로 받아들인다. 즉 다른 모든 층위의 일을 완벽히 설명하지 않고도 유용한 모델을 만들 수 있다."],"sol":"정답 ⑤. 빈칸 문장은 글의 결론('The key point is that ~')이다. 앞의 예시(다윈·월리스, 물리학자)가 모두 '모르는 것은 가정으로 넘어간다'는 내용이므로, '다른 층위에 대한 완전한 설명 없이도'가 된다.","sum":"[한줄 요약] 어떤 층위에서든 모델은 단순화하는 가정을 필요로 하며, 다른 층위의 모든 것을 설명하지 않고도 유용한 모델을 만들 수 있다."},{"id":33,"src":34,"rng":"29-34","type":"어휘","instr":"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?","passage":"<p>No matter how you choose to delineate your evolutionary system of interest — let's say it's cell phones — there will be some things that your model just needs to <u class=\"pt\"><b>①</b> take as a given</u>, such as the fact that new ideas emerge at particular times. Indeed, all models must make <u class=\"pt\"><b>②</b> complex</u> assumptions of this nature. When Wallace and Darwin presented their verbal model of biological evolution, there was little knowledge of how variation generation and inheritance <u class=\"pt\"><b>③</b> worked</u>. They just took as a given that these things happened somehow. Even at the finest level of detail, we need simplifying assumptions. Physicists, for example, must take as a given the mass and charge of fundamental particles. In a model of atomic bonds, physicists don't attempt to explain why electrons have their particular mass and charge, they just accept the measured values and <u class=\"pt\"><b>④</b> move on</u>. The key point is that we can build <u class=\"pt\"><b>⑤</b> useful</u> models at one level of analysis.</p>\n<p class=\"gloss\">* delineate: ~의 경계를 정하다</p>","choices":["①","②","③","④","⑤"],"answer":1,"exp":["take as a given(주어진 것으로 받아들이다) — 모델이 전제로 삼는 것이라는 뜻으로 옳다.","<b>정답.</b> 원문은 <b>simplifying</b>(단순화하는)이다. 이 단락 전체가 '복잡한 것을 다 설명하지 않고 가정으로 받아들인다'는 내용이므로 complex(복잡한)는 정반대다.","how variation generation and inheritance worked — 당시에는 알려지지 않았으므로 과거 시제 worked가 옳다.","move on(넘어가다) — 측정값을 그대로 받아들이고 넘어간다는 뜻으로 옳다.","useful models — '유용한 모델'이라는 뜻으로 옳다."],"sol":"정답 ②. 어휘 문항은 단락의 핵심 논리(단순화·가정)와 반대되는 단어를 노린다. simplifying assumptions는 이 글의 키워드 표현이다.","sum":"[한줄 요약] 모든 모델은 단순화하는 가정 위에 세워지며, 그것이 모델을 유용하게 만든다."},{"id":34,"src":35,"rng":"35-42","type":"무관한문장","instr":"다음 글에서 전체 흐름과 관계 없는 문장은?","passage":"<p>The recognition of burnout as an occupational phenomenon by the WHO in 2019 marked an important moment in the discourse on workplace mental health. This designation reframes clinical assessment and organizational responsibility, shifting attention to systemic prevention. <span class=\"mk\">①</span>It invites employers to adopt structural interventions rather than relying solely on individual-level remedies. <span class=\"mk\">②</span>In practice, this means clinicians should collaborate with occupational health and leadership to address root causes. <span class=\"mk\">③</span>Individuals can help themselves recover from burnout by changing patterns that contribute to stress. <span class=\"mk\">④</span>It signaled a shift away from viewing burnout as a personal failing or a matter of individual resilience, toward understanding it as a structural issue rooted in organizational culture, leadership practices, and the broader socio-economic context of work. <span class=\"mk\">⑤</span>This reframing is essential, as it opens the door to systemic interventions and policy-level changes rather than placing the burden solely on individuals to cope or adapt.</p>\n<p class=\"gloss\">* resilience: 회복 탄력성</p>","choices":["①","②","③","④","⑤"],"answer":2,"exp":["구조적 개입을 도입하도록 권한다 — 'systemic prevention' 흐름과 일치한다.","임상가가 직업 건강·리더십과 협력해 근본 원인을 다뤄야 한다 — 구조적 접근과 일치한다.","<b>정답.</b> 이 글은 번아웃을 '개인의 문제'가 아니라 '구조적 문제'로 재규정하고 시스템적 개입을 강조한다. ③은 개인이 스스로 패턴을 바꿔 회복하자는 '개인 차원'의 해법이라 글의 흐름과 정반대다.","개인의 실패가 아니라 조직 문화·리더십의 구조적 문제로 보는 전환 — 일치한다.","개인에게 부담을 지우지 않고 정책 변화의 문을 연다 — 일치한다."],"sol":"정답 ③. 무관한 문장은 ① 글의 핵심어(구조·시스템 대 개인)와 반대되거나 ② 다른 화제로 튀는 문장이다. ③은 'Individuals can help themselves'로 시작해 글 전체의 논지를 뒤집는다.","sum":"[한줄 요약] WHO의 번아웃 재규정은 문제를 개인의 실패가 아닌 구조적 문제로 옮겨, 시스템 차원의 개입을 가능하게 했다."},{"id":35,"src":35,"rng":"35-42","type":"어법","instr":"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?","passage":"<p>The recognition of burnout as an occupational phenomenon by the WHO in 2019 <u class=\"pt\"><b>①</b> marking</u> an important moment in the discourse on workplace mental health. This designation reframes clinical assessment and organizational responsibility, <u class=\"pt\"><b>②</b> shifting</u> attention to systemic prevention. In practice, this means clinicians should collaborate with occupational health and leadership <u class=\"pt\"><b>③</b> to address</u> root causes. It signaled a shift away from viewing burnout as a personal failing or a matter of individual resilience, <u class=\"pt\"><b>④</b> toward understanding</u> it as a structural issue rooted in organizational culture, leadership practices, and the broader socio-economic context of work. This reframing is essential, <u class=\"pt\"><b>⑤</b> as</u> it opens the door to systemic interventions and policy-level changes rather than placing the burden solely on individuals to cope or adapt.</p>\n<p class=\"gloss\">* resilience: 회복 탄력성</p>","choices":["①","②","③","④","⑤"],"answer":0,"exp":["<b>정답.</b> 문장 전체를 이끄는 정동사가 없어 비문이 되었다. <b>marked</b>가 되어야 한다. 주어는 'The recognition of burnout as an occupational phenomenon by the WHO in 2019'이다.","분사구문 shifting(~로 관심을 돌리며)으로 옳다.","collaborate with A to do(~하기 위해 A와 협력하다) — to부정사로 옳다.","'a shift away from A toward B'에서 toward는 전치사이므로 동명사 understanding이 와야 한다. 옳다.","As(~때문에) 접속사로 절을 이끌어 옳다."],"sol":"정답 ①. 문장에 정동사가 하나도 없으면 비문이다. 주어부가 길어 동사를 놓치는 유형이므로, 주어의 핵심 명사(The recognition)를 찾고 그에 맞는 동사를 확인해야 한다.","sum":"[한줄 요약] 번아웃을 직업적 현상으로 규정한 WHO의 결정은 문제의 원인을 개인이 아닌 구조에서 찾게 만든 전환점이었다."},{"id":36,"src":36,"rng":"35-42","type":"순서","instr":"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것을 고르시오.","passage":"<div class=\"insbox\"><span class=\"inslabel\">주어진 글</span>All sound begins with some kind of motion, something that disturbs molecules in air, water, steel, wood, or other medium. Isaac Newton noted that light waves are colorless; the perception of color only occurs in the brain of a living organism.</div>\n<div class=\"blkbox\"><span class=\"blabel\">(A)</span> We can measure that disturbance with gauges and instruments, but until it hits a brain, it is not sound. You may have heard the old philosophical riddle, \"If a tree falls in the forest and no one is there to hear it, does it make it sound?\"</div>\n<div class=\"blkbox\"><span class=\"blabel\">(B)</span> The same is true of sound. Thus perception of sound begins at our eardrums — before it hits our eardrums, it is nothing more than the disturbance of molecules.</div>\n<div class=\"blkbox\"><span class=\"blabel\">(C)</span> No, because sound is a psychological concept, a product of brains. That tree will disturb molecules and make a mess, but if no creature hears it, no bird, fox, or human, it has not made sound.</div>\n<p class=\"gloss\">* gauge: 측정기</p>","choices":["(A) - (C) - (B)","(B) - (A) - (C)","(B) - (C) - (A)","(C) - (A) - (B)","(C) - (B) - (A)"],"answer":1,"exp":["(A)가 먼저 오면 'that disturbance'의 지시 대상이 약해지고, (B)의 'The same is true of sound'가 색(빛) 이야기와 멀어져 연결이 끊긴다.","<b>정답.</b> 주어진 글의 '빛은 무색이고 색은 뇌에서 지각된다'에 (B) '소리도 마찬가지다(The same is true of sound)'가 바로 이어진다. (B) 끝의 '분자의 교란'을 (A)의 'that disturbance'가 받아 계측·뇌 이야기로 확장하고, (A) 끝의 '나무가 쓰러져도 소리가 나는가?'라는 수수께끼에 (C)가 '아니다, 소리는 뇌의 산물이다'로 답한다.","(B) 다음에 바로 (C)가 오면 (A)가 던진 수수께끼 질문이 없는데 'No'라는 대답이 나와 연결이 끊긴다.","(C)의 'No'가 가리킬 질문이 앞에 없으므로 시작이 될 수 없다.","(C)가 먼저 오면 'No'의 대상이 없고 (B)의 'The same is true of sound'도 부자연스러워진다."],"sol":"정답 ②. 순서 문제는 ① 지시어(The same, this, that) ② 연결어(Thus, For example, No) ③ 질문-대답 짝을 추적한다. 여기서는 'That same is true of sound → that disturbance → riddle → No'의 사슬이 핵심이다.","sum":"[한줄 요약] 소리는 분자의 교란이 뇌에 도달해야 비로소 '소리'가 되는 지각 현상이다."},{"id":37,"src":36,"rng":"35-42","type":"어법","instr":"다음 (A)~(C)의 밑줄 친 부분 중, 어법상 틀린 것은? ( (A)~(C)는 순서와 관계없이 제시된 글의 일부입니다. )","passage":"\n<div class=\"blkbox\"><span class=\"blabel\">(A)</span> We can <u class=\"pt\"><b>①</b> measure</u> that disturbance with gauges and instruments, but until it hits a brain, it <u class=\"pt\"><b>②</b> is</u> not sound. You may have heard the old philosophical riddle, \"If a tree falls in the forest and no one is there to hear it, does it make it sound?\"</div>\n<div class=\"blkbox\"><span class=\"blabel\">(B)</span> The same is true of sound. Thus perception of sound begins at our eardrums — before it <u class=\"pt\"><b>③</b> hits</u> our eardrums, it is nothing more than the disturbance of molecules.</div>\n<div class=\"blkbox\"><span class=\"blabel\">(C)</span> No, because sound is a psychological concept, a product of brains. That tree will disturb molecules and <u class=\"pt\"><b>④</b> make</u> a mess, but if no creature hears it, no bird, fox, or human, it <u class=\"pt\"><b>⑤</b> has not make</u> sound.</div>\n<p class=\"gloss\">* gauge: 측정기</p>","choices":["①","②","③","④","⑤"],"answer":4,"exp":["조동사 can 뒤에는 동사원형 measure가 와야 하므로 옳다.","주어 it(앞의 that disturbance)이 단수이므로 is가 옳다.","before it hits — 주어 it + 현재시제로 일반적 사실을 나타내므로 옳다.","will disturb와 (will) make가 병렬로 연결되어 옳다.","<b>정답.</b> 현재완료의 부정은 'has not + 과거분사'이므로 <b>has not made</b>가 되어야 한다. has not make는 조동사 뒤에 원형이 온 형태라 비문이다."],"sol":"정답 ⑤. 'has/have + p.p.' 구조에서 부정어 not은 has 뒤에 온다. has not make처럼 조동사 뒤에 동사원형이 오면 곧바로 오류다.","sum":"[한줄 요약] 소리는 뇌가 만들어 내는 지각 현상이므로, 듣는 생명체가 없으면 소리도 없다."},{"id":38,"src":37,"rng":"35-42","type":"순서","instr":"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것을 고르시오. [3점]","passage":"<div class=\"insbox\"><span class=\"inslabel\">주어진 글</span>When people are collaborating face to face they can easily see each other and the range of different communication cues being used, so the task space is a subset of the communication space.</div>\n<div class=\"blkbox\"><span class=\"blabel\">(A)</span> So, there is an artificial seam between the communication space and task space. This is the type of impact of remote communication technology that needs to be predicted through communication models.</div>\n<div class=\"blkbox\"><span class=\"blabel\">(B)</span> Ishii, a professor at the MIT Media Lab, describes this as seamless communication because there is no functional separation between the task and communication space. However, when people are working remotely, the task space is often separated from the communication space.</div>\n<div class=\"blkbox\"><span class=\"blabel\">(C)</span> For example, when video conferencing, people may have the face of their collaborator on one screen, while looking at a shared document on another. In this case, it is impossible to see many of the remote collaborator's communication cues at the same time as looking at the task space.</div>\n<p class=\"gloss\">* seam: 갈라진 틈</p>","choices":["(A) - (C) - (B)","(B) - (A) - (C)","(B) - (C) - (A)","(C) - (A) - (B)","(C) - (B) - (A)"],"answer":2,"exp":["(A)가 먼저 오면 'seam(이음매)'이 무엇 때문에 생겼는지 설명되기 전에 결론이 나온다.","(B)-(A)-(C)로 놓으면 (A)의 'So'가 (C)의 구체적 예시보다 앞서 근거 없이 결론이 나온다.","<b>정답.</b> 주어진 글의 '대면 협업에서는 과업 공간이 소통 공간의 부분집합'이라는 내용을 (B)가 'seamless communication'으로 명명하며 이어받는다. (B) 끝의 'However, 원격에서는 과업 공간이 분리된다'를 (C)가 화상 회의 예시로 구체화하고, (C)의 결과로 '인위적인 이음매가 생긴다'고 정리하는 (A)가 마무리한다.","(C)의 'For example'이 가리킬 원격 협업 내용이 앞에 없으므로 시작이 될 수 없다.","(C)가 먼저 오면 'For example'의 대상이 없고 (B)의 'this'도 지시 대상이 없어진다."],"sol":"정답 ③. '대면 상황 일반 → 원격 상황(However) → 예시(For example) → 결과(So)'의 흐름을 잡으면 된다. (B)의 this는 주어진 글의 'task space is a subset of the communication space'를 받는다.","sum":"[한줄 요약] 대면 협업에서는 과업 공간과 소통 공간이 분리되지 않지만, 원격 협업에서는 둘 사이에 인위적인 이음매가 생긴다."},{"id":39,"src":37,"rng":"35-42","type":"어휘","instr":"다음 (A)~(C)의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은? ( (A)~(C)는 순서와 관계없이 제시된 글의 일부입니다. )","passage":"\n<div class=\"blkbox\"><span class=\"blabel\">(A)</span> So, there is an <u class=\"pt\"><b>①</b> artificial</u> seam between the communication space and task space. This is the type of impact of remote communication technology that needs to be <u class=\"pt\"><b>②</b> ignored</u> through communication models.</div>\n<div class=\"blkbox\"><span class=\"blabel\">(B)</span> Ishii, a professor at the MIT Media Lab, describes this as <u class=\"pt\"><b>③</b> seamless</u> communication because there is no functional separation between the task and communication space. However, when people are working remotely, the task space is often <u class=\"pt\"><b>④</b> separated</u> from the communication space.</div>\n<div class=\"blkbox\"><span class=\"blabel\">(C)</span> For example, when video conferencing, people may have the face of their collaborator on one screen, while looking at a shared document on another. In this case, it is impossible to see many of the remote collaborator's communication <u class=\"pt\"><b>⑤</b> cues</u> at the same time as looking at the task space.</div>\n<p class=\"gloss\">* seam: 갈라진 틈</p>","choices":["①","②","③","④","⑤"],"answer":1,"exp":["artificial seam(인위적인 이음매) — 기술 때문에 생긴 틈이라는 뜻으로 옳다.","<b>정답.</b> 원문은 <b>predicted</b>(예측되다)다. 원격 소통 기술의 영향은 소통 모델을 통해 '예측되어야' 하는 것이므로 ignored(무시되어야)는 문맥과 반대다.","seamless communication(매끄러운 소통) — 기능적 분리가 없어 끊김 없는 소통이라는 뜻으로 옳다.","the task space is often separated from the communication space — 옳다.","communication cues(소통 단서) — 표정·몸짓 같은 단서라는 뜻으로 옳다."],"sol":"정답 ②. 'needs to be predicted through communication models'는 '모델을 통해 예측할 필요가 있다'는 뜻이다. ignore로 바꾸면 '예측'이 '무시'가 되어 논리가 무너진다.","sum":"[한줄 요약] 원격 협업에서는 소통 공간과 과업 공간이 분리되어 이음매가 생기므로, 그 영향을 소통 모델로 예측할 필요가 있다."},{"id":40,"src":38,"rng":"35-42","type":"문장삽입","instr":"글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳을 고르시오.","passage":"<div class=\"insbox\"><span class=\"inslabel\">주어진 문장</span>Regardless of whether the statement was true or false, belief in the truth of the claim went up as a function of repetition.</div><p>In 1977, psychologists Lynn Hasher and David Goldstein asked a group of college students how certain they were that sixty general-knowledge trivia-like statements were either true or false. The students were asked to evaluate the sixty statements three times, at two-week intervals. <span class=\"mk\">(①)</span> Crucially, only twenty of the statements were repeated each time; the other forty were new. <span class=\"mk\">(②)</span> The researchers then compared the 'truth-ratings' of the repeated versus non-repeated statements. <span class=\"mk\">(③)</span> What they found was astonishing. <span class=\"mk\">(④)</span> In other words, the more often you hear a statement, the more 'true' it sounds. <span class=\"mk\">(⑤)</span> This became known as the illusory truth effect.</p>\n<p class=\"gloss\">* trivia: 잡학적 지식</p>","choices":["①","②","③","④","⑤"],"answer":3,"exp":["①은 연구 방법(평가 3회, 2주 간격)이 먼저 제시되어야 하는 자리다.","②는 반복된 20개와 새 40개를 구분한 직후로, 아직 'truth-ratings 비교'라는 절차가 나오기 전이다.","③은 비교 절차 앞이라 결과가 먼저 나오면 순서가 뒤집힌다.","<b>정답.</b> 'What they found was astonishing.'(놀라운 발견) 다음에 그 발견의 내용(반복될수록 참이라고 믿는 정도가 올라갔다)이 와야 하고, 이어지는 'In other words, the more often you hear a statement, the more \"true\" it sounds.'가 이를 풀어 설명한다.","⑤는 'This became known as the illusory truth effect.' 앞으로, 이미 'In other words'로 요약한 뒤라 문장이 들어갈 자리가 없다."],"sol":"정답 ④. 주어진 문장은 '연구 결과'이므로 ① 실험 절차 → ② 비교 → ③ 놀라운 발견 → ④ (결과 진술) → ⑤ 요약·명명의 순서에서 ④ 자리에 들어간다.","sum":"[한줄 요약] 같은 문장을 반복해서 들을수록 그것이 참이라고 믿는 정도가 높아진다(착각적 진실 효과)."},{"id":41,"src":38,"rng":"35-42","type":"내용일치","instr":"다음 글의 내용과 일치하는 것은?","passage":"<p>In 1977, psychologists Lynn Hasher and David Goldstein asked a group of college students how certain they were that sixty general-knowledge trivia-like statements were either true or false. The students were asked to evaluate the sixty statements three times, at two-week intervals. <span class=\"mk\">(①)</span> Crucially, only twenty of the statements were repeated each time; the other forty were new. <span class=\"mk\">(②)</span> The researchers then compared the 'truth-ratings' of the repeated versus non-repeated statements. <span class=\"mk\">(③)</span> What they found was astonishing. <span class=\"mk\">(④)</span> In other words, the more often you hear a statement, the more 'true' it sounds. <span class=\"mk\">(⑤)</span> This became known as the illusory truth effect.</p>\n<p class=\"gloss\">* trivia: 잡학적 지식</p>","choices":["학생들은 매번 같은 60개의 문장을 평가했다.","평가는 2주 간격으로 세 번 이루어졌다.","연구 결과, 반복은 문장에 대한 믿음을 낮췄다.","이 효과는 'sleeper effect'로 알려졌다.","연구자들은 학생들에게 직접 잡학 문장을 쓰게 했다."],"answer":1,"exp":["매번 같은 60개가 아니라, 20개만 반복되고 40개는 매번 새로운 문장이었다.","<b>정답.</b> \"asked to evaluate the sixty statements three times, at two-week intervals\" — 2주 간격으로 3회.","반복될수록 문장이 '참'이라고 믿는 정도가 올라갔다(illusory truth effect).","'illusory truth effect'로 알려졌다.","연구자는 문장을 제시했을 뿐, 학생에게 작성을 요구하지 않았다."],"sol":"정답 ②. 숫자(20/40/3회)와 고유명사(illusory truth effect)를 바꿔 놓는 전형적 오답 유형이다.","sum":"[한줄 요약] 2주 간격 3회 평가 실험에서 반복된 문장일수록 '참'이라는 평가가 높아졌다."},{"id":42,"src":39,"rng":"35-42","type":"문장삽입","instr":"글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳을 고르시오.","passage":"<div class=\"insbox\"><span class=\"inslabel\">주어진 문장</span>When submerged underwater, to avoid feeling the pressure of the surrounding environment, it is necessary to maintain the condition of equal external and internal pressure.</div><p>The human body on the Earth's surface experiences constant air pressure equal to 16-18 tons per square meter of its body surface. However, this pressure is not felt because external pressure is balanced by internal pressure in the lungs and air cavities of the body. <span class=\"mk\">(①)</span> During dives, in addition to atmospheric pressure, the pressure of the water also acts on the human body. <span class=\"mk\">(②)</span> To achieve this, air or a breathing mixture is supplied to the diver under pressure equal to the pressure applied by the surrounding water. <span class=\"mk\">(③)</span> Water pressure increases proportionally with depth. <span class=\"mk\">(④)</span> It increases by 1 bar for every 10 meters. <span class=\"mk\">(⑤)</span> It follows that a diver at a depth of 10 meters experiences a pressure of 2 bar, and to stabilize pressure, the supply of a breathing mixture under pressure of 2 atmospheres is required.</p>\n<p class=\"gloss\">* submerge: 물속에 잠그다 &nbsp; ** air cavity: 공기가 들어 있는 공간</p>","choices":["①","②","③","④","⑤"],"answer":1,"exp":["①은 지상에서 기압이 느껴지지 않는 이유를 설명한 직후로, '잠수 시 수압'이라는 새 정보가 와야 자연스럽다.","<b>정답.</b> 주어진 문장은 '외부 압력과 내부 압력을 같게 유지해야 한다'는 원리이고, 바로 뒤의 'To achieve this, ~'가 그 원리를 실현하는 방법(주변 수압과 같은 압력의 호흡 혼합기 공급)을 제시한다. 원리와 'this'가 정확히 연결되는 자리다.","③은 '수압은 깊이에 비례해 증가한다'는 물리적 사실 뒤라, 원리 문장을 다시 꺼내면 흐름이 끊긴다.","④는 '1 bar for every 10 meters'라는 수치 뒤로, 'this'가 가리킬 내용이 이미 사라진 자리다.","⑤는 결론(10m 수심 예시) 뒤라 원리를 다시 제시하는 것이 결론을 되돌리는 구성이 된다."],"sol":"정답 ②. 삽입 문제는 'To achieve this / This means / For example' 같은 지시·연결 표현의 바로 앞이 빈자리인 경우가 많다. 여기서는 'To achieve this'의 this가 주어진 문장의 'equal external and internal pressure'를 가리킨다.","sum":"[한줄 요약] 잠수 시에는 주변 수압과 같은 압력의 호흡 혼합기를 공급해 내외부 압력을 같게 유지해야 한다."},{"id":43,"src":39,"rng":"35-42","type":"어법","instr":"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?","passage":"<p>The human body on the Earth's surface experiences constant air pressure <u class=\"pt\"><b>①</b> equal to</u> 16-18 tons per square meter of its body surface. However, this pressure is not felt because external pressure <u class=\"pt\"><b>②</b> is balanced</u> by internal pressure in the lungs and air cavities of the body. During dives, in addition to atmospheric pressure, the pressure of the water also <u class=\"pt\"><b>③</b> acts</u> on the human body. To achieve this, air or a breathing mixture is supplied to the diver under pressure equal to the pressure applied by the surrounding water. Water pressure increases <u class=\"pt\"><b>④</b> proportional</u> with depth. It increases by 1 bar for every 10 meters. It follows that a diver at a depth of 10 meters <u class=\"pt\"><b>⑤</b> experiences</u> a pressure of 2 bar, and to stabilize pressure, the supply of a breathing mixture under pressure of 2 atmospheres is required.</p>\n<p class=\"gloss\">* submerge: 물속에 잠그다 &nbsp; ** air cavity: 공기가 들어 있는 공간</p>","choices":["①","②","③","④","⑤"],"answer":3,"exp":["equal to ~ — 'air pressure'를 뒤에서 수식하는 형용사구로 옳다.","external pressure is balanced by internal pressure — 수동태로 옳다.","주어 'the pressure of the water'가 단수이므로 acts가 옳다.","<b>정답.</b> 동사 increases를 수식하는 것은 부사이므로 <b>proportionally</b>가 되어야 한다. proportional은 형용사라 동사를 꾸밀 수 없다.","주어 'a diver'가 단수이므로 experiences가 옳다."],"sol":"정답 ④. 동사를 수식하려면 부사(-ly)가 필요하다. increase proportionally with ~ 형태를 기억해 두자.","sum":"[한줄 요약] 수압은 10m마다 1 bar씩 증가하므로, 잠수자는 수심에 맞춰 같은 압력의 호흡 혼합기를 공급받아야 한다."},{"id":44,"src":40,"rng":"35-42","type":"요약","instr":"다음 글의 내용을 한 문장으로 요약하고자 한다. 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?","passage":"<p>Researchers recently found that goldenrods that live in peaceful areas without much threat from predators will issue chemical alarm calls that are incredibly specific — comprehensible only to their close kin — on the rare occasion they are attacked. But goldenrods in more hostile territory signal to their neighbors using chemical phrases easily understood by all the goldenrod in the area, not just their biological kin. Instead of using coded whisper networks, these goldenrod broadcast the threat over loudspeaker, so to speak. It is the first time research has confirmed that these chemical communications are beneficial not only to the plant receiving them but also to the sender. When times are truly tough, you do not want to be left standing in a field alone. There will be no one to mate with, no one to help bring in pollinators.</p>\n<p class=\"gloss\">* goldenrod: 미역취 &nbsp; ** pollinator: 꽃가루 매개자</p>\n<div class=\"sumbox\"><p>Compared to those in peaceful areas, goldenrods in more hostile environments send more <b>(A)</b> <span class=\"blk\">&nbsp;________&nbsp;</span> understandable chemical messages, thereby <b>(B)</b> <span class=\"blk\">&nbsp;________&nbsp;</span> both the senders and the receivers.</p></div>","choices":["(A) broadly / (B) benefiting","(A) easily / (B) harming","(A) narrowly / (B) protecting","(A) accidentally / (B) profiting","(A) specifically / (B) endangering"],"answer":0,"exp":["<b>정답.</b> 적대적 환경의 미역취는 '모두가 쉽게 이해할 수 있는(easily understood)' 화학 신호를 널리 보낸다 → broadly understandable. 그리고 그런 소통은 신호를 받는 쪽뿐 아니라 보내는 쪽에도 이익이 된다 → benefiting both.","'easily'는 (A)로는 가능하지만, (B) harming은 'beneficial not only to the plant receiving them but also to the sender'와 정반대다.","'narrowly'는 평화로운 지역의 특징(specific — 오직 가까운 친족에게만)이며, (B) protecting도 근거가 약하다.","'accidentally'는 문맥에 없고, (B) profiting은 (A)와 함께 성립하지 않는다.","'specifically'는 평화로운 지역의 특징이고, (B) endangering은 이익과 반대다."],"sol":"정답 ①. 요약문의 (A)는 '평화 지역과 대비되는 적대적 지역'의 특징을, (B)는 마지막 문단의 'beneficial to both'를 그대로 반영해야 한다.","sum":"[한줄 요약] 적대적 환경의 미역취는 모든 이가 알아듣는 넓은 화학 신호를 보내, 보내는 쪽과 받는 쪽 모두에게 이익이 된다."},{"id":45,"src":40,"rng":"35-42","type":"어휘","instr":"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?","passage":"<p>Researchers recently found that goldenrods that live in <u class=\"pt\"><b>①</b> peaceful</u> areas without much threat from predators will issue chemical alarm calls that are incredibly <u class=\"pt\"><b>②</b> specific</u> — <u class=\"pt\"><b>③</b> unintelligible</u> only to their close kin — on the rare occasion they are attacked. But goldenrods in more <u class=\"pt\"><b>④</b> hostile</u> territory signal to their neighbors using chemical phrases easily understood by all the goldenrod in the area, not just their biological kin. Instead of using coded whisper networks, these goldenrod <u class=\"pt\"><b>⑤</b> broadcast</u> the threat over loudspeaker, so to speak. It is the first time research has confirmed that these chemical communications are beneficial not only to the plant receiving them but also to the sender. When times are truly tough, you do not want to be left standing in a field alone. There will be no one to mate with, no one to help bring in pollinators.</p>\n<p class=\"gloss\">* goldenrod: 미역취 &nbsp; ** pollinator: 꽃가루 매개자</p>","choices":["①","②","③","④","⑤"],"answer":2,"exp":["peaceful areas — 포식자의 위협이 적은 '평화로운' 지역이라는 뜻으로 옳다.","incredibly specific — 매우 '특정한' 신호라는 뜻으로 옳다.","<b>정답.</b> 원문은 <b>comprehensible</b>(이해 가능한)이다. '오직 가까운 친족에게만 이해되는'이라는 뜻이어야 하므로 unintelligible(이해할 수 없는)은 정반대다.","hostile territory(적대적인 영역) — 위협이 많은 지역이라는 뜻으로 옳다.","broadcast(방송하다) — 확성기로 위협을 알리듯 널리 퍼뜨린다는 비유로 옳다."],"sol":"정답 ③. 뒤에 붙은 'only to their close kin'이 결정적 단서다. '오직 친족에게만' 이해된다는 뜻이므로 comprehensible이 와야 한다.","sum":"[한줄 요약] 위협이 적은 곳의 미역취는 친족만 알아듣는 좁은 신호를, 위협이 많은 곳의 미역취는 모두가 알아듣는 넓은 신호를 보내 서로를 돕는다."},{"id":46,"src":41,"rng":"35-42","type":"제목","instr":"윗글의 제목으로 가장 적절한 것은? [3점]","passage":"<p>Patterns such as infinite scroll, autoplaying videos, or requiring an account just to make a purchase all interfere with the user's control over their own experience. From a sustainability perspective, many of these patterns encourage overconsumption of data and attention. Infinite scroll keeps loading new content whether the user wants it or not, increasing data usage and device processing. Autoplay forces media to load and play even for people who may never watch it. These choices consume more energy on both the user's device and the servers delivering the content. Take the decision by a popular music streaming platform to replace static album artwork with short video loops by default. This change significantly increases data usage and battery consumption, while the option to disable it is buried deep in the settings. As a result, most users consume more resources unless they actively search for a way to opt out.</p>\n<p>It is important to acknowledge that web design always nudges behavior in some way. Showing consequences and highlighting options are all forms of influence. The ethical line is not whether nudging exists, but whether it is transparent, reversible, and aligned with the user's interests. In many cases, the most responsible approach is to make the lower-impact option the default, while keeping alternatives clearly available. Defaults are powerful, and when chosen carefully, they can reduce environmental impact without removing user agency.</p>\n<p class=\"gloss\">* default: 기본값 &nbsp; ** nudge: 유도하다 &nbsp; *** transparent: 투명한</p>","choices":["Creating Web Design That Respects Users and the Environment","The Better the Web Design, the More Data Usage Required","The Environmental Costs of Making Digital Devices","Why Do Users Prefer Autoplaying Visual Content?","User-Friendly Design: Making Purchasing Easier"],"answer":0,"exp":["<b>정답.</b> 사용자의 통제권을 존중하고 환경 영향까지 고려한 웹 디자인(투명하고 되돌릴 수 있는 기본값)을 논한다.","데이터 사용이 많을수록 좋은 디자인이라는 말은 글과 정반대다.","디지털 '기기 제조'의 환경 비용이 아니라 '웹 디자인 패턴'이 만드는 비용이다.","사용자가 자동 재생 콘텐츠를 '선호한다'는 근거가 없으며, 오히려 부정적으로 서술된다.","구매를 쉽게 하는 디자인이 아니라 사용자 통제와 환경 문제를 다룬다."],"sol":"정답 ①. 제목은 '글의 소재 + 필자의 태도'를 담는다. 이 글의 결론은 'the most responsible approach is to make the lower-impact option the default'로, 사용자와 환경을 함께 존중하는 디자인이다.","sum":"[한줄 요약] 사용자의 통제권을 빼앗는 웹 디자인 패턴은 자원을 낭비하므로, 투명하고 되돌릴 수 있는 '저영향 기본값'이 윤리적이다."},{"id":47,"src":42,"rng":"35-42","type":"어휘","instr":"밑줄 친 (a) ~ (e) 중에서 문맥상 낱말의 쓰임이 적절하지 않은 것은?","passage":"<p>Patterns such as infinite scroll, autoplaying videos, or requiring an account just to make a purchase all interfere with the user's control over their own experience. From a sustainability perspective, many of these patterns encourage <u class=\"pt\"><b>(a)</b> overconsumption</u> of data and attention. Infinite scroll keeps loading new content whether the user wants it or not, increasing data usage and device processing. Autoplay <u class=\"pt\"><b>(b)</b> forces</u> media to load and play even for people who may never watch it. These choices consume more energy on both the user's device and the servers delivering the content. Take the decision by a popular music streaming platform to replace static album artwork with short video loops by default. This change significantly increases data usage and battery consumption, while the option to disable it is buried <u class=\"pt\"><b>(c)</b> deep</u> in the settings. As a result, most users consume more resources unless they actively search for a way to opt out.</p>\n<p>It is important to acknowledge that web design always nudges behavior in some way. Showing consequences and highlighting options are all forms of influence. The ethical line is not whether nudging exists, but whether it is transparent, reversible, and aligned with the user's interests. In many cases, the most <u class=\"pt\"><b>(d)</b> responsible</u> approach is to make the lower-impact option the default, while keeping alternatives clearly available. Defaults are <u class=\"pt\"><b>(e)</b> powerless</u>, and when chosen carefully, they can reduce environmental impact without removing user agency.</p>\n<p class=\"gloss\">* default: 기본값 &nbsp; ** nudge: 유도하다 &nbsp; *** transparent: 투명한</p>","choices":["(a)","(b)","(c)","(d)","(e)"],"answer":4,"exp":["(a) overconsumption — 무한 스크롤 등이 데이터와 주의력의 '과소비'를 조장한다는 뜻으로 옳다.","(b) forces — 자동 재생이 미디어를 '강제로' 불러오게 한다는 뜻으로 옳다.","(c) deep — 끄는 옵션이 설정 '깊숙이' 묻혀 있다는 뜻으로 옳다.","(d) responsible — '가장 책임 있는 접근'이라는 뜻으로 옳다.","<b>정답.</b> 원문은 'Defaults are <b>powerful</b>'이다. 기본값을 신중히 고르면 환경 영향을 줄이면서도 사용자의 선택권을 없애지 않는다는 뜻이므로 powerless(힘없는)는 정반대다."],"sol":"정답 ⑤. (e) 문장은 '기본값은 강력하다 → 신중히 고르면 환경 영향을 줄일 수 있다'는 논리다. powerless가 들어가면 뒤의 'can reduce'와 모순된다.","sum":"[한줄 요약] 기본값은 강력하므로, 저영향 옵션을 기본값으로 삼되 대안을 명확히 열어 두는 것이 윤리적이다."},{"id":48,"src":41,"rng":"35-42","type":"어법","instr":"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?","passage":"<p>Patterns such as infinite scroll, autoplaying videos, or requiring an account just to make a purchase all <u class=\"pt\"><b>①</b> interfere with</u> the user's control over their own experience. From a sustainability perspective, many of these patterns encourage <u class=\"pt\"><b>②</b> overconsumption</u> of data and attention. Infinite scroll keeps loading new content whether the user wants it or not, increasing data usage and device processing. Autoplay <u class=\"pt\"><b>③</b> force</u> media to load and play even for people who may never watch it. These choices consume more energy on both the user's device and the servers delivering the content. Take the decision by a popular music streaming platform to replace static album artwork with short video loops by default. This change significantly increases data usage and battery consumption, while the option to disable it is buried <u class=\"pt\"><b>④</b> deep</u> in the settings. As a result, most users consume more resources unless they actively search for a way to opt out.</p>\n<p>It is important to acknowledge that web design always nudges behavior in some way. Showing consequences and highlighting options are all forms of influence. The ethical line is not whether nudging exists, but whether it is transparent, reversible, and aligned with the user's interests. In many cases, the most responsible approach is to make the lower-impact option the default, while <u class=\"pt\"><b>⑤</b> keeping</u> alternatives clearly available. Defaults are powerful, and when chosen carefully, they can reduce environmental impact without removing user agency.</p>\n<p class=\"gloss\">* default: 기본값 &nbsp; ** nudge: 유도하다</p>","choices":["①","②","③","④","⑤"],"answer":2,"exp":["주어 'Patterns'가 복수이므로 interfere with가 옳다.","'encourage overconsumption of ~' — 셀 수 없는 명사 overconsumption으로 옳다.","<b>정답.</b> 주어 Autoplay가 단수이므로 <b>forces</b>가 되어야 한다. 바로 앞의 복수 명사 videos/patterns에 끌리면 틀린다.","buried deep in the settings — 부사 deep(~깊숙이)이 전치사구를 수식하므로 옳다.","'while + -ing' 분사구문으로, 앞의 'to make ~'와 의미상 병렬을 이루어 옳다."],"sol":"정답 ③. 주어(Autoplay)와 동사(force) 사이에 복수 명사가 없어도, 앞 문장의 복수 주어에 끌려 수일치를 놓치는 유형이다.","sum":"[한줄 요약] 자동 재생·무한 스크롤 같은 패턴은 사용자의 통제를 빼앗고 자원을 낭비한다."},{"id":49,"src":42,"rng":"35-42","type":"내용일치","instr":"윗글의 내용과 일치하는 것은?","passage":"<p>Patterns such as infinite scroll, autoplaying videos, or requiring an account just to make a purchase all interfere with the user's control over their own experience. From a sustainability perspective, many of these patterns encourage overconsumption of data and attention. Infinite scroll keeps loading new content whether the user wants it or not, increasing data usage and device processing. Autoplay forces media to load and play even for people who may never watch it. These choices consume more energy on both the user's device and the servers delivering the content. Take the decision by a popular music streaming platform to replace static album artwork with short video loops by default. This change significantly increases data usage and battery consumption, while the option to disable it is buried deep in the settings. As a result, most users consume more resources unless they actively search for a way to opt out.</p>\n<p>It is important to acknowledge that web design always nudges behavior in some way. Showing consequences and highlighting options are all forms of influence. The ethical line is not whether nudging exists, but whether it is transparent, reversible, and aligned with the user's interests. In many cases, the most responsible approach is to make the lower-impact option the default, while keeping alternatives clearly available. Defaults are powerful, and when chosen carefully, they can reduce environmental impact without removing user agency.</p>\n<p class=\"gloss\">* default: 기본값 &nbsp; ** nudge: 유도하다 &nbsp; *** transparent: 투명한</p>","choices":["무한 스크롤은 데이터 사용량을 줄인다.","자동 재생은 그것을 시청할 사람에게만 미디어를 재생한다.","한 음악 스트리밍 플랫폼이 기본값을 동영상 루프에서 정적 앨범 아트로 바꿨다.","윤리적 쟁점은 유도(nudging)의 존재 여부가 아니라 그것이 투명하고 되돌릴 수 있는지 여부다.","필자는 기본값(default)을 없애야 한다고 주장한다."],"answer":3,"exp":["무한 스크롤은 'increasing data usage'로 데이터 사용을 늘린다.","'even for people who may never watch it' — 시청하지 않을 사람에게도 재생된다.","정적 아트워크를 '동영상 루프로' 바꾼 것과 반대다.","<b>정답.</b> \"The ethical line is not whether nudging exists, but whether it is transparent, reversible, and aligned with the user's interests.\"","기본값을 없애자는 것이 아니라, 신중히 고른 기본값이 환경 영향을 줄인다고 했다."],"sol":"정답 ④. 'not A but B' 구문은 그 자체로 정답 근거가 되는 경우가 많다. 여기서는 A(유도 존재 여부)와 B(투명성·되돌릴 수 있음)를 바꿔 놓은 선지가 없음을 확인하자.","sum":"[한줄 요약] 웹 디자인의 윤리적 기준은 유도 행위의 유무가 아니라 투명성·가역성·사용자 이익과의 일치 여부다."}]</script>
+<script>
+(function(){
+"use strict";
+var DATA = JSON.parse(document.getElementById('qdata').textContent);
+var TOTAL = DATA.length;
+var KEY = 'g1eng_2026_10_quiz_v1';
+var MARKS = ['①','②','③','④','⑤'];
+var RANGES = [
+  {id:'all', label:'전체'},
+  {id:'18-24', label:'18~24'},
+  {id:'29-34', label:'29~34'},
+  {id:'35-42', label:'35~42'},
+  {id:'wrong', label:'틀린 문제만'}
+];
+var REVIEW_KEY = 'g1eng_2026_10_review';
+
+var reviewIds = null;
+var cur = {list:[], idx:0};
+var autoOpened = false;
+
+/* ---------- state ---------- */
+function loadState(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){
+      var s = JSON.parse(raw);
+      if(s && s.v === 1) return {answers: s.answers || {}, last: s.last || {}, filter: s.filter || 'all'};
+    }
+  }catch(e){}
+  return {answers:{}, last:{}, filter:'all'};
+}
+var state = loadState();
+if(!RANGES.some(function(r){return r.id === state.filter;})) state.filter = 'all';
+
+function saveState(){
+  try{ localStorage.setItem(KEY, JSON.stringify({v:1, answers:state.answers, last:state.last, filter:state.filter})); }catch(e){}
+}
+
+function isAnswered(q){ return Object.prototype.hasOwnProperty.call(state.answers, q.id); }
+function isCorrect(q){ return isAnswered(q) && state.answers[q.id] === q.answer; }
+function wrongQuestions(){ return DATA.filter(function(q){ return isAnswered(q) && state.answers[q.id] !== q.answer; }); }
+function doneCount(){ return DATA.filter(isAnswered).length; }
+function correctCount(){ return DATA.filter(isCorrect).length; }
+
+function listFor(f){
+  if(f === 'all') return DATA;
+  if(f === 'wrong'){
+    var ids = reviewIds || wrongQuestions().map(function(q){return q.id;});
+    return DATA.filter(function(q){ return ids.indexOf(q.id) !== -1; });
+  }
+  return DATA.filter(function(q){ return q.rng === f; });
+}
+
+/* ---------- helpers ---------- */
+function el(tag, cls, html){
+  var d = document.createElement(tag);
+  if(cls) d.className = cls;
+  if(html != null) d.innerHTML = html;
+  return d;
+}
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ---------- header ---------- */
+function renderHeader(){
+  var d = doneCount(), c = correctCount();
+  document.getElementById('statCorrect').textContent = c;
+  document.getElementById('statDone').textContent = d;
+  var rateEl = document.getElementById('statRate');
+  rateEl.textContent = d ? Math.round(c / d * 100) + '%' : '-';
+  document.getElementById('barFill').style.width = (d / TOTAL * 100) + '%';
+  document.getElementById('totalTag').textContent = TOTAL + '문항';
+}
+
+function renderTabs(){
+  var host = document.getElementById('tabs');
+  host.innerHTML = '';
+  RANGES.forEach(function(r){
+    var n = listFor(r.id).length;
+    var b = el('button', 'tab' + (state.filter === r.id ? ' on' : ''),
+      esc(r.label) + '<span class="cnt">' + n + '</span>');
+    b.type = 'button';
+    b.setAttribute('aria-pressed', state.filter === r.id ? 'true' : 'false');
+    b.addEventListener('click', function(){ setFilter(r.id); });
+    host.appendChild(b);
+  });
+}
+
+function setFilter(f){
+  if(f !== 'wrong') reviewIds = null;
+  state.filter = f;
+  saveState();
+  rebuild(true);
+}
+
+/* ---------- card ---------- */
+function renderCard(){
+  var host = document.getElementById('cardHost');
+  host.innerHTML = '';
+  var q = cur.list[cur.idx];
+
+  if(!q){
+    var e = el('div', 'card empty');
+    e.innerHTML = '<div class="big">🎉</div><p>' +
+      (state.filter === 'wrong' ? '틀린 문제가 없어요! 모두 맞혔습니다.' : '해당 범위에 문항이 없어요.') +
+      '</p>';
+    var b = el('button','btn primary','전체 문제 보기');
+    b.type = 'button';
+    b.addEventListener('click', function(){ setFilter('all'); });
+    e.appendChild(b);
+    host.appendChild(e);
+    return;
+  }
+
+  var card = el('div', 'card');
+
+  var head = el('div', 'card-head');
+  head.appendChild(el('span', 'qno', 'Q' + String(q.id).padStart(2,'0')));
+  head.appendChild(el('span', 'badge', '지문 ' + q.src + '번'));
+  head.appendChild(el('span', 'badge type', esc(q.type)));
+  head.appendChild(el('span', 'badge pos', (cur.idx + 1) + ' / ' + cur.list.length));
+  card.appendChild(head);
+
+  card.appendChild(el('p', 'instr', esc(q.instr)));
+
+  var pass = el('div', 'passage');
+  pass.innerHTML = q.passage;
+  card.appendChild(pass);
+
+  /* underline points inside passage */
+  var pts = pass.querySelectorAll('u.pt');
+
+  var choices = el('div', 'choices');
+  var compact = q.choices.every(function(c){ return c.length <= 2; });
+  if(compact) choices.className = 'choices compact';
+
+  q.choices.forEach(function(text, i){
+    var btn = el('button', 'ch');
+    btn.type = 'button';
+    btn.dataset.i = String(i);
+    if(compact){
+      btn.innerHTML = esc(text);
+    }else{
+      btn.innerHTML = '<span class="num">' + MARKS[i] + '</span><span class="tx">' + esc(text) + '</span>';
+    }
+    btn.addEventListener('click', function(){ pick(q, i); });
+    choices.appendChild(btn);
+  });
+  card.appendChild(choices);
+
+  var fbHost = el('div');
+  card.appendChild(fbHost);
+
+  if(isAnswered(q)) paintAnswered(q, choices, pts, fbHost, false);
+  host.appendChild(card);
+}
+
+function paintAnswered(q, choicesEl, pts, fbHost, animate){
+  var picked = state.answers[q.id];
+  var ok = picked === q.answer;
+
+  Array.prototype.forEach.call(choicesEl.children, function(btn){
+    var i = Number(btn.dataset.i);
+    btn.disabled = true;
+    if(i === q.answer) btn.classList.add('ok');
+    else if(i === picked) btn.classList.add('no');
+  });
+
+  if(pts && pts.length){
+    if(pts[q.answer]) pts[q.answer].classList.add('pt-ok');
+    if(!ok && pts[picked]) pts[picked].classList.add('pt-no');
+  }
+
+  fbHost.innerHTML = '';
+  var fb = el('div', 'fb ' + (ok ? 'ok' : 'no'));
+  var hd = el('div', 'fb-hd');
+  hd.innerHTML = (ok ? '✅ 정답입니다!' : '❌ 아쉬워요 · 정답은 ' + MARKS[q.answer]) +
+    '<button class="sp" type="button">이 문제 다시 풀기</button>';
+  fb.appendChild(hd);
+
+  var ol = el('ol', 'exp');
+  q.exp.forEach(function(t, i){
+    var li = el('li', i === q.answer ? 'correct' : '');
+    li.innerHTML = '<span class="m">' + MARKS[i] + '</span>' + t;
+    ol.appendChild(li);
+  });
+  fb.appendChild(ol);
+
+  if(q.sol) fb.appendChild(el('div', 'sol', '<b>핵심 해설</b> · ' + q.sol));
+  if(q.sum) fb.appendChild(el('div', 'sum', esc(q.sum)));
+
+  hd.querySelector('.sp').addEventListener('click', function(){
+    delete state.answers[q.id];
+    saveState();
+    rebuild(false);
+  });
+
+  fbHost.appendChild(fb);
+  if(animate){
+    fb.style.scrollMarginTop = '150px';
+    try{ fb.scrollIntoView({behavior:'smooth', block:'nearest'}); }catch(e){}
+  }
+}
+
+function pick(q, i){
+  if(isAnswered(q)) return;
+  state.answers[q.id] = i;
+  saveState();
+
+  var card = document.querySelector('#cardHost .card');
+  if(!card) return;
+  var choicesEl = card.querySelector('.choices');
+  var pass = card.querySelector('.passage');
+  var pts = pass ? pass.querySelectorAll('u.pt') : [];
+  var fbHost = card.lastElementChild;
+  paintAnswered(q, choicesEl, pts, fbHost, true);
+
+  renderHeader(); renderTabs(); renderMini();
+
+  if(doneCount() === TOTAL && !autoOpened){
+    autoOpened = true;
+    setTimeout(openResult, 900);
+  }
+}
+
+/* ---------- nav ---------- */
+function goto(i){
+  if(!cur.list.length) return;
+  cur.idx = Math.max(0, Math.min(cur.list.length - 1, i));
+  state.last[state.filter] = cur.idx;
+  saveState();
+  renderCard(); renderNav(); renderMini();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function renderNav(){
+  document.getElementById('btnPrev').disabled = cur.idx <= 0;
+  document.getElementById('btnNext').disabled = cur.idx >= cur.list.length - 1;
+  var jump = document.getElementById('jump');
+  jump.innerHTML = '';
+  cur.list.forEach(function(q, i){
+    var o = document.createElement('option');
+    o.value = String(i);
+    o.textContent = 'Q' + String(q.id).padStart(2,'0') + ' · ' + q.src + '번 · ' + q.type;
+    if(i === cur.idx) o.selected = true;
+    jump.appendChild(o);
+  });
+}
+
+function renderMini(){
+  var host = document.getElementById('minimap');
+  host.innerHTML = '';
+  if(!cur.list.length){ document.getElementById('mmwrap').style.display = 'none'; return; }
+  document.getElementById('mmwrap').style.display = '';
+  cur.list.forEach(function(q, i){
+    var b = el('button', 'mm' + (isCorrect(q) ? ' ok' : (isAnswered(q) ? ' no' : '')) + (i === cur.idx ? ' cur' : ''), String(q.id));
+    b.type = 'button';
+    b.setAttribute('aria-label', 'Q' + q.id + ' ' + q.type);
+    b.addEventListener('click', function(){ goto(i); });
+    host.appendChild(b);
+  });
+}
+
+/* ---------- rebuild ---------- */
+function rebuild(resetIdx){
+  cur.list = listFor(state.filter);
+  var saved = state.last[state.filter] || 0;
+  cur.idx = resetIdx ? 0 : Math.max(0, Math.min(cur.list.length - 1, saved));
+  renderHeader(); renderTabs(); renderCard(); renderNav(); renderMini();
+}
+
+/* ---------- result ---------- */
+function pct(a, b){ return b ? Math.round(a / b * 100) : 0; }
+
+function renderResult(){
+  var d = doneCount(), c = correctCount();
+  var body = document.getElementById('resultBody');
+  var html = '';
+
+  html += '<div class="rgrid">' +
+    '<div class="cell"><div class="v">' + TOTAL + '</div><div class="l">전체 문항</div></div>' +
+    '<div class="cell acc"><div class="v">' + d + '</div><div class="l">푼 문항</div></div>' +
+    '<div class="cell okk"><div class="v">' + pct(c, d) + '<span style="font-size:12px">%</span></div><div class="l">정답률</div></div>' +
+    '</div>';
+
+  /* by range */
+  html += '<p class="sec-t">범위별 정답률</p>';
+  var rangeStats = [];
+  ['18-24','29-34','35-42'].forEach(function(r){
+    var qs = DATA.filter(function(q){ return q.rng === r; });
+    var dd = qs.filter(isAnswered).length;
+    var cc = qs.filter(isCorrect).length;
+    var p = pct(cc, dd);
+    rangeStats.push({r:r, d:dd, c:cc, p:p, n:qs.length});
+    html += '<div class="rrow"><div class="top"><span>' + r + '번</span>' +
+      '<span class="d">' + cc + '/' + dd + ' · ' + qs.length + '문항</span>' +
+      '<span class="pct">' + (dd ? p + '%' : '-') + '</span></div>' +
+      '<div class="mini-bar"><span class="' + (p < 50 && dd ? 'vlow' : (p < 75 && dd ? 'low' : '')) + '" style="width:' + (dd ? p : 0) + '%"></span></div></div>';
+  });
+
+  /* by type */
+  var types = {};
+  DATA.forEach(function(q){
+    if(!types[q.type]) types[q.type] = {n:0, d:0, c:0};
+    types[q.type].n++;
+    if(isAnswered(q)) types[q.type].d++;
+    if(isCorrect(q)) types[q.type].c++;
+  });
+  var tlist = Object.keys(types).map(function(t){
+    var o = types[t];
+    return {t:t, n:o.n, d:o.d, c:o.c, p:pct(o.c, o.d)};
+  }).filter(function(o){ return o.d > 0; }).sort(function(a,b){ return a.p - b.p; });
+
+  html += '<p class="sec-t">유형별 정답률 (낮은 순)</p>';
+  if(!tlist.length){
+    html += '<div class="rrow"><div class="top"><span style="color:#a3aab6">아직 푼 문제가 없어요.</span></div></div>';
+  }else{
+    tlist.forEach(function(o){
+      html += '<div class="rrow"><div class="top"><span>' + esc(o.t) + '</span>' +
+        '<span class="d">' + o.c + '/' + o.d + ' · ' + o.n + '문항</span>' +
+        '<span class="pct">' + o.p + '%</span></div>' +
+        '<div class="mini-bar"><span class="' + (o.p < 50 ? 'vlow' : (o.p < 75 ? 'low' : '')) + '" style="width:' + o.p + '%"></span></div></div>';
+    });
+  }
+
+  /* tip */
+  var weakR = rangeStats.filter(function(o){ return o.d > 0; }).sort(function(a,b){ return a.p - b.p; })[0];
+  var tips = [];
+  if(tlist.length){
+    var worst = tlist.slice(0, 2).filter(function(o){ return o.p < 85; });
+    if(worst.length){
+      tips.push('가장 약한 유형은 <b>' + worst.map(function(o){ return esc(o.t) + '(' + o.p + '%)'; }).join(', ') + '</b> 입니다. 해설에서 근거 문장을 다시 확인해 보세요.');
+    }else{
+      tips.push('모든 유형에서 85% 이상이에요. 아주 좋아요! 틀린 문제만 다시 풀어 마무리해 보세요.');
+    }
+  }
+  if(weakR && weakR.p < 80 && weakR.d >= 3) tips.push('<b>' + weakR.r + '번</b> 범위의 정답률이 ' + weakR.p + '%로 상대적으로 낮아요. 이 범위부터 다시 보는 것을 추천합니다.');
+  if(d < TOTAL) tips.push('아직 ' + (TOTAL - d) + '문항이 남았어요. 이어서 풀면 취약점 통계가 더 정확해져요.');
+  if(tips.length) html += '<div class="tipbox">' + tips.join('<br>') + '</div>';
+
+  var wrongN = wrongQuestions().length;
+  html += '<div class="acts">' +
+    '<button class="btn primary" id="btnRetryWrong"' + (wrongN ? '' : ' disabled style="opacity:.45"') + '>틀린 문제만 다시 풀기' + (wrongN ? ' (' + wrongN + ')' : '') + '</button>' +
+    '<button class="btn" id="btnReset2">전체 처음부터 다시 풀기</button>' +
+    '</div>';
+
+  body.innerHTML = html;
+
+  var rw = document.getElementById('btnRetryWrong');
+  if(rw) rw.addEventListener('click', function(){
+    var ids = wrongQuestions().map(function(q){ return q.id; });
+    if(!ids.length) return;
+    ids.forEach(function(id){ delete state.answers[id]; });
+    reviewIds = ids;
+    state.filter = 'wrong';
+    autoOpened = false;
+    saveState();
+    closeResult();
+    rebuild(true);
+  });
+  var r2 = document.getElementById('btnReset2');
+  if(r2) r2.addEventListener('click', function(){ closeResult(); resetAll(); });
+}
+
+function openResult(){
+  renderResult();
+  document.getElementById('modal').classList.add('show');
+}
+function closeResult(){
+  document.getElementById('modal').classList.remove('show');
+}
+
+function resetAll(){
+  if(!window.confirm('모든 풀이 기록을 지우고 처음부터 다시 풀까요?')) return;
+  state.answers = {};
+  state.last = {};
+  reviewIds = null;
+  state.filter = 'all';
+  autoOpened = false;
+  saveState();
+  rebuild(true);
+}
+
+/* ---------- events ---------- */
+document.getElementById('btnPrev').addEventListener('click', function(){ goto(cur.idx - 1); });
+document.getElementById('btnNext').addEventListener('click', function(){ goto(cur.idx + 1); });
+document.getElementById('jump').addEventListener('change', function(e){ goto(Number(e.target.value)); });
+document.getElementById('btnResult').addEventListener('click', openResult);
+document.getElementById('btnClose').addEventListener('click', closeResult);
+document.getElementById('btnReset').addEventListener('click', resetAll);
+document.getElementById('modal').addEventListener('click', function(e){
+  if(e.target === document.getElementById('modal')) closeResult();
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'ArrowLeft' && e.target.tagName !== 'SELECT'){ goto(cur.idx - 1); }
+  else if(e.key === 'ArrowRight' && e.target.tagName !== 'SELECT'){ goto(cur.idx + 1); }
+  else if(e.key === 'Escape'){ closeResult(); }
+});
+
+/* swipe */
+(function(){
+  var sx = 0, sy = 0, active = false;
+  var host = document.getElementById('cardHost');
+  host.addEventListener('touchstart', function(e){
+    if(e.touches.length !== 1) return;
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY; active = true;
+  }, {passive:true});
+  host.addEventListener('touchend', function(e){
+    if(!active) return;
+    active = false;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - sx, dy = t.clientY - sy;
+    if(Math.abs(dx) > 70 && Math.abs(dy) < 45){
+      if(dx < 0) goto(cur.idx + 1); else goto(cur.idx - 1);
+    }
+  }, {passive:true});
+})();
+
+/* go */
+rebuild(true);
+})();
+</script>
+</body>
+</html>
