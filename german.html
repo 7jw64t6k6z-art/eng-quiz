@@ -784,7 +784,7 @@ function renderS(){
     const el=document.createElement("div");
     el.className="item"+(it.state===1?" ok":it.state===-1?" no":"");
     el.innerHTML=`<div class="row" style="align-items:flex-start">
-        <span class="qn">${n}</span>
+        <span class="qn">${n+1}</span>
         <div style="flex:1;min-width:0">
           <div class="qtxt" style="font-size:14.5px;color:#3a4552"><span class="badge${it.grp==="B"?" b":""}">${it.grp==="A"?"Perfekt":"dass"}</span>${it.src}</div>
           <div class="ansrow" style="margin-top:7px">
