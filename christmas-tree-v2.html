@@ -756,8 +756,7 @@
     zoom = Math.max(0.55, Math.min(2.8, zoom * Math.exp(-e.deltaY * 0.0012)));
   }, { passive: false });
 
-  /* ───────────── 오르골 캐롤 (자동 재생) ───────────── */
-  var audio = null, musicTimer = null;
+  /* ───────────── 오르골 캐롤 (iOS Safari 무음 모드에서도 나는 <audio> 방식) ───────────── */
   musicOn = true;
 
   var NT = {
@@ -790,84 +789,144 @@
     [48, 'C3', 6], [54, 'G3', 2], [56, 'C3', 4], [60, 'C3', 2]
   ];
 
-  function bell(freq, at, dur, vol, type) {
-    if (!audio) return;
-    var t = audio.currentTime + at;
-    var o1 = audio.createOscillator();
-    var o2 = audio.createOscillator();
-    var g1 = audio.createGain();
-    var g2 = audio.createGain();
-    var master = audio.createGain();
-    var filt = audio.createBiquadFilter();
+  var BEAT = 60 / 128;
 
-    o1.type = type || 'sine';
-    o2.type = 'sine';
-    o1.frequency.value = freq;
-    o2.frequency.value = freq * 2.005;
-    g1.gain.value = 1;
-    g2.gain.value = 0.16;
+  /* 징글벨 오르골 멜로디 한 바퀴를 통째로 16bit PCM WAV로 메모리에서 합성한다.
+     iOS는 Web Audio(AudioContext)를 측면 무음 스위치에 묶어 버려서 소리가 안 나지만,
+     <audio>로 재생하는 미디어는 무음 모드에서도 소리가 난다. 그래서 AudioContext 대신 이 방식만 쓴다. */
+  function buildCarolWav() {
+    var SR = 16000;
+    var i, total = 0.12;
+    for (i = 0; i < MELODY.length; i++) total += MELODY[i][1] * BEAT;
+    total += 1.15;                                  /* 마지막 여운 + 한 바퀴 사이 숨 고르기 */
+    var N = Math.ceil(total * SR);
+    var buf = new Float32Array(N);
+    var attack = Math.max(1, Math.round(0.012 * SR));
+    var tau = 0.30 * SR;
 
-    filt.type = 'lowpass';
-    filt.frequency.value = 5200;
-    filt.Q.value = 0.4;
-
-    master.gain.setValueAtTime(0.0001, t);
-    master.gain.exponentialRampToValueAtTime(vol, t + 0.012);
-    master.gain.exponentialRampToValueAtTime(vol * 0.3, t + Math.min(dur * 0.5, 0.35));
-    master.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.55);
-
-    o1.connect(g1); g1.connect(filt);
-    o2.connect(g2); g2.connect(filt);
-    filt.connect(master); master.connect(audio.destination);
-    o1.start(t); o2.start(t);
-    o1.stop(t + dur + 0.7);
-    o2.stop(t + dur + 0.7);
-  }
-
-  function scheduleCarol() {
-    if (!audio || !musicOn) return;
-    var beat = 60 / 128;
-    var t = 0.12;
-    for (var i = 0; i < MELODY.length; i++) {
-      var note = MELODY[i][0], beats = MELODY[i][1];
-      if (note !== '-') {
-        bell(NT[note], t, beats * beat, 0.21, 'sine');
-        bell(NT[note] * 2, t, beats * beat * 0.45, 0.03, 'sine');
+    function voice(freq, at, dur, vol, kind) {
+      var start = Math.round(at * SR);
+      if (start >= N) return;
+      var len = Math.min(N - start, Math.round((dur + 0.6) * SR));
+      if (len <= 1) return;
+      var w = 2 * Math.PI * freq / SR;
+      var w2 = w * 2.005;
+      var fade = Math.max(1, Math.round(0.09 * SR));
+      var fadeFrom = len - fade;
+      for (var j = 0; j < len; j++) {
+        var env = j < attack ? j / attack : Math.exp(-(j - attack) / tau);
+        if (j > fadeFrom) env *= (len - j) / fade;
+        var ph = w * j;
+        var s = kind === 'tri' ? (2 / Math.PI) * Math.asin(Math.sin(ph)) : Math.sin(ph);
+        s += 0.16 * Math.sin(w2 * j);
+        buf[start + j] += vol * env * s;
       }
-      t += beats * beat;
     }
-    for (var j = 0; j < BASS.length; j++) {
-      var bb = BASS[j];
-      bell(NT[bb[1]] * 0.5, bb[0] * beat + 0.12, bb[2] * beat, 0.07, 'triangle');
+
+    var t = 0.12;
+    for (i = 0; i < MELODY.length; i++) {
+      var nm = MELODY[i][0], bt = MELODY[i][1];
+      if (nm !== '-' && NT[nm]) {
+        voice(NT[nm], t, bt * BEAT, 0.55, 'sine');
+        voice(NT[nm] * 2, t, bt * BEAT * 0.45, 0.07, 'sine');
+      }
+      t += bt * BEAT;
     }
-    musicTimer = setTimeout(scheduleCarol, (t + 1.1) * 1000);
+    for (i = 0; i < BASS.length; i++) {
+      var b = BASS[i];
+      voice(NT[b[1]] * 0.5, b[0] * BEAT + 0.12, b[2] * BEAT, 0.20, 'tri');
+    }
+
+    var peak = 0;
+    for (i = 0; i < N; i++) { var av = buf[i] < 0 ? -buf[i] : buf[i]; if (av > peak) peak = av; }
+    var gain = peak > 0.0001 ? Math.min(12, 0.92 / peak) : 1;
+
+    var bytes = 44 + N * 2;
+    var ab = new ArrayBuffer(bytes);
+    var dv = new DataView(ab);
+    function tag(off, str) { for (var q = 0; q < str.length; q++) dv.setUint8(off + q, str.charCodeAt(q)); }
+    tag(0, 'RIFF'); dv.setUint32(4, bytes - 8, true); tag(8, 'WAVE');
+    tag(12, 'fmt '); dv.setUint32(16, 16, true); dv.setUint16(20, 1, true); dv.setUint16(22, 1, true);
+    dv.setUint32(24, SR, true); dv.setUint32(28, SR * 2, true); dv.setUint16(32, 2, true); dv.setUint16(34, 16, true);
+    tag(36, 'data'); dv.setUint32(40, N * 2, true);
+    var off = 44;
+    for (i = 0; i < N; i++) {
+      var v = buf[i] * gain;
+      v = v > 1 ? 1 : (v < -1 ? -1 : v);
+      dv.setInt16(off, Math.round(v < 0 ? v * 32768 : v * 32767), true);
+      off += 2;
+    }
+    return ab;
   }
 
-  /* 버튼 없이: 로드 즉시 재생 시도 -> 막히면 첫 터치에 저절로 깨어난다 */
-  function pumpAudio() {
+  var musicEl = null, musicUrl = null, musicBuilt = false, musicArmed = false;
+
+  var MUSIC_EVS = ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'click', 'keydown'];
+
+  function armMusic() {
+    if (musicArmed) return;
+    musicArmed = true;
+    for (var i = 0; i < MUSIC_EVS.length; i++) {
+      document.addEventListener(MUSIC_EVS[i], onMusicGesture, true);
+      window.addEventListener(MUSIC_EVS[i], onMusicGesture, true);
+    }
+  }
+
+  function disarmMusic() {
+    if (!musicArmed) return;
+    musicArmed = false;
+    for (var i = 0; i < MUSIC_EVS.length; i++) {
+      document.removeEventListener(MUSIC_EVS[i], onMusicGesture, true);
+      window.removeEventListener(MUSIC_EVS[i], onMusicGesture, true);
+    }
+  }
+
+  function makeMusic() {
+    if (musicEl || musicBuilt) return musicEl;
+    musicBuilt = true;
+    try {
+      musicUrl = URL.createObjectURL(new Blob([buildCarolWav()], { type: 'audio/wav' }));
+      var a = document.createElement('audio');
+      a.setAttribute('playsinline', '');
+      a.setAttribute('webkit-playsinline', '');
+      a.setAttribute('preload', 'auto');
+      a.loop = true;
+      a.volume = 1;
+      a.src = musicUrl;
+      a.style.cssText = 'position:fixed;left:-4px;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;';
+      a.addEventListener('playing', function () { if (!a.paused) disarmMusic(); }, false);
+      a.addEventListener('pause', function () {
+        if (musicOn && !a.ended) setTimeout(function () { if (a.paused) armMusic(); }, 400);
+      }, false);
+      document.body.appendChild(a);
+      musicEl = a;
+    } catch (e) { musicEl = null; }
+    return musicEl;
+  }
+
+  function playCarol() {
     if (!musicOn) return;
-    if (!audio) {
-      var AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-      try { audio = new AC(); } catch (err) { return; }
-    }
-    if (audio.state === 'running') {
-      if (!musicTimer) scheduleCarol();
-      return;
-    }
-    var p = audio.resume();
-    if (p && p.then) {
-      p.then(function () {
-        if (!musicTimer) scheduleCarol();
-      }).catch(function () {});
-    }
+    var a = musicEl || makeMusic();
+    if (!a || !a.paused) return;
+    try {
+      var p = a.play();
+      if (p && p.catch) p.catch(function () {});
+    } catch (e) {}
   }
 
-  ['pointerdown', 'touchstart', 'click', 'keydown'].forEach(function (ev) {
-    document.addEventListener(ev, pumpAudio, { passive: true });
-  });
-  window.addEventListener('load', function () { setTimeout(pumpAudio, 50); });
-  setTimeout(pumpAudio, 0);
+  function onMusicGesture() {
+    playCarol();
+    if (musicEl && !musicEl.paused) disarmMusic();
+  }
+
+  armMusic();
+
+  /* 로드 직후 한 번 재생을 시도하고(아이폰은 대개 차단), 막히면 첫 터치에서 반드시 재생된다.
+     캔버스가 터치를 먹어도 잡히도록 document와 window 양쪽에 리스너를 걸어 둔다. */
+  function bootMusic() { makeMusic(); playCarol(); }
+  window.addEventListener('load', function () { setTimeout(bootMusic, 40); });
+  if (typeof requestIdleCallback === 'function') requestIdleCallback(bootMusic, { timeout: 1200 });
+  else setTimeout(bootMusic, 300);
 
   /* ───────────── go ───────────── */
   layout();
