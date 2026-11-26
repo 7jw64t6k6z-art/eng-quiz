@@ -27,10 +27,10 @@ button{font-family:inherit}
 .hd-top{display:flex;align-items:center;gap:8px}
 .hd-title{font-size:15px;font-weight:800;letter-spacing:-.3px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hd-title em{font-style:normal;color:var(--accent);font-size:11px;background:var(--accent-soft);padding:2px 6px;border-radius:6px;margin-left:5px;vertical-align:1px}
-.tabs{display:flex;gap:6px;overflow-x:auto;padding:9px 0 9px;scrollbar-width:none}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:9px 0 9px}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--sub);font-size:12.5px;font-weight:800;
-  padding:8px 12px;border-radius:999px;cursor:pointer;white-space:nowrap;letter-spacing:-.3px;transition:.15s}
+.tab{border:1px solid var(--line);background:#fff;color:var(--sub);font-size:12px;font-weight:800;text-align:center;
+  padding:8px 4px;border-radius:999px;cursor:pointer;white-space:nowrap;letter-spacing:-.6px;transition:.15s;overflow:hidden;text-overflow:ellipsis}
 .tab.on{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(43,89,216,.25)}
 .tab .n{opacity:.6;font-weight:700;font-size:11px;margin-left:3px}
 .tab.on .n{opacity:.85}
@@ -124,10 +124,10 @@ main{max-width:840px;margin:0 auto;padding:14px 14px 90px}
  <div class="hd-in">
   <div class="hd-top"><div class="hd-title">🇩🇪 독일어 수행평가 연습 <em>Übungsblatt 4</em></div></div>
   <nav class="tabs" id="tabs">
-    <button class="tab on" data-p="p1">불규칙 과거분사<span class="n">50</span></button>
-    <button class="tab" data-p="p2">그림 증상·조언<span class="n">8</span></button>
+    <button class="tab on" data-p="p1">과거분사<span class="n">50</span></button>
+    <button class="tab" data-p="p2">그림 증상<span class="n">8</span></button>
     <button class="tab" data-p="p3">문장 변환<span class="n">20</span></button>
-    <button class="tab" data-p="p4">🎮 믹스 게임</button>
+    <button class="tab" data-p="p4">🎮 믹스게임</button>
   </nav>
  </div>
 </header>
