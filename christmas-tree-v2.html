@@ -804,22 +804,33 @@
     var attack = Math.max(1, Math.round(0.012 * SR));
     var tau = 0.30 * SR;
 
+    /* 아이폰에서도 로딩이 끊기지 않도록 사인·삼각파는 표로 미리 만들어 둔다 */
+    var TBL = 8192, MASK = TBL - 1;
+    var SIN = new Float32Array(TBL), TRI = new Float32Array(TBL);
+    for (i = 0; i < TBL; i++) {
+      var ang = 2 * Math.PI * i / TBL;
+      SIN[i] = Math.sin(ang);
+      TRI[i] = (2 / Math.PI) * Math.asin(Math.sin(ang));
+    }
+
     function voice(freq, at, dur, vol, kind) {
       var start = Math.round(at * SR);
       if (start >= N) return;
       var len = Math.min(N - start, Math.round((dur + 0.6) * SR));
       if (len <= 1) return;
-      var w = 2 * Math.PI * freq / SR;
-      var w2 = w * 2.005;
+      var tbl = kind === 'tri' ? TRI : SIN;
+      var p1 = 0, p2 = 0;
+      var st1 = freq * TBL / SR, st2 = freq * 2.005 * TBL / SR;
+      var dec = Math.exp(-1 / tau);
       var fade = Math.max(1, Math.round(0.09 * SR));
       var fadeFrom = len - fade;
+      var env = 0;
       for (var j = 0; j < len; j++) {
-        var env = j < attack ? j / attack : Math.exp(-(j - attack) / tau);
-        if (j > fadeFrom) env *= (len - j) / fade;
-        var ph = w * j;
-        var s = kind === 'tri' ? (2 / Math.PI) * Math.asin(Math.sin(ph)) : Math.sin(ph);
-        s += 0.16 * Math.sin(w2 * j);
-        buf[start + j] += vol * env * s;
+        env = j === 0 ? 0 : (j < attack ? j / attack : (j === attack ? 1 : env * dec));
+        var amp = j > fadeFrom ? env * (len - j) / fade : env;
+        var s = tbl[(p1 | 0) & MASK] + 0.16 * SIN[(p2 | 0) & MASK];
+        buf[start + j] += vol * amp * s;
+        p1 += st1; p2 += st2;
       }
     }
 
