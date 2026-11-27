@@ -311,7 +311,9 @@
     box-shadow:0 12px 26px rgba(3,6,22,.6),inset 0 1px 0 rgba(255,255,255,.45),0 0 0 4px rgba(160,190,255,.10),0 0 18px rgba(120,158,235,.28);
     color:#f2f7ff;
   }
+  .hand.letter{background:linear-gradient(150deg,rgba(63,92,166,.96),rgba(24,38,86,.94));color:#f2f7ff;border-color:rgba(220,232,255,.8)}
   .hand.cake.spin{border-color:#fff;box-shadow:0 0 0 6px rgba(190,215,255,.32),0 14px 30px rgba(90,130,220,.55)}
+  .soma{height:min(54vh,470px)!important;max-height:470px}
   .unit{color:#dce8ff;text-shadow:0 0 12px rgba(120,158,235,.55)}
   .unit b{color:#ffd166;letter-spacing:.16em}
   .allbtn{border:1px solid rgba(220,232,255,.6);color:#e8f0ff;background:rgba(40,60,118,.6)}
@@ -339,8 +341,9 @@
   .rletter .ln{color:#b81f34;font-size:.82em;margin-right:5px;opacity:.85}
   .rletter .sig{display:block;margin-top:8px;text-align:right;font-size:10.5px;color:#5b78b4;letter-spacing:.02em}
   /* 100점 도장 카드 */
-  .stampPop{position:fixed;inset:0;z-index:105;display:none;place-items:center;pointer-events:none}
+  .stampPop{position:fixed;inset:0;z-index:105;display:none;grid-auto-rows:min-content;place-content:center;justify-items:center;pointer-events:none}
   .stampPop.on{display:grid}
+  .stampCap{margin-top:18px;font-size:clamp(13px,3.8vw,16px);color:#e8f0ff;text-shadow:0 2px 12px rgba(40,70,150,.95);letter-spacing:.02em}
   .stampCard{position:relative;width:min(56vw,232px);aspect-ratio:1/1;display:grid;place-items:center;
     background:linear-gradient(160deg,#ffffff,#f2f7ff);border-radius:8px;transform:rotate(-9deg);
     box-shadow:0 26px 62px rgba(3,6,22,.62),0 0 0 1px rgba(255,255,255,.95);
@@ -363,13 +366,14 @@
     <span class="sTxt">100점!</span>
     <span class="sSub">ALL 백점 ♪</span>
   </div>
+  <div class="stampCap">서인의 기말고사 올백을 기원해 ♪</div>
 </div>
 
 <button id="sound" type="button" aria-label="배경 음악 켜기/끄기" aria-pressed="true"><span id="soundIco">🎵</span></button>
 
 <main class="stage">
   <div class="wrap">
-    <div class="bubble" id="bubble">후아암… 기말고사 <b>올백</b>, 내가 응원해 줄게 <span class="sp">♪</span></div>
+    <div class="bubble" id="bubble">후아암… <b>서인아</b>, 기말고사 올백 내가 응원해 줄게 <span class="sp">♪</span></div>
 
     <div class="hero">
       <div class="halo"></div>
@@ -392,20 +396,20 @@
     <button class="lclose" id="closebtn" type="button" aria-label="닫기">✕</button>
     <div class="ltop">
       <span class="crest">🌙</span>
-      <h2 id="letterTitle">기말고사 올백, 내가 응원해 ♪</h2>
+      <h2 id="letterTitle">기말고사 올백, 내가 응원해 줄게 ♪</h2>
       <span class="kanji">Knights · 朔間凛月</span>
     </div>
     <div class="divider"><i></i>🌙<i></i></div>
 
     <div class="rletter">
-      <p><span class="ln">1.</span>해린 씨, 기말고사… 응원하러 왔어 ♪</p>
+      <p><span class="ln">1.</span>서인아, 기말고사… 응원하러 왔어 ♪</p>
       <p><span class="ln">2.</span>밤새우는 건 반대야. 나처럼 푹 자고 일어나야 머리가 맑아지잖아.</p>
       <p><span class="ln">3.</span>아침엔 물 한 잔 마시고 창문 열어서 햇빛 좀 쬐어 봐 ♪</p>
       <p><span class="ln">4.</span>시험지 펼치면 제일 쉬운 문제부터 풀어. 그게 제일 빨라.</p>
       <p><span class="ln">5.</span>막히는 문제는 붙잡고 있지 말고 표시만 해 두고 넘어가면 돼.</p>
       <p><span class="ln">6.</span>다 풀고 나서 처음부터 한 번 더 보는 거, 그게 점수를 바꾸더라 ♪</p>
       <p><span class="ln">7.</span>긴장되면 잠깐 눈 감고 내 피아노 소리 떠올려 봐. 옆에 있는 것처럼.</p>
-      <p><span class="ln">8.</span>해린 씨는 이미 충분히 잘하고 있으니까, 너무 애쓰지 않아도 괜찮아.</p>
+      <p><span class="ln">8.</span>서인이는 이미 충분히 잘하고 있으니까, 너무 애쓰지 않아도 괜찮아.</p>
       <p><span class="ln">9.</span>시험 끝나면 나랑 낮잠 자자 ♪ 내가 제일 좋아하는 시간이야.</p>
       <p><span class="ln">10.</span>100점 아니어도 괜찮아. 그래도 100점 맞으면… 내가 진짜 기뻐할 거야 ♪</p>
       <span class="sig">— 사쿠마 리츠 · 朔間凛月</span>
