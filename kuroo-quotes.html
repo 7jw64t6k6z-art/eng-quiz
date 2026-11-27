@@ -38,16 +38,18 @@ body{
 }
 
 /* 상단 코너 장식 + 네코마 전광판 */
-.top-bar{width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 2px;margin-bottom:-2px}
-.paw-badge{display:flex;align-items:center;gap:4px;font-size:10px;letter-spacing:.14em;color:#ff5468;font-weight:700}
+.top-bar{width:100%;display:flex;align-items:flex-start;justify-content:space-between;padding:0 2px;margin-bottom:-36px;position:relative;z-index:5;pointer-events:none}
+.top-bar > *{pointer-events:auto}
+.paw-badge{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:9px;letter-spacing:.12em;color:#ff5468;font-weight:700;line-height:1.1}
+.paw-badge .p-ico{font-size:20px;filter:drop-shadow(0 0 8px rgba(255,60,80,.7))}
 .sound-btn{
-  width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(255,95,115,.55);
-  background:rgba(30,6,11,.9);color:#fff;font-size:14px;cursor:pointer;display:grid;place-items:center;
+  width:34px;height:34px;border-radius:9px;border:1.5px solid rgba(255,255,255,.35);
+  background:rgba(16,4,7,.92);color:#fff;font-size:15px;cursor:pointer;display:grid;place-items:center;
 }
 
 .board{
-  width:100%;background:linear-gradient(180deg,#1c060b,#0b0204);
-  border:2px solid rgba(255,68,88,.8);border-radius:14px;padding:10px 22px;
+  width:78%;background:linear-gradient(180deg,#1c060b,#090204);
+  border:2px solid rgba(255,68,88,.82);border-radius:14px;padding:9px 18px;
   box-shadow:0 0 28px rgba(255,40,65,.38), inset 0 0 16px rgba(255,65,85,.22);
   text-align:center;position:relative;
 }
@@ -57,7 +59,8 @@ body{
 }
 .dots-l{left:9px} .dots-r{right:9px}
 .dots-l i,.dots-r i{width:4px;height:4px;border-radius:50%;background:rgba(255,110,125,.6);display:block}
-.b-sub{font-size:10.5px;letter-spacing:.22em;color:#ffc0c7;font-weight:700}
+.b-sub{font-size:10px;letter-spacing:.20em;color:#ffe0e3;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px}
+.b-sub::before,.b-sub::after{content:"";width:18px;height:2px;background:#ff3b52;display:inline-block}
 .b-main{
   font-family:'KTitle',monospace;font-size:23px;letter-spacing:.05em;line-height:1.15;margin:3px 0 2px;
   color:#ff4b5e;
@@ -144,13 +147,13 @@ body{
 <div class="wrap">
   <div class="top-bar">
     <button class="sound-btn" id="sound" type="button" aria-label="배경음악">🔊</button>
-    <div class="paw-badge">🐾 NEKOMA</div>
+    <div class="paw-badge"><span class="p-ico">🐾</span><span>NEKOMA</span></div>
   </div>
 
   <header class="board">
     <div class="dots-l"><i></i><i></i><i></i><i></i></div>
     <div class="dots-r"><i></i><i></i><i></i><i></i></div>
-    <div class="b-sub">— NEKOMA NO.1 —</div>
+    <div class="b-sub">NEKOMA NO.1</div>
     <div class="b-main">KUROO TETSURO</div>
     <div class="b-cap">FAMOUS QUOTES ARCHIVE</div>
   </header>
