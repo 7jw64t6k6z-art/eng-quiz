@@ -7,7 +7,7 @@
 <title>🌸 서연아 생일 축하해! · 홍월의 무사돌</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Pen+Script&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Jua&family=Nanum+Pen+Script&family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
   :root{
     --doraji:#5654a2;--doraji-deep:#3c3a78;--doraji-light:#8b88d6;
@@ -242,15 +242,32 @@
     .bubble,.soma,.halo,.hand{animation:none!important}
     .floaties{display:none}
   }
+
+  /* ── 전체 글꼴: 고운바탕(고풍스러운 명조) ── */
+  body, body *{
+    font-family:"Gowun Batang","Noto Serif KR","Gowun Dodum",Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif !important;
+    letter-spacing:.004em;
+  }
+  .bubble{font-weight:400}
+
+  /* ── 인트로: 검정 화면 → 팡! ── */
+  #intro{position:fixed;inset:0;background:#05030c;z-index:120;pointer-events:none;animation:introOut .62s ease-in .4s forwards}
+  @keyframes introOut{0%{opacity:1}100%{opacity:0;visibility:hidden}}
+  .bubble{animation:bubblePop 1s cubic-bezier(.2,1.75,.35,1) .46s both, bubbleFloat 5s ease-in-out 1.7s infinite}
+  @keyframes bubblePop{0%{opacity:0;transform:scale(.2) translateY(20px)}60%{opacity:1;transform:scale(1.09) translateY(-4px)}100%{opacity:1;transform:scale(1)}}
+  .soma{animation:somaPop 1.05s cubic-bezier(.16,1.8,.36,1) .44s both, somaFloat 6.5s ease-in-out 1.8s infinite}
+  @keyframes somaPop{0%{opacity:0;transform:scale(.18) translateY(30px)}58%{opacity:1;transform:scale(1.08) translateY(-8px)}100%{opacity:1;transform:scale(1)}}
+  .halo{animation:haloPulse 6s ease-in-out .5s infinite both}
 </style>
 </head>
 <body>
 <canvas id="fx" aria-hidden="true"></canvas>
+<div id="intro" aria-hidden="true"></div>
 <button id="sound" type="button" aria-label="생일 노래 소리 켜기/끄기" aria-pressed="true"><span id="soundIco">🎵</span></button>
 
 <main class="stage">
   <div class="wrap">
-    <div class="bubble" id="bubble">서연아 <b>생일 축하해!</b> <span class="sp">🎂</span><span class="sp">🌸</span></div>
+    <div class="bubble" id="bubble">서연 공, <b>탄신일을 진심으로 축하하오</b> <span class="sp">🌸</span><span class="sp">🏮</span></div>
 
     <div class="hero">
       <div class="halo"></div>
@@ -305,7 +322,7 @@
   var W = 0, H = 0, DPR = 1, bgGrad = null, TAU = Math.PI * 2, rnd = Math.random;
   var PALETTE = ['#ffd166', '#ffe9a3', '#ff4d6d', '#ff8fa8', '#ffb3c6', '#8b88d6', '#ffffff', '#c9a7ff'];
   var FW_HUES = [45, 38, 352, 340, 320, 285, 268, 200, 30, 45];
-  var blobs = [], stars = [], rockets = [], sparks = [], shards = [], twinkles = [], rings = [], emitters = [], petals = [];
+  var blobs = [], stars = [], rockets = [], sparks = [], shards = [], twinkles = [], rings = [], emitters = [], petals = [], AURORA = [], LANTERNS = [];
   var SPR = {};
 
   function pathHeart(g, d) {
@@ -400,14 +417,15 @@
     MOON.halo = hg;
 
     stars = [];
-    var n = Math.max(45, Math.min(130, Math.round(W * H / 8500)));
-    for (var k = 0; k < n; k++) stars.push({ x: rnd() * W, y: rnd() * H, r: 0.5 + rnd() * 1.3, ph: rnd() * TAU, sp: 0.6 + rnd() * 1.6 });
+    var n = Math.max(70, Math.min(230, Math.round(W * H / 4800)));
+    for (var k = 0; k < n; k++) stars.push({ x: rnd() * W, y: rnd() * H, r: 0.5 + rnd() * 1.4, ph: rnd() * TAU, sp: 0.6 + rnd() * 1.6 });
 
     twinkles = [];
-    for (var t = 0; t < 30; t++) twinkles.push({ x: rnd() * W, y: rnd() * H, r: 1.1 + rnd() * 1.8, ph: rnd() * TAU, sp: 0.9 + rnd() * 1.6, vy: -0.10 - rnd() * 0.30, vx: (rnd() - 0.5) * 0.16 });
+    var twN = W < 520 ? 34 : 58;
+    for (var t = 0; t < twN; t++) twinkles.push({ x: rnd() * W, y: rnd() * H, r: 1.1 + rnd() * 2.1, ph: rnd() * TAU, sp: 0.9 + rnd() * 1.6, vy: -0.10 - rnd() * 0.30, vx: (rnd() - 0.5) * 0.16 });
 
     petals = [];
-    var pn = W < 520 ? 18 : 28;
+    var pn = W < 520 ? 36 : 58;
     for (var p = 0; p < pn; p++) petals.push({
       x: rnd() * W, y: rnd() * H, vy: 0.45 + rnd() * 0.95,
       ph: rnd() * TAU, ps: 0.008 + rnd() * 0.018, sway: 0.6 + rnd() * 1.4,
@@ -415,6 +433,85 @@
       color: ['#ffb3c6', '#ffc8d6', '#ffd7e2', '#ff9db4', '#ffe3ec'][(rnd() * 5) | 0],
       alpha: 0.5 + rnd() * 0.45
     });
+
+    /* 오로라 띠 */
+    AURORA = [
+      { y: H * 0.06, amp: H * 0.045, h: H * 0.26, c: 'rgba(124,255,214,0.15)', sp: 0.00013, ph: 0.0, k: 1.0 },
+      { y: H * 0.16, amp: H * 0.055, h: H * 0.30, c: 'rgba(150,126,255,0.18)', sp: -0.00010, ph: 2.1, k: 1.2 },
+      { y: H * 0.28, amp: H * 0.040, h: H * 0.22, c: 'rgba(255,118,190,0.13)', sp: 0.00016, ph: 4.2, k: 0.9 },
+      { y: H * 0.42, amp: H * 0.030, h: H * 0.16, c: 'rgba(255,209,102,0.09)', sp: 0.00012, ph: 5.6, k: 0.8 }
+    ];
+
+    /* 하단 등불 */
+    LANTERNS = [];
+    var ln = W < 520 ? 7 : 11;
+    for (var li = 0; li < ln; li++) {
+      LANTERNS.push({
+        x: (li + 0.5) * W / ln + (rnd() - 0.5) * W * 0.05,
+        y: H * (0.70 + rnd() * 0.22),
+        r: 5 + rnd() * 7, sp: 0.0004 + rnd() * 0.0006, ph: rnd() * TAU,
+        rise: 4 + rnd() * 10, warm: rnd() < 0.72
+      });
+    }
+    buildRoof();
+  }
+
+  /* ── 처마(전각) 실루엣 미리 그리기 ── */
+  var roofCv = null, roofH = 0;
+  function buildRoof() {
+    roofH = Math.max(70, Math.round(H * 0.17));
+    var rw = Math.max(1, W), rh = roofH;
+    var c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(rw * DPR)); c.height = Math.max(1, Math.round(rh * DPR));
+    var g = c.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+    function roofPath(baseY, peakY, overhang, fill) {
+      g.beginPath();
+      g.moveTo(-overhang, baseY + rh * 0.30);
+      g.bezierCurveTo(rw * 0.12, baseY - rh * 0.10, rw * 0.26, peakY + rh * 0.04, rw * 0.5, peakY);
+      g.bezierCurveTo(rw * 0.74, peakY + rh * 0.04, rw * 0.88, baseY - rh * 0.10, rw + overhang, baseY + rh * 0.30);
+      g.lineTo(rw + overhang, rh + 10); g.lineTo(-overhang, rh + 10); g.closePath();
+      g.fillStyle = fill; g.fill();
+      /* 기와 결 */
+      g.save(); g.clip();
+      g.strokeStyle = 'rgba(255,236,190,0.055)'; g.lineWidth = 1;
+      for (var i = 0; i <= 22; i++) {
+        var x = -overhang + (rw + overhang * 2) * i / 22;
+        g.beginPath(); g.moveTo(x, peakY - 4); g.lineTo(x + (x - rw / 2) * 0.12, rh + 10); g.stroke();
+      }
+      g.restore();
+    }
+    /* 뒤쪽 작은 처마 */
+    roofPath(rh * 0.34, rh * 0.16, -rh * 0.10, 'rgba(20,12,42,0.72)');
+    /* 앞쪽 큰 처마 */
+    roofPath(rh * 0.62, rh * 0.34, rh * 0.22, 'rgba(11,7,24,0.94)');
+
+    /* 금빛 테두리 */
+    g.lineWidth = Math.max(1, rh * 0.022); g.lineJoin = 'round';
+    var rim = g.createLinearGradient(0, 0, rw, 0);
+    rim.addColorStop(0, 'rgba(255,209,102,0.05)'); rim.addColorStop(0.28, 'rgba(255,214,140,0.46)');
+    rim.addColorStop(0.5, 'rgba(255,236,190,0.66)'); rim.addColorStop(0.72, 'rgba(255,214,140,0.46)');
+    rim.addColorStop(1, 'rgba(255,209,102,0.05)');
+    g.strokeStyle = rim;
+    g.beginPath();
+    g.moveTo(-rh * 0.22, rh * 0.62 + rh * 0.30);
+    g.bezierCurveTo(rw * 0.12, rh * 0.62 - rh * 0.10, rw * 0.26, rh * 0.34 + rh * 0.04, rw * 0.5, rh * 0.34);
+    g.bezierCurveTo(rw * 0.74, rh * 0.34 + rh * 0.04, rw * 0.88, rh * 0.62 - rh * 0.10, rw + rh * 0.22, rh * 0.62 + rh * 0.30);
+    g.stroke();
+
+    /* 처마에 매달린 등불 */
+    var nl = Math.max(4, Math.round(W / 120));
+    for (var i2 = 0; i2 < nl; i2++) {
+      var fx = (i2 + 0.5) / nl;
+      var ly = rh * 0.62 + Math.sin(fx * Math.PI) * -rh * 0.16 + rh * 0.22;
+      var lx = fx * rw + (fx - 0.5) * rh * 0.3;
+      var lr = rh * 0.075;
+      var lg = g.createRadialGradient(lx, ly, 0, lx, ly, lr * 3.2);
+      lg.addColorStop(0, 'rgba(255,196,110,0.55)'); lg.addColorStop(0.35, 'rgba(255,150,90,0.22)'); lg.addColorStop(1, 'rgba(255,140,80,0)');
+      g.fillStyle = lg; g.beginPath(); g.arc(lx, ly, lr * 3.2, 0, TAU); g.fill();
+      g.fillStyle = 'rgba(255,214,150,0.95)'; g.beginPath(); g.ellipse(lx, ly, lr * 0.72, lr, 0, 0, TAU); g.fill();
+    }
+    roofCv = c;
   }
 
   function confetti(x, y, o) {
@@ -435,8 +532,13 @@
   }
   function seedConfetti() {
     shards.length = 0;
-    var n = W < 520 ? 20 : 32;
-    for (var i = 0; i < n; i++) { var c = confetti(rnd() * W, rnd() * H); c.vy = 0.35 + rnd() * 0.8; c.size = 3.5 + rnd() * 4; shards.push(c); }
+    var n = W < 520 ? 40 : 64;
+    for (var i = 0; i < n; i++) {
+      var c = confetti(rnd() * W, rnd() * H);
+      c.vy = 0.35 + rnd() * 0.8; c.size = 3.5 + rnd() * 4.5;
+      if (rnd() < 0.34) { c.shape = 'sparkle'; c.color = ['#ffd166', '#ffe9a3', '#ffcf5c'][(rnd() * 3) | 0]; c.size = 3 + rnd() * 3.5; }
+      shards.push(c);
+    }
   }
   function addSpark(x, y, vx, vy, hue, life, size, kind) {
     if (sparks.length > 1600) return;
@@ -447,7 +549,7 @@
       g: kind === 'glitter' ? 0.02 : 0.045, drag: kind === 'glitter' ? 0.965 : 0.985, glitter: kind === 'glitter' });
   }
   function explode(x, y, hue, count, power) {
-    count = count || 68; power = power || 5.2;
+    count = count || 118; power = power || 6.6;
     rings.push({ x: x, y: y, r: 2, max: power * 7, life: 0, max_life: 18, c: 'hsl(' + hue + ',100%,80%)' });
     for (var i = 0; i < count; i++) {
       var a = rnd() * TAU, sp = power * (0.32 + Math.sqrt(rnd()) * 0.78);
@@ -492,28 +594,70 @@
   function resize() {
     DPR = Math.min(2, window.devicePixelRatio || 1);
     var r = cv.getBoundingClientRect();
-    W = Math.max(1, Math.round(r.width || window.innerWidth));
-    H = Math.max(1, Math.round(r.height || window.innerHeight));
-    cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+    var iw = window.innerWidth || document.documentElement.clientWidth || 0;
+    var ih = window.innerHeight || document.documentElement.clientHeight || 0;
+    if (window.visualViewport) {
+      iw = Math.max(iw, Math.round(window.visualViewport.width || 0));
+      ih = Math.max(ih, Math.round(window.visualViewport.height || 0));
+    }
+    /* 캔버스는 position:fixed;inset:0 이므로 창 크기와 rect 중 큰 쪽을 쓴다.
+       (htmlpreview/사파리에서 처음 잰 값이 0 이나 아주 작을 수 있음) */
+    var w = Math.max(1, Math.round(Math.max(iw, r.width || 0)));
+    var h = Math.max(1, Math.round(Math.max(ih, r.height || 0)));
+    var bw = Math.round(w * DPR), bh = Math.round(h * DPR);
+    /* 같은 크기면 다시 만들지 않는다 (불꽃·꽃잎·별이 리셋되지 않게) */
+    if (W === w && H === h && cv.width === bw && cv.height === bh && bgGrad) return;
+    W = w; H = h;
+    /* CSS 크기를 px 로 못박아 버퍼 비율과 항상 1:1 이 되게 한다 → 어떤 기기에서도 안 찌그러짐 */
+    cv.style.width = w + 'px';
+    cv.style.height = h + 'px';
+    cv.width = bw;
+    cv.height = bh;
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     makeBg(); seedConfetti();
+  }
+  var rsQueued = 0;
+  function queueResize() {
+    if (rsQueued) return;
+    rsQueued = 1;
+    requestAnimationFrame(function () { rsQueued = 0; resize(); });
   }
 
   var t0 = 0;
   function drawBg(t) {
     ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
     ctx.fillStyle = bgGrad; ctx.fillRect(0, 0, W, H);
-    ctx.globalCompositeOperation = 'lighter';
-    for (var i = 0; i < blobs.length; i++) {
-      var b = blobs[i];
-      var x = b.x * W + Math.sin(t * b.sp + b.ph) * W * b.ax;
-      var y = b.y * H + Math.cos(t * b.sp * 1.3 + b.ph) * H * b.ay;
-      ctx.save(); ctx.translate(x, y); ctx.fillStyle = b.g;
-      ctx.beginPath(); ctx.arc(0, 0, b.R, 0, TAU); ctx.fill(); ctx.restore();
-    }
+    ctx.globalCompositeOperation = 'source-over';
+    /* (큰 원형 보케 제거) */
     var gb = ctx.createRadialGradient(W * 0.5, H * 1.04, 0, W * 0.5, H * 1.04, Math.max(W, H) * 0.62);
     gb.addColorStop(0, 'rgba(230,57,70,0.26)'); gb.addColorStop(0.5, 'rgba(86,84,162,0.12)'); gb.addColorStop(1, 'rgba(86,84,162,0)');
     ctx.fillStyle = gb; ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'source-over';
+
+    /* ── 오로라 빛무리 ── */
+    ctx.globalCompositeOperation = 'lighter';
+    for (var ai = 0; ai < AURORA.length; ai++) {
+      var au = AURORA[ai];
+      var ay = au.y + Math.sin(t * au.sp + au.ph) * au.amp;
+      var ag = ctx.createLinearGradient(0, ay, 0, ay + au.h);
+      ag.addColorStop(0, 'rgba(0,0,0,0)');
+      ag.addColorStop(0.42, au.c);
+      ag.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = ag;
+      ctx.beginPath();
+      var stp = 12;
+      for (var a1 = 0; a1 <= stp; a1++) {
+        var ax = W * a1 / stp;
+        var aw = Math.sin(t * au.sp * 2.1 + au.ph + a1 * 0.85) * au.amp * 1.1 + Math.sin(t * au.sp * 3.7 + a1 * 0.4) * au.amp * 0.4;
+        if (a1 === 0) ctx.moveTo(ax, ay + aw); else ctx.lineTo(ax, ay + aw);
+      }
+      for (var a2 = stp; a2 >= 0; a2--) {
+        var ax2 = W * a2 / stp;
+        var aw2 = Math.sin(t * au.sp * 1.7 + au.ph + a2 * 0.6) * au.amp * 1.8;
+        ctx.lineTo(ax2, ay + au.h * au.k + aw2);
+      }
+      ctx.closePath(); ctx.fill();
+    }
     ctx.globalCompositeOperation = 'source-over';
 
     for (var s = 0; s < stars.length; s++) {
@@ -523,29 +667,24 @@
     }
     ctx.globalAlpha = 1;
 
-    var mx = MOON.x, my = MOON.y, mr = MOON.r;
-    ctx.save(); ctx.translate(mx, my);
-    ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = MOON.halo;
-    ctx.beginPath(); ctx.arc(0, 0, mr * 2.9, 0, TAU); ctx.fill();
-    ctx.globalCompositeOperation = 'source-over';
-    var disc = ctx.createRadialGradient(-mr * 0.32, -mr * 0.36, mr * 0.08, 0, 0, mr);
-    disc.addColorStop(0, '#ffb3a0'); disc.addColorStop(0.35, '#f2606a');
-    disc.addColorStop(0.72, '#d92b45'); disc.addColorStop(1, '#a81a36');
-    ctx.fillStyle = disc; ctx.beginPath(); ctx.arc(0, 0, mr, 0, TAU); ctx.fill();
-    ctx.globalAlpha = 0.16; ctx.fillStyle = '#7d1030';
-    ctx.beginPath(); ctx.arc(-mr * 0.28, -mr * 0.22, mr * 0.26, 0, TAU); ctx.fill();
-    ctx.beginPath(); ctx.arc(mr * 0.30, mr * 0.10, mr * 0.20, 0, TAU); ctx.fill();
-    ctx.beginPath(); ctx.arc(mr * 0.05, mr * 0.45, mr * 0.13, 0, TAU); ctx.fill();
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = 'rgba(255,214,170,' + (0.45 + 0.16 * Math.sin(t * 0.0013)) + ')';
-    ctx.lineWidth = Math.max(1, mr * 0.022);
-    ctx.beginPath(); ctx.arc(0, 0, mr, 0, TAU); ctx.stroke();
-    var cs = glowSprite('rgba(26,16,54,0.85)');
-    ctx.globalAlpha = 0.45;
-    ctx.drawImage(cs, -mr * 2.4 + Math.sin(t * 0.00016) * mr * 0.5, -mr * 0.32, mr * 4.6, mr * 0.9);
-    ctx.globalAlpha = 0.32;
-    ctx.drawImage(cs, -mr * 2.0 + Math.sin(t * 0.00021 + 2) * mr * 0.6, mr * 0.34, mr * 4.0, mr * 0.8);
-    ctx.globalAlpha = 1; ctx.restore();
+    /* ── 둥둥 떠다니는 등불 ── */
+    for (var li = 0; li < LANTERNS.length; li++) {
+      var LT = LANTERNS[li];
+      var lx = LT.x + Math.sin(t * LT.sp + LT.ph) * 16;
+      var ly = LT.y + Math.cos(t * LT.sp * 0.8 + LT.ph) * LT.rise;
+      var lg2 = glowSprite(LT.warm ? 'rgba(255,186,104,0.55)' : 'rgba(255,132,168,0.45)');
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = 0.45 + 0.25 * Math.sin(t * 0.0016 + LT.ph);
+      ctx.drawImage(lg2, lx - LT.r * 3.6, ly - LT.r * 3.6, LT.r * 7.2, LT.r * 7.2);
+      ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = LT.warm ? '#ffe2b8' : '#ffd0de';
+      ctx.beginPath(); ctx.ellipse(lx, ly, LT.r * 0.6, LT.r, 0, 0, TAU); ctx.fill();
+    }
+
+    /* (붉은 달·큰 원 제거) */
+
+    /* ── 처마 실루엣 ── */
+    if (roofCv) ctx.drawImage(roofCv, 0, H - roofH, W, roofH);
   }
 
   function drawFrame(t) {
@@ -554,11 +693,13 @@
     for (var i = rockets.length - 1; i >= 0; i--) {
       var r = rockets[i], px = r.x, py = r.y;
       r.x += r.vx; r.y += r.vy; r.vy += 0.055;
-      var grd = ctx.createLinearGradient(px, py, px, py + 26);
-      grd.addColorStop(0, 'hsla(' + r.hue + ',100%,88%,0.95)');
-      grd.addColorStop(1, 'hsla(' + r.hue + ',100%,70%,0)');
-      ctx.strokeStyle = grd; ctx.lineWidth = 2.2;
-      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px - r.vx * 1.6, py + 22); ctx.stroke();
+      if (sparks.length < 1900) addSpark(r.x + (rnd() - 0.5) * 3, r.y + 6, (rnd() - 0.5) * 0.7, 0.6 + rnd() * 0.9, r.hue + (rnd() - .5) * 20, 24 + rnd() * 16, 1.1 + rnd() * 1.1, 'glitter');
+      var grd = ctx.createLinearGradient(px, py, px, py + 40);
+      grd.addColorStop(0, 'hsla(' + r.hue + ',100%,92%,1)');
+      grd.addColorStop(0.45, 'hsla(' + r.hue + ',100%,78%,0.7)');
+      grd.addColorStop(1, 'hsla(' + r.hue + ',100%,66%,0)');
+      ctx.strokeStyle = grd; ctx.lineWidth = 3.2;
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px - r.vx * 2.2, py + 34); ctx.stroke();
       ctx.globalAlpha = 1; ctx.fillStyle = 'hsl(' + r.hue + ',100%,92%)';
       ctx.beginPath(); ctx.arc(r.x, r.y, 2.4, 0, TAU); ctx.fill();
       if (r.y <= r.ty || r.vy >= -1.2) { explode(r.x, r.y, r.hue, 62 + ((rnd() * 30) | 0), 4.8 + rnd() * 1.8); rockets.splice(i, 1); }
@@ -633,40 +774,68 @@
     }
   }
 
-  var lastT = 0, acc = 0, nextFw = 700;
+  var lastT = 0, acc = 0, nextFw = 380;
   function frame(ts) {
     if (!t0) { t0 = ts; lastT = ts; }
     var dt = ts - lastT; lastT = ts; if (dt > 120) dt = 120;
     acc += dt;
     if (acc > nextFw) {
-      acc = 0; nextFw = 620 + rnd() * 880;
-      launchRocket(W * (0.12 + rnd() * 0.76), H * (0.06 + rnd() * 0.34));
-      if (rnd() < 0.26) setTimeout(function () { launchRocket(W * (0.15 + rnd() * 0.7), H * (0.08 + rnd() * 0.3)); }, 220);
+      acc = 0; nextFw = 300 + rnd() * 480;
+      launchRocket(W * (0.10 + rnd() * 0.80), H * (0.05 + rnd() * 0.36));
+      if (rnd() < 0.55) setTimeout(function () { launchRocket(W * (0.12 + rnd() * 0.76), H * (0.06 + rnd() * 0.32), FW_HUES[(rnd() * FW_HUES.length) | 0]); }, 180 + rnd() * 200);
+      if (rnd() < 0.28) setTimeout(function () { launchRocket(W * (0.12 + rnd() * 0.76), H * (0.08 + rnd() * 0.30), FW_HUES[(rnd() * FW_HUES.length) | 0]); }, 380 + rnd() * 240);
     }
     drawFrame(ts);
     requestAnimationFrame(frame);
   }
-  window.addEventListener('resize', function () { clearTimeout(resize._t); resize._t = setTimeout(resize, 120); });
-  window.addEventListener('orientationchange', function () { setTimeout(resize, 220); });
+  window.addEventListener('resize', queueResize);
+  window.addEventListener('orientationchange', function () { queueResize(); setTimeout(resize, 120); setTimeout(resize, 320); setTimeout(resize, 700); });
+  window.addEventListener('load', function () { resize(); setTimeout(resize, 80); setTimeout(resize, 350); setTimeout(resize, 900); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) queueResize(); });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', queueResize);
+    window.visualViewport.addEventListener('scroll', queueResize);
+  }
+  if (window.ResizeObserver) {
+    try { var ro = new ResizeObserver(queueResize); ro.observe(document.documentElement); if (document.body) ro.observe(document.body); } catch (e) {}
+  }
+  /* htmlpreview / 사파리에서 늦게 자리잡는 경우까지 계속 맞춰 준다 */
+  setInterval(function () {
+    var iw = window.innerWidth || 0, ih = window.innerHeight || 0;
+    var r = cv.getBoundingClientRect();
+    if (Math.abs(Math.max(iw, r.width) - W) > 1 || Math.abs(Math.max(ih, r.height) - H) > 1) resize();
+  }, 400);
   window.addEventListener('pointerdown', function (e) { if (e.clientX !== undefined) tapBurst(e.clientX, e.clientY); }, { passive: true });
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   resize();
-  requestAnimationFrame(frame);
+  requestAnimationFrame(function () { resize(); requestAnimationFrame(frame); });
+  /* 검정 화면 → 소마 팡! */
+  setTimeout(function () {
+    partyBlast(W * 0.5, H * 0.38);
+    launchRocket(W * 0.50, H * 0.18, 45);
+    launchRocket(W * 0.26, H * 0.24, 340);
+    launchRocket(W * 0.74, H * 0.22, 285);
+    setTimeout(function () { launchRocket(W * 0.38, H * 0.12, 45); launchRocket(W * 0.62, H * 0.14, 320); }, 320);
+  }, 420);
 
-  /* ══════════ 2. 파티 버전 Happy Birthday (메모리 합성 WAV) ══════════ */
+  /* ══════════ 2. 축제 사운드 (홍월 · 화풍 5음계, 메모리 합성 WAV) ══════════ */
   var NT = {
     'A#1': 58.27, 'C2': 65.41, 'D2': 73.42, 'F2': 87.31, 'G2': 98.00, 'A2': 110.00, 'A#2': 116.54,
     'C3': 130.81, 'D3': 146.83, 'E3': 164.81, 'F3': 174.61, 'G3': 196.00, 'A3': 220.00, 'A#3': 233.08,
     'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23, 'G4': 392.00, 'A4': 440.00, 'A#4': 466.16,
     'C5': 523.25, 'D5': 587.33, 'E5': 659.25, 'F5': 698.46, 'G5': 783.99 };
   var MELODY = [
-    ['C4', 0.5], ['C4', 0.5], ['D4', 1], ['C4', 1], ['F4', 1], ['E4', 2],
-    ['C4', 0.5], ['C4', 0.5], ['D4', 1], ['C4', 1], ['G4', 1], ['F4', 2],
-    ['C4', 0.5], ['C4', 0.5], ['C5', 1], ['A4', 1], ['F4', 1], ['E4', 1], ['D4', 1],
-    ['A#4', 0.5], ['A#4', 0.5], ['A4', 1], ['F4', 1], ['G4', 1], ['F4', 2]];
-  var CHORDS = [['F3','A3','C4'],['C3','E3','G3'],['F3','A3','C4'],['C3','E3','G3'],['F3','A3','C4'],['C3','E3','G3'],['A#2','D3','F3'],['F3','A3','C4']];
-  var BASSROOT = ['F2','C2','F2','C2','F2','C2','A#2','F2'];
-  var BEAT = 60 / 132;
+    ['A4', 1], ['C5', 0.5], ['D5', 0.5], ['C5', 0.5], ['A4', 0.5],
+    ['A4', 0.5], ['C5', 0.5], ['D5', 1], ['E5', 1],
+    ['E5', 0.5], ['G5', 0.5], ['E5', 1], ['D5', 1],
+    ['C5', 1], ['D5', 1], ['A4', 1],
+    ['D5', 0.5], ['E5', 0.5], ['G5', 1], ['E5', 1],
+    ['G5', 0.5], ['E5', 0.5], ['D5', 0.5], ['C5', 0.5], ['D5', 1],
+    ['A4', 1], ['C5', 1], ['D5', 1],
+    ['E5', 1.5], ['D5', 0.5], ['A4', 1]];
+  var CHORDS = [['A3','C4','E4'],['A3','C4','E4'],['G3','C4','E4'],['A3','C4','E4'],['D3','G3','A3'],['G3','C4','E4'],['A3','C4','E4'],['C4','E4','G4']];
+  var BASSROOT = ['A2','A2','G2','A2','D2','G2','A2','C2'];
+  var BEAT = 60 / 150;
 
   function buildPartyWav() {
     var SR = 22050, BARS = 8, BEATS = BARS * 3, tail = 0.55;
@@ -713,11 +882,24 @@
         buf[start + j] += vol * n * Math.exp(-tt / tau);
       }
     }
-    var t = 0, LEAD = [1, 0.42, 0.22, 0.12, 0.06];
+    function taiko(at, vol) {
+      var start = Math.round(at * SR); if (start >= N) return;
+      var len = Math.min(N - start, Math.round(0.36 * SR)), ph = 0;
+      for (var j = 0; j < len; j++) {
+        var tt = j / SR, f = 66 + 82 * Math.exp(-tt / 0.048);
+        ph += TAU * f / SR;
+        var e = Math.exp(-tt / 0.150);
+        var skin = j < 400 ? (Math.random() - 0.5) * 0.22 * (1 - j / 400) : 0;
+        buf[start + j] += vol * (Math.sin(ph) * e + Math.sin(ph * 1.47) * e * 0.25 + skin);
+      }
+    }
+    var t = 0, LEAD = [1, 0.58, 0.33, 0.19, 0.11, 0.06];
     for (i = 0; i < MELODY.length; i++) {
       var note = MELODY[i][0], beats = MELODY[i][1], dur = beats * BEAT;
-      addVoice(NT[note], t, dur, 0.30, LEAD, 0.006, 0.55, 0.22);
-      addVoice(NT[note] * 2, t, dur * 0.8, 0.055, [1, 0.25], 0.004, 0.35, 0.1);
+      /* 고토·샤미센 느낌의 뜯는 리드 */
+      addVoice(NT[note], t, dur, 0.32, LEAD, 0.002, 0.30, 0.06);
+      addVoice(NT[note] * 2, t, dur * 0.7, 0.075, [1, 0.35, 0.15], 0.001, 0.18, 0.05);
+      if (i % 2 === 0) addVoice(NT[note] * 0.5, t, dur * 0.9, 0.10, [1, 0.3], 0.002, 0.24, 0.08);
       t += dur;
     }
     var PAD = [1, 0.30, 0.16];
@@ -731,10 +913,13 @@
       addVoice(root, barAt, BEAT * 0.95, 0.40, [1, 0.22], 0.004, 0.30, 0.35);
       addVoice(root * 1.5, barAt + BEAT, BEAT * 0.75, 0.26, [1, 0.18], 0.004, 0.22, 0.25);
       addVoice(root * 2, barAt + BEAT * 2, BEAT * 0.95, 0.30, [1, 0.20], 0.004, 0.26, 0.30);
-      kick(barAt, 0.82); kick(barAt + BEAT * 2, 0.66);
-      noiseBurst(barAt + BEAT * 1, 0.17, 0.30, 0.055, true);
-      noiseBurst(barAt + BEAT * 2.5, 0.10, 0.16, 0.035, true);
-      for (var hh = 0; hh < 6; hh++) noiseBurst(barAt + hh * BEAT * 0.5, 0.055, hh % 2 ? 0.075 : 0.11, 0.016, true);
+      kick(barAt, 0.86); kick(barAt + BEAT * 2, 0.60);
+      taiko(barAt + BEAT * 1, 0.72);
+      taiko(barAt + BEAT * 2.5, 0.42);
+      noiseBurst(barAt + BEAT * 1, 0.17, 0.20, 0.055, true);
+      /* 샤미센 짓기(축제 리듬) */
+      for (var hh = 0; hh < 6; hh++) noiseBurst(barAt + hh * BEAT * 0.5, 0.05, hh % 2 ? 0.085 : 0.125, 0.014, true);
+      noiseBurst(barAt + BEAT * 0.75, 0.07, 0.10, 0.020, true);
     }
     var fillAt = 7 * 3 * BEAT + BEAT * 1.5;
     noiseBurst(fillAt, 0.10, 0.26, 0.045, true);
@@ -869,10 +1054,10 @@
   })();
 
   /* ══════════ 4. 롤링페이퍼 (ntfy.sh) ══════════ */
-  var GB_TOPIC = window.__GB_TOPIC || 'seoyeon-bday-soma-k9x4m2p7';
+  var GB_TOPIC = window.__GB_TOPIC || 'seoyeon-bday-soma-clean-p3x9mz7q';
   var GB_API = 'https://ntfy.sh/' + GB_TOPIC;
   var GB_POLL = GB_API + '/json?poll=1&since=all';
-  var LS_MSGS = 'sy_bday_msgs_v1', LS_NICK = 'sy_bday_nick_v1';
+  var LS_MSGS = 'sy_bday_msgs_v2', LS_NICK = 'sy_bday_nick_v2';
   var messages = {}, pending = {}, polling = false, posting = false;
   var nickEl = document.getElementById('g-nick'), msgEl = document.getElementById('g-msg');
   var statusEl = document.getElementById('g-status'), listEl = document.getElementById('g-list');
@@ -1011,6 +1196,8 @@
   };
   window.__bd.counts = function () { return { sparks: sparks.length, shards: shards.length, petals: petals.length, rockets: rockets.length }; };
   window.__bd.gb = function () { return { topic: GB_TOPIC, count: Object.keys(messages).length, ids: Object.keys(messages), error: window.__bd.gbError || null }; };
+  window.__bd.canvas = function () { var r = cv.getBoundingClientRect(); return { W: W, H: H, dpr: DPR, buf: [cv.width, cv.height], css: [Math.round(r.width), Math.round(r.height)], ratio: +((cv.width / cv.height).toFixed(3)), screen: +((r.width / r.height).toFixed(3)) }; };
+  window.__bd.font = function () { return getComputedStyle(document.getElementById('bubble')).fontFamily; };
   window.__bd.fetchGb = fetchAll;
   window.__bd.postGb = post;
   window.__bd.ready = true;
