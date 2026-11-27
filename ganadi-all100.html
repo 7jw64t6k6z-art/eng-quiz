@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffe8f3">
+<title>🍀 지웅님 기말고사 올백</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum:#6b4a63; --plum-soft:#8a6b81;
+    --pink:#ff9ec4; --pink-deep:#ff7bb0; --sky:#8fd3ff; --cream:#fff6e2;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;min-height:100%}
+  body{
+    font-family:"Gowun Dodum","Jua",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    color:var(--plum);
+    background:
+      radial-gradient(60% 40% at 12% 6%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%),
+      radial-gradient(50% 35% at 88% 14%, rgba(198,240,255,.85), rgba(198,240,255,0) 70%),
+      radial-gradient(70% 50% at 50% 100%, rgba(255,233,199,.95), rgba(255,233,199,0) 75%),
+      linear-gradient(180deg,#dff2ff 0%,#eaf6ff 18%,#ffe9f4 52%,#fff3e4 78%,#fff8ec 100%);
+    background-attachment:fixed;
+    min-height:100vh;min-height:100dvh;
+    overflow-x:hidden;-webkit-font-smoothing:antialiased;
+    user-select:none;-webkit-user-select:none;
+  }
+  #fx{position:fixed;inset:0;display:block;z-index:0;pointer-events:none;touch-action:manipulation}
+
+  /* 🎵 버튼 */
+  #sound{
+    position:fixed;z-index:60;top:calc(env(safe-area-inset-top,0px) + 10px);right:10px;
+    width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+    font-size:17px;line-height:1;padding:0;cursor:pointer;
+    border:2px solid #fff;
+    background:linear-gradient(150deg,#ffe6f1,#d9f1ff);
+    box-shadow:0 6px 16px rgba(180,130,170,.32),inset 0 1px 0 #fff;
+    transition:transform .18s,filter .25s,opacity .25s;
+  }
+  #sound:active{transform:scale(.9)}
+  #sound.off{filter:grayscale(1);opacity:.66}
+
+  .stage{
+    position:relative;z-index:2;min-height:100vh;min-height:100dvh;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    padding:calc(env(safe-area-inset-top,0px) + 22px) 14px calc(env(safe-area-inset-bottom,0px) + 20px);
+  }
+  .wrap{width:min(760px,100%);display:flex;flex-direction:column;align-items:center}
+
+  /* ── 타이틀 ── */
+  .hero{text-align:center;position:relative;padding:2px 0 4px}
+  .rainbow{
+    font-size:clamp(15px,4vw,20px);letter-spacing:.35em;
+    opacity:.9;margin-bottom:2px;filter:drop-shadow(0 2px 4px rgba(255,150,190,.35));
+  }
+  h1{
+    margin:0;font-family:"Jua",sans-serif;font-weight:400;
+    line-height:1.06;letter-spacing:-.01em;
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+  }
+  h1 .l1{
+    font-size:clamp(20px,5.2vw,30px);color:#a98aa4;
+    letter-spacing:.16em;padding-left:.16em;
+  }
+  h1 .l2{
+    font-size:clamp(38px,11.4vw,64px);
+    background:linear-gradient(178deg,#ff9dc6 0%,#ff7fb3 38%,#c48cf0 72%,#7fc8ff 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    -webkit-text-stroke:0;
+    filter:drop-shadow(0 2px 0 #fff) drop-shadow(0 4px 0 rgba(255,255,255,.85)) drop-shadow(0 8px 16px rgba(190,130,180,.35));
+    padding:0 .04em 6px;
+  }
+  h1 .l2 em{font-style:normal;position:relative;display:inline-block}
+  .twinkle{display:inline-block;animation:twinkle 2.4s ease-in-out infinite}
+  .twinkle:nth-child(2){animation-delay:.7s}
+  .twinkle:nth-child(3){animation-delay:1.3s}
+  @keyframes twinkle{0%,100%{transform:scale(1) rotate(0);opacity:.75}50%{transform:scale(1.28) rotate(14deg);opacity:1}}
+
+  /* ── 가나디 존 ── */
+  .ganadi-zone{
+    width:100%;margin-top:14px;
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .bubble{
+    position:relative;z-index:5;
+    width:min(560px,94%);min-height:58px;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:13px 18px;
+    border-radius:26px 26px 26px 10px;
+    font-family:"Jua","Gowun Dodum",sans-serif;font-weight:400;
+    font-size:clamp(14px,4.1vw,21px);line-height:1.36;
+    color:#77415f;letter-spacing:-.01em;
+    background:linear-gradient(155deg,#fffdfd,#fff0f7 60%,#ffe3f0);
+    box-shadow:0 8px 20px rgba(210,140,180,.26),inset 0 1px 0 #fff,0 0 0 2px rgba(255,255,255,.95);
+    word-break:keep-all;overflow-wrap:break-word;
+    transition:transform .3s ease,box-shadow .3s ease;
+  }
+  .bubble::after{
+    content:"";position:absolute;left:50%;bottom:-9px;width:16px;height:16px;margin-left:-8px;
+    background:#ffe3f0;border-radius:0 0 4px 0;
+    transform:rotate(45deg);box-shadow:3px 3px 5px rgba(210,140,180,.14);
+  }
+  .bubble.shine{animation:bubbleShine .8s ease}
+  @keyframes bubbleShine{
+    0%{transform:scale(1)}
+    30%{transform:scale(1.06) rotate(-.8deg);box-shadow:0 12px 28px rgba(255,140,190,.5),0 0 0 3px #ffd6e8,inset 0 1px 0 #fff}
+    100%{transform:scale(1)}
+  }
+
+  .dog{
+    position:relative;margin-top:22px;
+    font:inherit;color:inherit;border:0;background:transparent;padding:0;cursor:pointer;
+    display:block;line-height:0;
+    filter:drop-shadow(0 10px 14px rgba(170,130,160,.24));
+    transition:transform .2s ease;
+    touch-action:manipulation;
+  }
+  .dog:active{transform:scale(.97)}
+  .dog svg{display:block;width:clamp(230px,64vw,420px);height:auto}
+  @media (min-height:900px){ .dog svg{width:clamp(250px,66vw,470px)} }
+  .dog.jump{animation:dogJump .66s cubic-bezier(.28,1.7,.42,1)}
+  @keyframes dogJump{
+    0%{transform:translateY(0) scale(1,1)}
+    18%{transform:translateY(4px) scale(1.06,.93)}
+    42%{transform:translateY(-34px) scale(.95,1.06)}
+    62%{transform:translateY(0) scale(1.05,.95)}
+    78%{transform:translateY(-11px) scale(.99,1.02)}
+    100%{transform:translateY(0) scale(1,1)}
+  }
+  .dog .earL,.dog .earR{transform-origin:50% 30%}
+  .dog.jump .earL{animation:earFlap .66s ease}
+  .dog.jump .earR{animation:earFlap .66s ease .05s}
+  @keyframes earFlap{
+    0%,100%{transform:rotate(0)}
+    35%{transform:rotate(-9deg)}
+    65%{transform:rotate(6deg)}
+  }
+  .dog .tail{transform-origin:78% 70%}
+  .dog.jump .tail{animation:tailWag .66s ease}
+  @keyframes tailWag{0%,100%{transform:rotate(0)}40%{transform:rotate(22deg)}70%{transform:rotate(-14deg)}}
+
+  .name{
+    margin-top:10px;font-family:"Jua",sans-serif;
+    font-size:clamp(12px,3.2vw,16px);color:#b090a9;letter-spacing:.06em;
+    background:rgba(255,255,255,.8);border:2px solid #fff;border-radius:999px;
+    padding:4px 14px;box-shadow:0 4px 12px rgba(190,150,180,.16);
+  }
+  .hint{
+    margin-top:8px;font-size:clamp(11px,3vw,14px);color:#9b7a95;
+    animation:hintPulse 2s ease-in-out infinite;
+  }
+  @keyframes hintPulse{0%,100%{opacity:.62}50%{opacity:1}}
+
+  .foot{
+    margin:18px 0 4px;text-align:center;
+    font-family:"Jua",sans-serif;font-size:clamp(13px,3.6vw,17px);
+    color:#9b7a95;
+    background:rgba(255,255,255,.72);border:2px dashed #ffd2e6;border-radius:20px;
+    padding:10px 18px;
+  }
+  .foot small{display:block;margin-top:3px;font-family:"Gowun Dodum",sans-serif;font-size:11.5px;color:#b39bac}
+
+  /* 💗 터지는 하트/별 (DOM 이펙트) */
+  .pop{
+    position:fixed;z-index:70;pointer-events:none;
+    font-size:20px;line-height:1;will-change:transform,opacity;
+    animation:popUp .95s ease-out forwards;
+  }
+  @keyframes popUp{
+    0%{transform:translate(-50%,-50%) scale(.4);opacity:0}
+    18%{opacity:1}
+    100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.05) rotate(var(--rot));opacity:0}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .dog.jump,.bubble.shine,.twinkle,.hint{animation:none!important}
+  }
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<button id="sound" aria-label="음악 켜기/끄기" title="음악">🎵</button>
+
+<main class="stage">
+  <div class="wrap">
+    <header class="hero">
+      <div class="rainbow">🍀 <span class="twinkle">✨</span> 🌈 <span class="twinkle">⭐</span> 🍀</div>
+      <h1>
+        <span class="l1">지웅님</span>
+        <span class="l2">기말고사 <em>올백</em></span>
+      </h1>
+    </header>
+
+    <section class="ganadi-zone">
+      <div class="bubble" id="bubble" aria-live="polite">지웅님… 올백 가자… 듀… 🍀</div>
+
+      <button class="dog" id="dog" aria-label="가나디 응원">
+        <svg viewBox="0 0 240 260" role="img" aria-label="하얀 강아지 가나디">
+          <!-- 그림자 -->
+          <ellipse cx="120" cy="242" rx="58" ry="8" fill="#c9aec0" opacity=".26"/>
+
+          <!-- 꼬리 (짧은 뭉툭) -->
+          <g class="tail">
+            <path d="M174 200q26-2 27-24" fill="#ffffff" stroke="#2b2b2b" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+
+          <!-- 몸통 (심플) -->
+          <path d="M120 150c27 0 45 20 45 43 0 20-19 31-45 31s-45-11-45-31c0-23 18-43 45-43z"
+                fill="#ffffff" stroke="#2b2b2b" stroke-width="4.6" stroke-linejoin="round"/>
+
+          <!-- 짧은 앞발 -->
+          <ellipse cx="98" cy="221" rx="15" ry="11" fill="#ffffff" stroke="#2b2b2b" stroke-width="4.6"/>
+          <ellipse cx="142" cy="221" rx="15" ry="11" fill="#ffffff" stroke="#2b2b2b" stroke-width="4.6"/>
+
+          <!-- 양옆으로 축 처진 작은 귀 -->
+          <g class="earL">
+            <ellipse cx="62" cy="112" rx="13" ry="27" fill="#ffffff" stroke="#2b2b2b" stroke-width="4.6"
+                     transform="rotate(-16 62 112)"/>
+          </g>
+          <g class="earR">
+            <ellipse cx="178" cy="112" rx="13" ry="27" fill="#ffffff" stroke="#2b2b2b" stroke-width="4.6"
+                     transform="rotate(16 178 112)"/>
+          </g>
+
+          <!-- 동글동글 동그란 얼굴 -->
+          <circle cx="120" cy="98" r="62" fill="#ffffff" stroke="#2b2b2b" stroke-width="4.6"/>
+
+          <!-- 볼터치 -->
+          <ellipse cx="88" cy="118" rx="11" ry="6.5" fill="#ffc2d5" opacity=".85"/>
+          <ellipse cx="152" cy="118" rx="11" ry="6.5" fill="#ffc2d5" opacity=".85"/>
+
+          <!-- 까만 점 눈 (조금 멍한 듀…) -->
+          <circle cx="101" cy="96" r="5.6" fill="#232323"/>
+          <circle cx="139" cy="96" r="5.6" fill="#232323"/>
+          <circle cx="102.6" cy="94.2" r="1.7" fill="#fff"/>
+          <circle cx="140.6" cy="94.2" r="1.7" fill="#fff"/>
+
+          <!-- 작은 코 -->
+          <path d="M116 110q4-3.4 8 0-1.5 5-4 5t-4-5z" fill="#2b2b2b"/>
+          <!-- 입 -->
+          <path d="M120 116v4M120 120q-4.6 4.6-8 .6M120 120q4.6 4.6 8 .6" fill="none" stroke="#2b2b2b" stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <div class="name">가나디</div>
+      <div class="hint">가나디를 콕 눌러봐요 🐾</div>
+    </section>
+
+    <p class="foot">🍀 지웅님 오늘도 최고! 내일도 최고! 🍀
+      <small>가나디를 누를 때마다 방방 뛰고 응원 문구가 바뀌어요 💗</small>
+    </p>
+  </div>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ══════════ 배경 캔버스 (구름·별·하트) ══════════ */
+  var cv = document.getElementById('fx');
+  var ctx = cv.getContext('2d');
+  var W = 0, H = 0, DPR = 1;
+  var clouds = [], stars = [], bits = [], bursts = [];
+
+  function rnd(a,b){ return a + Math.random()*(b-a); }
+
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = Math.max(1, window.innerWidth);
+    H = Math.max(1, window.innerHeight);
+    cv.width  = Math.round(W * DPR);
+    cv.height = Math.round(H * DPR);
+    cv.style.width  = W + 'px';
+    cv.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);   // 같은 비율 → 1:1 픽셀, 왜곡 없음
+    buildClouds();
+  }
+
+  function buildClouds(){
+    clouds = [];
+    var n = W < 520 ? 5 : 7;
+    for (var i=0;i<n;i++){
+      clouds.push({
+        x: rnd(-60, W+60),
+        y: rnd(H*0.04, H*0.92),
+        r: rnd(26, 58) * (W<520 ? 0.9 : 1.1),
+        v: rnd(0.06, 0.20),
+        a: rnd(0.28, 0.55)
+      });
+    }
+    stars = [];
+    var ns = W < 520 ? 26 : 42;
+    for (var j=0;j<ns;j++){
+      stars.push({ x: rnd(0,W), y: rnd(0,H), r: rnd(0.7,2.1), p: rnd(0,Math.PI*2), s: rnd(0.008,0.026) });
+    }
+  }
+
+  var GLYPHS = ['💗','✦','⭐','🌸','🍀','💕','✧','🎀'];
+  function spawnBit(){
+    bits.push({
+      x: rnd(0, W), y: H + 20,
+      vy: rnd(0.22, 0.65), vx: rnd(-0.18, 0.18),
+      size: rnd(9, 17), rot: rnd(0, Math.PI*2), vr: rnd(-0.02, 0.02),
+      g: GLYPHS[(Math.random()*GLYPHS.length)|0], life: 1, fade: rnd(0.0016, 0.0035)
+    });
+  }
+  for (var b=0;b<(W<520?10:16);b++){ spawnBit(); bits[bits.length-1].y = rnd(0,H); }
+
+  function burst(x, y){
+    var gs = ['💗','⭐','✨','💕','🌸','🍀','✦','🎉','🐾'];
+    for (var i=0;i<18;i++){
+      var ang = (Math.PI*2) * (i/18) + rnd(-0.2,0.2);
+      var sp  = rnd(1.6, 4.8);
+      bursts.push({
+        x:x, y:y, vx:Math.cos(ang)*sp, vy:Math.sin(ang)*sp - 1.3,
+        g: gs[(Math.random()*gs.length)|0], size: rnd(12,21),
+        rot: rnd(0,6.28), vr: rnd(-0.12,0.12), life: 1, fade: rnd(0.012,0.021)
+      });
+    }
+  }
+
+  function drawCloud(c){
+    ctx.save();
+    ctx.globalAlpha = c.a;
+    var grd = ctx.createRadialGradient(c.x, c.y, c.r*0.15, c.x, c.y, c.r);
+    grd.addColorStop(0, '#ffffff');
+    grd.addColorStop(0.55, 'rgba(255,255,255,.85)');
+    grd.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.ellipse(c.x, c.y, c.r, c.r*0.62, 0, 0, Math.PI*2);
+    ctx.ellipse(c.x - c.r*0.55, c.y + c.r*0.12, c.r*0.6, c.r*0.42, 0, 0, Math.PI*2);
+    ctx.ellipse(c.x + c.r*0.6, c.y + c.r*0.1, c.r*0.55, c.r*0.4, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  var last = 0, acc = 0;
+  function loop(t){
+    var dt = last ? Math.min(2.5, (t-last)/16.67) : 1;
+    last = t;
+    ctx.clearRect(0,0,W,H);
+
+    // 구름
+    for (var i=0;i<clouds.length;i++){
+      var c = clouds[i];
+      c.x += c.v * dt;
+      if (c.x - c.r > W + 40) c.x = -c.r - 40;
+      drawCloud(c);
+    }
+    // 별 반짝
+    for (var j=0;j<stars.length;j++){
+      var s = stars[j];
+      s.p += s.s * dt;
+      var a = 0.35 + 0.55 * Math.abs(Math.sin(s.p));
+      ctx.globalAlpha = a;
+      ctx.fillStyle = '#fff9d6';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // 흩날리는 글리프
+    acc += dt;
+    if (acc > 26 && bits.length < 26){ acc = 0; spawnBit(); }
+    for (var k=bits.length-1;k>=0;k--){
+      var p = bits[k];
+      p.x += p.vx*dt; p.y -= p.vy*dt; p.rot += p.vr*dt; p.life -= p.fade*dt;
+      if (p.life <= 0 || p.y < -40){ bits.splice(k,1); continue; }
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, Math.min(1, p.life*1.5));
+      ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.font = p.size + 'px system-ui, "Apple Color Emoji", "Segoe UI Emoji", sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(p.g, 0, 0);
+      ctx.restore();
+    }
+
+    // 터지는 폭죽
+    for (var m=bursts.length-1;m>=0;m--){
+      var q = bursts[m];
+      q.x += q.vx*dt; q.y += q.vy*dt;
+      q.vy += 0.06*dt; q.vx *= 0.985; q.rot += q.vr*dt;
+      q.life -= q.fade*dt;
+      if (q.life <= 0){ bursts.splice(m,1); continue; }
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, Math.min(1, q.life*1.6));
+      ctx.translate(q.x, q.y); ctx.rotate(q.rot);
+      ctx.font = q.size + 'px system-ui, "Apple Color Emoji", "Segoe UI Emoji", sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(q.g, 0, 0);
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', resize, {passive:true});
+  window.addEventListener('orientationchange', function(){ setTimeout(resize, 220); });
+  resize();
+  requestAnimationFrame(loop);
+
+  /* ══════════ 응원 문구 ══════════ */
+  var PHRASES = [
+    "지웅님… 올백 가자… 듀… 🍀",
+    "지웅님 100점 받구 나 안아… 🐶💖",
+    "공부하느라 고생해써… 지웅님 짱이야… ✨",
+    "떨지 마… 지웅님 천재만재잖아… 💯",
+    "아는 거 다 맞고 모르는 것도 찍어서 맞아라…!",
+    "올백 받구 맛난 거 먹구 푹 자자… 듀… 🍚",
+    "실수 없이 차분하게 100점 쾅!! ⭐",
+    "지웅님 파이팅… 내가 응원 중이야… 🎀"
+  ];
+  var pi = 0;
+  var bubble = document.getElementById('bubble');
+  var bubbleFirst = true;
+
+  function nextPhrase(){
+    var text;
+    if (bubbleFirst){ bubbleFirst = false; text = PHRASES[0]; }
+    else {
+      pi = (pi + 1) % PHRASES.length;
+      text = PHRASES[pi];
+    }
+    bubble.textContent = text;
+    bubble.classList.remove('shine'); void bubble.offsetWidth; bubble.classList.add('shine');
+  }
+
+  /* ══════════ 가나디 터치 ══════════ */
+  var dog = document.getElementById('dog');
+  function tapDog(){
+    dog.classList.remove('jump');
+    void dog.offsetWidth;
+    dog.classList.add('jump');
+    var r = dog.getBoundingClientRect();
+    var cx = r.left + r.width/2, cy = r.top + r.height*0.38;
+    burst(cx, cy);
+    for (var i=0;i<6;i++){
+      var el = document.createElement('span');
+      el.className = 'pop';
+      el.textContent = ['💗','⭐','✨','🍀','💕','🐾'][i];
+      el.style.left = cx + 'px';
+      el.style.top  = cy + 'px';
+      el.style.setProperty('--dx', (Math.random()*180-90).toFixed(0)+'px');
+      el.style.setProperty('--dy', (-70 - Math.random()*100).toFixed(0)+'px');
+      el.style.setProperty('--rot', (Math.random()*80-40).toFixed(0)+'deg');
+      document.body.appendChild(el);
+      (function(n){ setTimeout(function(){ n.remove(); }, 1000); })(el);
+    }
+    nextPhrase();
+    poke();
+  }
+  dog.addEventListener('click', tapDog);
+
+  /* ══════════ BGM : 마림바/오르골풍 WAV ══════════ */
+  var SR = 22050;
+  var audio = null, audioReady = false, wantSound = true, soundBtn = document.getElementById('sound');
+
+  var MELODY = [
+    [64,1],[67,1],[72,1],[67,1], [62,1],[67,1],[71,1],[67,1], [64,1],[69,1],[72,1],[69,1], [65,1],[69,1],[72,1],[69,1],
+    [64,1],[67,1],[72,1],[76,1], [74,1],[71,1],[67,1],[62,1], [72,1],[69,1],[65,1],[69,1], [67,1],[64,1],[60,1],[64,1],
+    [64,1],[67,1],[72,1],[67,1], [62,1],[65,1],[71,1],[74,1], [72,1],[76,1],[81,1],[76,1], [69,1],[72,1],[77,1],[72,1],
+    [65,1],[69,1],[74,1],[77,1], [67,1],[71,1],[74,1],[71,1], [76,1],[72,1],[67,1],[72,1], [64,1],[67,1],[72,2]
+  ];
+  var BASS = [48,43,45,41,48,43,41,48, 48,43,45,41,50,43,48,48];
+
+  function midi2f(m){ return 440 * Math.pow(2, (m - 69) / 12); }
+
+  function makeWav(){
+    var eighth = 0.155;
+    var totalE = 0;
+    for (var i=0;i<MELODY.length;i++) totalE += MELODY[i][1];
+    var dur = totalE * eighth + 0.9;
+    var n = Math.ceil(dur * SR);
+    var buf = new Float32Array(n);
+
+    function bell(start, f, amp, decay){
+      var s0 = Math.floor(start * SR);
+      var len = Math.min(n - s0, Math.floor(decay * 3.2 * SR));
+      var parts = [[1,1.0,1.0],[2,0.34,1.5],[3.01,0.13,2.1],[4.97,0.05,2.8]];
+      for (var p=0;p<parts.length;p++){
+        var pf = parts[p][0], pa = parts[p][1], pd = parts[p][2];
+        var w = 2*Math.PI*pf*f/SR;
+        for (var k=0;k<len;k++){
+          var t = k / SR;
+          var atk = t < 0.006 ? t/0.006 : 1;
+          var env = atk * Math.exp(-t * decay * pd);
+          buf[s0+k] += amp * pa * env * Math.sin(w * k);
+        }
+      }
+    }
+
+    var t = 0, barIdx = 0, beat = 0;
+    for (var i=0;i<MELODY.length;i++){
+      var midi = MELODY[i][0], len = MELODY[i][1];
+      var f = midi2f(midi);
+      bell(t, f, 0.20, 7.2);
+      if (midi >= 72) bell(t + 0.008, f*2, 0.045, 10);
+      t += len * eighth;
+      beat += len;
+      if (beat >= 4){
+        beat -= 4;
+        var root = BASS[barIdx % BASS.length];
+        bell(t - 4*eighth, midi2f(root), 0.115, 3.4);
+        barIdx++;
+      }
+    }
+
+    var peak = 0;
+    for (var q=0;q<n;q++){ var v = Math.abs(buf[q]); if (v > peak) peak = v; }
+    var gain = peak > 0 ? 0.72 / peak : 1;
+    var fadeIn = Math.floor(0.02*SR), fadeOut = Math.floor(0.35*SR);
+    for (var q2=0;q2<n;q2++){
+      var g = gain;
+      if (q2 < fadeIn) g *= q2/fadeIn;
+      if (q2 > n - fadeOut) g *= Math.max(0, (n - q2)/fadeOut);
+      buf[q2] *= g;
+    }
+
+    var bytes = 44 + n*2;
+    var ab = new ArrayBuffer(bytes);
+    var dv = new DataView(ab);
+    function ws(off, s){ for (var x=0;x<s.length;x++) dv.setUint8(off+x, s.charCodeAt(x)); }
+    ws(0,'RIFF'); dv.setUint32(4, bytes-8, true); ws(8,'WAVE');
+    ws(12,'fmt '); dv.setUint32(16,16,true); dv.setUint16(20,1,true); dv.setUint16(22,1,true);
+    dv.setUint32(24,SR,true); dv.setUint32(28,SR*2,true); dv.setUint16(32,2,true); dv.setUint16(34,16,true);
+    ws(36,'data'); dv.setUint32(40, n*2, true);
+    var off = 44;
+    for (var z=0;z<n;z++){
+      var s = Math.max(-1, Math.min(1, buf[z]));
+      dv.setInt16(off, s < 0 ? s*0x8000 : s*0x7FFF, true);
+      off += 2;
+    }
+    return new Blob([ab], {type:'audio/wav'});
+  }
+
+  function initAudio(){
+    if (audio) return audio;
+    audio = new Audio();
+    audio.loop = true;
+    audio.playsInline = true;
+    audio.setAttribute('playsinline','');
+    audio.setAttribute('webkit-playsinline','');
+    audio.preload = 'auto';
+    audio.volume = 0.55;
+    try {
+      audio.src = URL.createObjectURL(makeWav());
+      audioReady = true;
+    } catch(e){ audioReady = false; }
+    return audio;
+  }
+
+  function tryPlay(){
+    if (!wantSound) return;
+    var a = initAudio();
+    if (!a) return;
+    var p = a.play();
+    if (p && p.catch) p.catch(function(){});
+  }
+  function poke(){ if (wantSound && audio && audio.paused) tryPlay(); }
+
+  soundBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if (wantSound){
+      wantSound = false;
+      soundBtn.classList.add('off');
+      soundBtn.textContent = '🔇';
+      if (audio) audio.pause();
+    } else {
+      wantSound = true;
+      soundBtn.classList.remove('off');
+      soundBtn.textContent = '🎵';
+      tryPlay();
+    }
+  });
+
+  var started = false;
+  function firstGesture(){
+    if (started) return;
+    started = true;
+    tryPlay();
+  }
+  ['pointerdown','touchstart','click','keydown'].forEach(function(ev){
+    document.addEventListener(ev, firstGesture, {once:false, passive:true});
+  });
+
+  setTimeout(function(){
+    try {
+      if (!audio) { audio = new Audio(); audio.loop = true; audio.playsInline = true;
+        audio.setAttribute('playsinline',''); audio.volume = 0.55;
+        audio.src = URL.createObjectURL(makeWav()); audioReady = true; }
+    } catch(e){}
+  }, 260);
+
+  setInterval(function(){
+    if (bursts.length > 220) bursts.splice(0, bursts.length-220);
+    if (bits.length > 40) bits.splice(0, bits.length-40);
+  }, 4000);
+
+  window.__ganadi = {
+    get canvasRatio(){ return cv.width / parseFloat(cv.style.width); },
+    get dpr(){ return DPR; },
+    get audioReady(){ return audioReady; },
+    get audioPaused(){ return audio ? audio.paused : null; },
+    get phrase(){ return bubble.textContent; },
+    get index(){ return pi; },
+    phrases: PHRASES.length,
+    dogs: document.querySelectorAll('.dog').length
+  };
+})();
+</script>
+</body>
+</html>
