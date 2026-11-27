@@ -53,9 +53,14 @@
   /* ── 타이틀 ── */
   .hero{text-align:center;position:relative;padding:2px 0 8px}
   .rainbow{
-    font-size:clamp(15px,4vw,20px);letter-spacing:.35em;
-    opacity:.9;margin-bottom:2px;filter:drop-shadow(0 2px 4px rgba(255,150,190,.35));
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    margin-bottom:4px;
   }
+  .rainbow svg,.foot svg{display:block}
+  .rainbow .ico{filter:drop-shadow(0 2px 3px rgba(255,150,190,.35));animation:bob 3s ease-in-out infinite}
+  .rainbow .ico:nth-child(2){animation-delay:-.7s}
+  .rainbow .ico:nth-child(4){animation-delay:-1.4s}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-4px) rotate(4deg)}}
   h1{
     margin:0;font-family:"Jua",sans-serif;font-weight:400;
     line-height:1.06;letter-spacing:-.01em;
@@ -149,7 +154,8 @@
   }
   .pet{
     display:block;width:clamp(66px,18vw,104px);height:auto;aspect-ratio:1/1;
-    border-radius:18%;
+    border-radius:20%;
+    box-shadow:0 0 0 3px #fff, 0 8px 14px rgba(196,150,180,.22);
     animation:petFloat 3.6s ease-in-out infinite;
     will-change:transform;
   }
@@ -199,7 +205,13 @@
 <main class="stage">
   <div class="wrap">
     <header class="hero">
-      <div class="rainbow">🍀 <span class="twinkle">✨</span> 🌈 <span class="twinkle">⭐</span> 🍀</div>
+      <div class="rainbow">
+        <svg class="ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><g fill="#79c98b"><circle cx="12" cy="7.4" r="3.4"/><circle cx="12" cy="16.6" r="3.4"/><circle cx="7.4" cy="12" r="3.4"/><circle cx="16.6" cy="12" r="3.4"/></g><circle cx="12" cy="12" r="1.5" fill="#4f9a62"/></svg>
+        <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0l2.4 7.6L22 10l-7.6 2.4L12 20l-2.4-7.6L2 10l7.6-2.4z" fill="#ffd76e"/></svg>
+        <svg class="ico" width="34" height="22" viewBox="0 0 48 30" aria-hidden="true" fill="none" stroke-width="4.4" stroke-linecap="round"><path d="M5 27a19 19 0 0138 0" stroke="#ff9ec4"/><path d="M11 27a13 13 0 0126 0" stroke="#ffc86e"/><path d="M17 27a7 7 0 0114 0" stroke="#8fc9f2"/></svg>
+        <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0l2.4 7.6L22 10l-7.6 2.4L12 20l-2.4-7.6L2 10l7.6-2.4z" fill="#ffb3d1"/></svg>
+        <svg class="ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><g fill="#9bd7a8"><circle cx="12" cy="7.4" r="3.4"/><circle cx="12" cy="16.6" r="3.4"/><circle cx="7.4" cy="12" r="3.4"/><circle cx="16.6" cy="12" r="3.4"/></g><circle cx="12" cy="12" r="1.5" fill="#6cb87e"/></svg>
+      </div>
       <h1>
         <span class="l1">지웅님</span>
         <span class="l2">기말고사 <em>올백</em></span>
@@ -251,7 +263,7 @@
       </button>
     </div>
 
-    <p class="foot">🍀 지웅님 오늘도 최고! 내일도 최고! 🍀
+    <p class="foot"><svg width="15" height="15" style="display:inline-block;vertical-align:-2px;margin-right:4px" viewBox="0 0 24 24" aria-hidden="true"><g fill="#79c98b"><circle cx="12" cy="7.4" r="3.4"/><circle cx="12" cy="16.6" r="3.4"/><circle cx="7.4" cy="12" r="3.4"/><circle cx="16.6" cy="12" r="3.4"/></g><circle cx="12" cy="12" r="1.5" fill="#4f9a62"/></svg>지웅님 오늘도 최고! 내일도 최고! <svg width="15" height="15" style="display:inline-block;vertical-align:-2px;margin-left:4px" viewBox="0 0 24 24" aria-hidden="true"><g fill="#79c98b"><circle cx="12" cy="7.4" r="3.4"/><circle cx="12" cy="16.6" r="3.4"/><circle cx="7.4" cy="12" r="3.4"/><circle cx="16.6" cy="12" r="3.4"/></g><circle cx="12" cy="12" r="1.5" fill="#4f9a62"/></svg>
       <small>터치할 때마다 친구들이 통통 뛰어요 💗</small>
     </p>
   </div>
