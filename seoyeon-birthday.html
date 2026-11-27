@@ -258,11 +258,88 @@
   .soma{animation:somaPop 1.05s cubic-bezier(.16,1.8,.36,1) .44s both, somaFloat 6.5s ease-in-out 1.8s infinite}
   @keyframes somaPop{0%{opacity:0;transform:scale(.18) translateY(30px)}58%{opacity:1;transform:scale(1.08) translateY(-8px)}100%{opacity:1;transform:scale(1)}}
   .halo{animation:haloPulse 6s ease-in-out .5s infinite both}
+  /* ── 케이크 팝업 (보라·라벤더·도라지 + 금박·벚꽃) ── */
+  .cakePop{position:fixed;inset:0;z-index:110;display:none;place-items:center;pointer-events:auto;
+    background:radial-gradient(circle at 50% 46%,rgba(38,20,74,.90),rgba(4,2,10,.965))}
+  .cakePop.open{display:grid;animation:cakeFade .28s ease-out both}
+  @keyframes cakeFade{from{opacity:0}to{opacity:1}}
+  .cakeBox{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;padding:8px 10px;
+    animation:cakePop .9s cubic-bezier(.2,1.75,.35,1) both}
+  @keyframes cakePop{0%{opacity:0;transform:scale(.1) translateY(60px)}
+    58%{opacity:1;transform:scale(1.1) translateY(-10px)}80%{transform:scale(.98)}100%{opacity:1;transform:scale(1)}}
+  .cakeSpin{position:relative;perspective:1100px;perspective-origin:50% 55%}
+  .cakeSpin::before{content:'';position:absolute;left:50%;top:52%;width:min(92vw,520px);height:min(92vw,520px);transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(168,140,240,.42),rgba(255,209,102,.12) 45%,rgba(0,0,0,0) 70%);pointer-events:none}
+  .cakeSvg{display:block;width:min(86vw,440px);height:auto;
+    filter:drop-shadow(0 22px 46px rgba(150,110,235,.55)) drop-shadow(0 0 22px rgba(255,209,102,.28));
+    animation:cakeSpinY 4.2s linear infinite;transform-style:preserve-3d;transform-origin:50% 55%}
+  @keyframes cakeSpinY{from{transform:rotateY(0deg) rotateX(7deg)}to{transform:rotateY(360deg) rotateX(7deg)}}
+  .cakeSvg .flame{animation:flameFlick .3s ease-in-out infinite alternate;transform-origin:center bottom}
+  .cakeSvg .flame.f2{animation-duration:.24s}
+  .cakeSvg .flame.f3{animation-duration:.36s}
+  @keyframes flameFlick{0%{transform:scale(1,1) translateY(0);opacity:.92}100%{transform:scale(.82,1.18) translateY(-1.5px);opacity:1}}
+  .cakeCap{font-size:clamp(14px,4.2vw,18px);color:#ffe9f5;text-shadow:0 2px 12px rgba(120,80,200,.9);letter-spacing:.02em}
+  .cakeX{position:absolute;top:-6px;right:-6px;z-index:3;padding:7px 13px;border-radius:999px;cursor:pointer;
+    border:1px solid rgba(255,209,102,.65);color:#fff;font-size:12.5px;
+    background:linear-gradient(150deg,rgba(122,103,196,.95),rgba(70,55,130,.95));
+    box-shadow:0 8px 22px rgba(10,0,30,.5),inset 0 1px 0 rgba(255,255,255,.4)}
+  .cakeX:active{transform:scale(.94)}
+  .cakeHint{margin-top:-4px;font-size:11.5px;color:rgba(255,233,250,.6)}
 </style>
 </head>
 <body>
 <canvas id="fx" aria-hidden="true"></canvas>
 <div id="intro" aria-hidden="true"></div>
+<div class="cakePop" id="cakePop" role="dialog" aria-modal="true" aria-label="생일 케이크">
+  <div class="cakeBox">
+    <button class="cakeX" id="cakeClose" type="button">✕ 닫기</button>
+    <div class="cakeSpin">
+    <svg class="cakeSvg" viewBox="0 0 240 260" role="img" aria-label="보랏빛 3단 생일 케이크">
+      <defs>
+        <linearGradient id="t3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cdbcf7"/><stop offset="1" stop-color="#8f7ad4"/></linearGradient>
+        <linearGradient id="t2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a48fe0"/><stop offset="1" stop-color="#6a58b4"/></linearGradient>
+        <linearGradient id="t1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7d6bc0"/><stop offset="1" stop-color="#4a3c8c"/></linearGradient>
+        <linearGradient id="crm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf8ff"/><stop offset="1" stop-color="#e8dcff"/></linearGradient>
+        <linearGradient id="gld" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a3"/><stop offset="1" stop-color="#e8a92e"/></linearGradient>
+        <radialGradient id="fl" cx="50%" cy="65%" r="60%"><stop offset="0" stop-color="#fff6c9"/><stop offset="45%" stop-color="#ffd166"/><stop offset="100%" stop-color="#ff8a3d" stop-opacity="0"/></radialGradient>
+      </defs>
+      <ellipse cx="120" cy="228" rx="98" ry="15" fill="#0b0618" opacity=".55"/>
+      <ellipse cx="120" cy="224" rx="92" ry="12" fill="#b9a7d6" opacity=".45"/>
+      <!-- 1단 -->
+      <rect x="26" y="160" width="188" height="58" rx="12" fill="url(#t1)"/>
+      <path d="M26 168 q13 16 26 0 q13 16 26 0 q13 16 26 0 q13 16 26 0 q13 16 26 0 q13 16 26 0 q13 16 26 0 v-18 h-188z" fill="url(#crm)"/>
+      <!-- 2단 -->
+      <rect x="44" y="112" width="152" height="52" rx="11" fill="url(#t2)"/>
+      <path d="M44 120 q11 15 22 0 q11 15 22 0 q11 15 22 0 q11 15 22 0 q11 15 22 0 q11 15 22 0 q11 15 22 0 v-18 h-152z" fill="url(#crm)" opacity=".96"/>
+      <!-- 3단 -->
+      <rect x="64" y="70" width="112" height="46" rx="10" fill="url(#t3)"/>
+      <path d="M64 78 q10 14 20 0 q10 14 20 0 q10 14 20 0 q10 14 20 0 q10 14 20 0 q10 14 20 0 v-18 h-112z" fill="url(#crm)"/>
+      <!-- 금박 띠 -->
+      <rect x="26" y="196" width="188" height="5" rx="2.5" fill="url(#gld)" opacity=".85"/>
+      <rect x="44" y="146" width="152" height="4.5" rx="2.2" fill="url(#gld)" opacity=".8"/>
+      <rect x="64" y="102" width="112" height="4" rx="2" fill="url(#gld)" opacity=".8"/>
+      <!-- 벚꽃 장식 -->
+      <g fill="#ffc2d6" opacity=".95">
+        <g transform="translate(52,182)"><circle cx="0" cy="-5" r="4"/><circle cx="5" cy="-1" r="4"/><circle cx="3" cy="5" r="4"/><circle cx="-3" cy="5" r="4"/><circle cx="-5" cy="-1" r="4"/><circle cx="0" cy="0" r="2.4" fill="#ffd166"/></g>
+        <g transform="translate(104,132)"><circle cx="0" cy="-5" r="4"/><circle cx="5" cy="-1" r="4"/><circle cx="3" cy="5" r="4"/><circle cx="-3" cy="5" r="4"/><circle cx="-5" cy="-1" r="4"/><circle cx="0" cy="0" r="2.4" fill="#ffd166"/></g>
+        <g transform="translate(176,140)"><circle cx="0" cy="-4.5" r="3.6"/><circle cx="4.5" cy="-1" r="3.6"/><circle cx="2.7" cy="4.5" r="3.6"/><circle cx="-2.7" cy="4.5" r="3.6"/><circle cx="-4.5" cy="-1" r="3.6"/><circle cx="0" cy="0" r="2.2" fill="#ffd166"/></g>
+        <g transform="translate(132,90)"><circle cx="0" cy="-4.5" r="3.6"/><circle cx="4.5" cy="-1" r="3.6"/><circle cx="2.7" cy="4.5" r="3.6"/><circle cx="-2.7" cy="4.5" r="3.6"/><circle cx="-4.5" cy="-1" r="3.6"/><circle cx="0" cy="0" r="2.2" fill="#ffd166"/></g>
+      </g>
+      <!-- 촛불 -->
+      <g>
+        <rect x="94" y="44" width="8" height="28" rx="4" fill="#f3ecff"/><rect x="94" y="50" width="8" height="4" fill="#a48fe0"/><rect x="94" y="60" width="8" height="4" fill="#a48fe0"/>
+        <ellipse class="flame" cx="98" cy="36" rx="7" ry="12" fill="url(#fl)"/>
+        <rect x="116" y="38" width="8" height="34" rx="4" fill="#f3ecff"/><rect x="116" y="45" width="8" height="4" fill="#a48fe0"/><rect x="116" y="56" width="8" height="4" fill="#a48fe0"/>
+        <ellipse class="flame f2" cx="120" cy="29" rx="8" ry="13" fill="url(#fl)"/>
+        <rect x="138" y="44" width="8" height="28" rx="4" fill="#f3ecff"/><rect x="138" y="50" width="8" height="4" fill="#a48fe0"/><rect x="138" y="60" width="8" height="4" fill="#a48fe0"/>
+        <ellipse class="flame f3" cx="142" cy="36" rx="7" ry="12" fill="url(#fl)"/>
+      </g>
+    </svg>
+    </div>
+    <div class="cakeCap">서연 공, 탄신일을 진심으로 축하하오 🌸</div>
+    <div class="cakeHint">배경을 누르면 닫혀요 · 노래는 계속 나와요</div>
+  </div>
+</div>
+
 <button id="sound" type="button" aria-label="생일 노래 소리 켜기/끄기" aria-pressed="true"><span id="soundIco">🎵</span></button>
 
 <main class="stage">
@@ -1013,6 +1090,29 @@
 
   function centerOf(el) { var r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
 
+  /* ── 케이크 팝업 ── */
+  var cakePop = document.getElementById('cakePop');
+  var cakeFwTimer = null;
+  function burstAroundCake() {
+    var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    partyBlast(cx, cy + window.innerHeight * 0.18);
+    launchRocket(cx + (rnd() - 0.5) * window.innerWidth * 0.55, window.innerHeight * 0.18, FW_HUES[(rnd() * FW_HUES.length) | 0]);
+    tapBurst(cx + (rnd() - 0.5) * window.innerWidth * 0.6, cy + (rnd() - 0.5) * window.innerHeight * 0.35);
+  }
+  function openCakePop() {
+    cakePop.classList.add('open');
+    burstAroundCake();
+    setTimeout(burstAroundCake, 260);
+    if (cakeFwTimer) clearInterval(cakeFwTimer);
+    cakeFwTimer = setInterval(burstAroundCake, 950);
+  }
+  function closeCakePop() {
+    cakePop.classList.remove('open');
+    if (cakeFwTimer) { clearInterval(cakeFwTimer); cakeFwTimer = null; }
+  }
+  document.getElementById('cakeClose').addEventListener('click', function (ev) { ev.stopPropagation(); closeCakePop(); });
+  cakePop.addEventListener('click', function (ev) { if (ev.target === cakePop) closeCakePop(); });
+
   btnCake.addEventListener('click', function (ev) {
     ev.stopPropagation();
     btnCake.classList.remove('spin');
@@ -1021,6 +1121,7 @@
     var p = centerOf(btnCake);
     partyBlast(p.x, p.y - 10);
     musicOn = true; syncSoundBtn(); playMusic();
+    openCakePop();
   });
   btnCake.addEventListener('animationend', function () { btnCake.classList.remove('spin'); });
 
@@ -1194,6 +1295,7 @@
     return audioEl ? { paused: audioEl.paused, currentTime: audioEl.currentTime, duration: audioEl.duration,
       readyState: audioEl.readyState, loop: audioEl.loop } : null;
   };
+  window.__bd.cake = function () { return { open: cakePop.classList.contains('open'), svg: !!document.querySelector('.cakeSvg'), spin: getComputedStyle(document.querySelector('.cakeSvg')).animationName, scale: getComputedStyle(document.querySelector('.cakeBox')).transform }; };
   window.__bd.counts = function () { return { sparks: sparks.length, shards: shards.length, petals: petals.length, rockets: rockets.length }; };
   window.__bd.gb = function () { return { topic: GB_TOPIC, count: Object.keys(messages).length, ids: Object.keys(messages), error: window.__bd.gbError || null }; };
   window.__bd.canvas = function () { var r = cv.getBoundingClientRect(); return { W: W, H: H, dpr: DPR, buf: [cv.width, cv.height], css: [Math.round(r.width), Math.round(r.height)], ratio: +((cv.width / cv.height).toFixed(3)), screen: +((r.width / r.height).toFixed(3)) }; };
