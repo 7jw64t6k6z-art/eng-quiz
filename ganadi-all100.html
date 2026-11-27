@@ -371,16 +371,10 @@
   ];
   var pi = 0;
   var bubble = document.getElementById('bubble');
-  var bubbleFirst = true;
 
   function nextPhrase(){
-    var text;
-    if (bubbleFirst){ bubbleFirst = false; text = PHRASES[0]; }
-    else {
-      pi = (pi + 1) % PHRASES.length;
-      text = PHRASES[pi];
-    }
-    bubble.textContent = text;
+    pi = (pi + 1) % PHRASES.length;
+    bubble.textContent = PHRASES[pi];
     bubble.classList.remove('shine'); void bubble.offsetWidth; bubble.classList.add('shine');
   }
 
